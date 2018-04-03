@@ -9,9 +9,14 @@ get_zpid(zwsid, address, citystatezip)
 \arguments{
 \item{zwsid}{Access token}
 
-\item{address}{Street address of interest as a string (e.g., '2144+Bigelow+Ave')}
+\item{address}{Street address of interest as a string
+(e.g., '2144+Bigelow+Ave')}
 
-\item{citystatezip}{either the city and state or ZIP code of the street address (e.g., 'Seattle%2C+WA')}
+\item{citystatezip}{either the city and state or ZIP code
+of the street address (e.g., 'Seattle%2C+WA')}
+}
+\value{
+zpid as a string
 }
 \description{
 Retrieves Zillow Property ID (zpid) from the GetSearchResults API.

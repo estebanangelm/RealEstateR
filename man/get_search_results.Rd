@@ -2,10 +2,22 @@
 % Please edit documentation in R/zestimate.R
 \name{get_search_results}
 \alias{get_search_results}
-\title{Get Search Results Response}
+\title{GetSearchResults Response}
 \usage{
 get_search_results(zwsid, address, citystatezip)
 }
+\arguments{
+\item{zwsid}{Access token}
+
+\item{address}{Street address of interest as a string
+(e.g., '2144+Bigelow+Ave')}
+
+\item{citystatezip}{either the city and state or ZIP code
+of the street address (e.g., 'Seattle%2C+WA')}
+}
+\value{
+API response
+}
 \description{
-Get Search Results Response
+Retrieves GetSearchResults API response.
 }

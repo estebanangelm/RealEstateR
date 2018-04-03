@@ -1,4 +1,17 @@
-#' Get Search Results Response
+#' GetSearchResults Response
+#' 
+#' @description Retrieves GetSearchResults API response.
+#' 
+#' @param zwsid Access token
+#' 
+#' @param address Street address of interest as a string
+#' (e.g., '2144+Bigelow+Ave')
+#' 
+#' @param citystatezip either the city and state or ZIP code
+#' of the street address (e.g., 'Seattle%2C+WA')
+#' 
+#' @return API response
+#' @export
 get_search_results <- function(zwsid, address, citystatezip) {
   url_search <- 'http://www.zillow.com/webservice/GetSearchResults.htm?'
   result <- httr::GET(url = paste0(url_search, 'zws-id=', zwsid, '&address=', address, '&citystatezip=', citystatezip))
@@ -11,9 +24,13 @@ get_search_results <- function(zwsid, address, citystatezip) {
 #' 
 #' @param zwsid Access token 
 #' 
-#' @param address Street address of interest as a string (e.g., '2144+Bigelow+Ave')
+#' @param address Street address of interest as a string
+#' (e.g., '2144+Bigelow+Ave')
 #' 
-#' @param citystatezip either the city and state or ZIP code of the street address (e.g., 'Seattle%2C+WA')
+#' @param citystatezip either the city and state or ZIP code
+#' of the street address (e.g., 'Seattle%2C+WA')
+#' 
+#' @return zpid as a string
 #' @export
 get_zpid <- function(zwsid, address, citystatezip) {
   url_search <- 'http://www.zillow.com/webservice/GetSearchResults.htm?'
@@ -23,6 +40,16 @@ get_zpid <- function(zwsid, address, citystatezip) {
   return(zpid)
 }
 
+#' Get Zestimate
+#' 
+#' @description Retrives zestimate information for a specified zpid.
+#' 
+#' @param zwsid Access token
+#' 
+#' @param zpid Zillow property ID (zpid)
+#' 
+#' @return Zestimate of house (in USD)
+#' @export
 get_zestimate <- function(zwsid, zpid) {
   url_zillow <- 'http://www.zillow.com/webservice/GetZestimate.htm?'
   result <- httr::GET(url = paste0(url_zillow,'zws-id=', zwsid, '&zpid=', zpid))
