@@ -1,14 +1,23 @@
+---
+output: github_document
+---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-RealEstateR
-===========
 
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+# RealEstateR
 [![Travis build status](https://travis-ci.org/estebanangelm/RealEstateR.svg?branch=master)](https://travis-ci.org/estebanangelm/RealEstateR)[![Coverage status](https://coveralls.io/repos/github/estebanangelm/RealEstateR/badge.svg)](https://coveralls.io/r/estebanangelm/RealEstateR?branch=master)[![Coverage status](https://codecov.io/gh/estebanangelm/RealEstateR/branch/master/graph/badge.svg)](https://codecov.io/github/estebanangelm/RealEstateR?branch=master)
 
 Set of R tools for analyzing real estate data from Zillow and other sources.
 
-Installation
-------------
+## Installation
 
 You can install the released version of RealEstateR from [CRAN](https://CRAN.R-project.org) with:
 
@@ -22,17 +31,15 @@ And the development version from [GitHub](https://github.com/) with:
 # install.packages("devtools")
 devtools::install_github("estebanangelm/RealEstateR")
 ```
-
-Example
--------
+## Example
 
 This is a basic example which shows you how to solve a common problem:
 
-``` r
+```{r example}
 ## basic example code
 ```
 
-Contribution
-------------
+## Contribution
 
-Please note that this project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
+Please note that this project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md).
+By participating in this project you agree to abide by its terms.
