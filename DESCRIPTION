@@ -15,3 +15,4 @@ ByteCompile: true
 Suggests: 
     testthat,
     covr
+RoxygenNote: 6.0.1
