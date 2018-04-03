@@ -1,11 +1,17 @@
 Package: RealEstateR
-Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Version: 0.0.0.9000
+Title: RealEstateR
+Description: Set of R tools for analyzing real estate data from Zillow and other sources.
+Authors@R: c(
+      person("Ha", "Dinh", email = "nhatha.1306@gmail.com", role = c("aut", "cre")),
+      person("Xinbin", "Huang", email = "xbhuang93@hotmail.com", role = c("aut", "cre")),
+      person("Esteban", "Angel", email = "", role = c("aut", "cre")),
+      person("Jill", "Cates", email = "", role = c("aut", "cre"))
+      )
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+ByteCompile: true
+Suggests: 
+    testthat,
+    covr
