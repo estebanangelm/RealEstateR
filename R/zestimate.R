@@ -53,7 +53,7 @@ get_zpid <- function(zwsid, address, citystatezip) {
 get_zestimate <- function(zwsid, zpid) {
   url_zillow <- 'http://www.zillow.com/webservice/GetZestimate.htm?'
   result <- httr::GET(url = paste0(url_zillow,'zws-id=', zwsid, '&zpid=', zpid))
-  zillow_xml <- xml2::read_xml(content(result, "text"))
+  zillow_xml <- xml2::read_xml(httr::content(result, "text"))
   zestimate <- xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//zestimate/amount"))
   currency <- xml2::xml_attr(xml2::xml_find_all(zillow_xml, ".//zestimate/amount"), "currency")
   return(zestimate)
