@@ -32,7 +32,7 @@ And the development version from [GitHub](https://github.com/) with:
 devtools::install_github("estebanangelm/RealEstateR")
 ```
 
-Note: add your ZWSID to `.Renviron`.
+Note: add your ZWSID to `.Renviron`. You can do this by running  Sys.setenv(ZWSID='your-key-here') in your console.
 
 ## Example
 
