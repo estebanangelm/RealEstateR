@@ -60,14 +60,3 @@ get_zestimate <- function(zwsid, zpid) {
 }
 
 
-# Get Zestimate
-# 
-# Example: 
-# address <- '2144+Bigelow+Ave'
-# citystatezip <- 'Seattle%2C+WA'
-# get_zpid(zwsid, address, citystatezip)
-# zpid <- get_zpid(zwsid, address, citystatezip)
-# get_zestimate_zpid <- function(zwsid, zpid)
-
-
-

@@ -1,10 +1,9 @@
-# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
-
 language: R
 sudo: false
 cache: packages
-
-
 after_success:
-  - Rscript -e 'covr::codecov()'
-  - Rscript -e 'covr::coveralls()'
+- Rscript -e 'covr::codecov()'
+- Rscript -e 'covr::coveralls()'
+env:
+  matrix:
+    secure: gYcJXRrjQowXe3w1TyXKu8GRVgeGmWTtxSPfc6dL5v4NN8KAMYTLmi2KtR3SZVOx8h7uK5h09Y5pMktebaAPZTTEgoQkKf3PLAFCqMgqj44RpFUeWGjhL5hZSNzM7xabESsiy17FUVNQUD+ZHtnM3VMnSP8R8NTvcES4ZoD3gkJ/djhx6PvLOyU9TpULnEQEdTP9MaMQQueDybjeaahzpfuLH9RTt4Ii6YhvzKppjDGfIN2khcOVBc8hw443+dHKOPe/4ZjRwVnYhb12mWH6LBRoswoLyVYBZWzOTHnR6nKWbqG73SJAsUeIH41aOeMgxAuxf2K1gJQKXT2DSp4Fl+i/oTadZaX5V6X3BX+8GRJissOONmGiO/IQoYj67lBWWfqIbBM1FqCTAg+qtQbHfIeqRs/+AO6ThUnAMTMR4sfSybzvvAxYxJpOS6bjHHZaoZpQuxFF8v9ZvXdokxIx2dZJsU0q3T8SmQEYTsHO5aANgeD2H2qlHNjfHLDNqO7IaHvlZhVocjH5LnEiwDq3MsQfFss5sXpGMqDzyWCRX7xtb43mLLtinhahV5TqrlIKHY9GSfd7FhZSNBIeyNFes9IfakpO59trcTG9HglNtWrA8XgRPlU4oNUJTPx9ogu9MrflpXN1z1QocHf+kLTqIqoI1w34XuG5EjBGxPeA+DU=
