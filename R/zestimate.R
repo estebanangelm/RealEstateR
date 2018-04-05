@@ -12,8 +12,6 @@
 #' 
 #' @return API response
 #' 
-#' @importFrom httr GET
-#' 
 #' @export
 get_search_results <- function(zwsid, address, citystatezip) {
   url_search <- 'http://www.zillow.com/webservice/GetSearchResults.htm?'
@@ -35,9 +33,6 @@ get_search_results <- function(zwsid, address, citystatezip) {
 #' 
 #' @return zpid as a string
 #' 
-#' @importFrom httr GET content
-#' @importFrom xml2 read_xml xml_text xml_find_all
-#' 
 #' @export
 get_zpid <- function(zwsid, address, citystatezip) {
   url_search <- 'http://www.zillow.com/webservice/GetSearchResults.htm?'
@@ -56,9 +51,6 @@ get_zpid <- function(zwsid, address, citystatezip) {
 #' @param zpid Zillow property ID (zpid)
 #' 
 #' @return Zestimate of house (in USD)
-#' 
-#' @importFrom httr GET content
-#' @importFrom xml2 read_xml xml_text xml_find_all xml_attr
 #' 
 #' @export
 get_zestimate <- function(zwsid, zpid) {

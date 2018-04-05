@@ -15,4 +15,7 @@ ByteCompile: true
 Suggests: 
     testthat,
     covr
+Imports:
+    xml2,
+    httr
 RoxygenNote: 6.0.1
