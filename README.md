@@ -23,6 +23,8 @@ And the development version from [GitHub](https://github.com/) with:
 devtools::install_github("estebanangelm/RealEstateR")
 ```
 
+Note: add your ZWSID to `.Renviron`.
+
 Example
 -------
 
