@@ -24,7 +24,7 @@ test_that("get_zpid() generates appropriate zpid", {
   expect_equal(output, '48879021')
 })
 
-test_that("", {
+test_that("get_zestimate() provides price estimate of house given zpid", {
   zpid <- '48879021'
   output <- get_zestimate(zwsid, zpid)
   expect_equal(output, '783654')
