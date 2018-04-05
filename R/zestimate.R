@@ -19,10 +19,10 @@ get_search_results <- function(zwsid, address, citystatezip) {
   
 #' Get Zillow Property ID
 #' 
-#' @description 
-#' Retrieves Zillow Property ID (zpid) from the GetSearchResults API.
+#' @description Retrieves the Zillow Property ID (zpid) for a house
+#' from the GetSearchResults API.
 #' 
-#' @param zwsid Access token 
+#' @param zwsid Access token as a string
 #' 
 #' @param address Street address of interest as a string
 #' (e.g., '2144+Bigelow+Ave')

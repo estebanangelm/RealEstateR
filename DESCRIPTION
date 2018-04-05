@@ -4,9 +4,9 @@ Title: RealEstateR
 Description: Set of R tools for analyzing real estate data from Zillow and other sources.
 Authors@R: c(
       person("Ha", "Dinh", email = "nhatha.1306@gmail.com", role = c("aut", "cre")),
-      person("Xinbin", "Huang", email = "xbhuang93@hotmail.com", role = c("aut", "cre")),
-      person("Esteban", "Angel", email = "", role = c("aut", "cre")),
-      person("Jill", "Cates", email = "", role = c("aut", "cre"))
+      person("Xinbin", "Huang", email = "xbhuang93@hotmail.com", role = c("aut")),
+      person("Esteban", "Angel", email = "", role = c("aut")),
+      person("Jill", "Cates", email = "", role = c("aut"))
       )
 License: MIT + file LICENSE
 Encoding: UTF-8

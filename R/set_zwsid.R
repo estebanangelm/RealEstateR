@@ -1,6 +1,8 @@
 #' Set access token (Zillow Web Service ID)
 #' 
-set_zwsid <- function(x) {
-  options('zwsid' = x)
+#' @param id Zillow Web Service ID
+#' 
+set_zwsid <- function(id) {
+  options('zwsid' = id)
   return(invisible())
 }
