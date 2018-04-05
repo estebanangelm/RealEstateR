@@ -11,7 +11,6 @@ zwsid <- function() {
   }
   val
 }
-
 zwsid <- zwsid()
 
 # -----------------------------------------------------------------------------
@@ -23,4 +22,10 @@ test_that("get_zpid() generates appropriate zpid", {
   citystatezip <- 'Seattle%2C+WA'
   output <- get_zpid(zwsid, address, citystatezip)
   expect_equal(output, '48879021')
+})
+
+test_that("", {
+  zpid <- '48879021'
+  output <- get_zestimate(zwsid, zpid)
+  expect_equal(output, '783654')
 })

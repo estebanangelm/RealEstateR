@@ -31,6 +31,9 @@ And the development version from [GitHub](https://github.com/) with:
 # install.packages("devtools")
 devtools::install_github("estebanangelm/RealEstateR")
 ```
+
+Note: add your ZWSID to `.Renviron`.
+
 ## Example
 
 This is a basic example which shows you how to solve a common problem:
