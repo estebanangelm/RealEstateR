@@ -4,11 +4,9 @@
 \alias{get_zpid}
 \title{Get Zillow Property ID}
 \usage{
-get_zpid(zwsid, address, citystatezip)
+get_zpid(address, citystatezip)
 }
 \arguments{
-\item{zwsid}{Access token as a string}
-
 \item{address}{Street address of interest as a string
 (e.g., '2144+Bigelow+Ave')}
 

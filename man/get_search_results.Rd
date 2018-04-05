@@ -4,11 +4,9 @@
 \alias{get_search_results}
 \title{GetSearchResults Response}
 \usage{
-get_search_results(zwsid, address, citystatezip)
+get_search_results(address, citystatezip)
 }
 \arguments{
-\item{zwsid}{Access token}
-
 \item{address}{Street address of interest as a string
 (e.g., '2144+Bigelow+Ave')}
 

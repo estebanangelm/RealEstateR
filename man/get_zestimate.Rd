@@ -4,12 +4,10 @@
 \alias{get_zestimate}
 \title{Get Zestimate}
 \usage{
-get_zestimate(zwsid, zpid)
+get_zestimate(zpid)
 }
 \arguments{
-\item{zwsid}{Access token}
-
-\item{zpid}{Zillow property ID (zpid)}
+\item{zpid}{property ID}
 }
 \value{
 Zestimate of house (in USD)
