@@ -21,6 +21,7 @@ test_that("set_zwsid() is able to set zwsid as a global var", {
   set_zwsid(zwsid)
   global_var <- getOption("ZWSID")
   expect_true(is.character(global_var))
+  expect_equal(nchar(global_var), 23)
 })
 
 # -----------------------------------------------------------------------------
@@ -38,7 +39,6 @@ test_that("get_zpid() generates appropriate zpid", {
 # -----------------------------------------------------------------------------
 # get_zestimate()
 # -----------------------------------------------------------------------------
-
 
 test_that("get_zestimate() provides price estimate of house given zpid", {
   set_zwsid(zwsid)
