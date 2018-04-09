@@ -64,3 +64,35 @@ price_plot <- function(zpid){
 
   return(p)
 }
+
+#' Price ranges plot
+#'
+#' @description Creates a boxplot with the price ranges of similar properties.
+#'
+#' @param zpid property ID
+#'
+#' @return A gglot boxplot with the price ranges of similar properties.
+#'
+#' @export
+
+
+price_ranges <- function(zpid){
+  zwsid <- getOption("ZWSID")
+  url_zillow <- 'http://www.zillow.com/webservice/GetDeepComps.htm?'
+  url_zillow <- paste0(url_zillow,'zws-id=', zwsid, '&zpid=', zpid,'&count=25&rentzestimate=true')
+  result <- httr::GET(url_zillow)
+  zillow_xml <- xml2::read_xml(httr::content(result, "text"))
+
+  price_low <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/zestimate/valuationRange/low")))
+  price_high <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/zestimate/valuationRange/high")))
+  prices <- c(price_low,price_high)
+
+  p <-ggplot2::ggplot(dplyr::data_frame(prices))+
+    geom_boxplot(aes(x="",y=prices),color="#434D62",fill="#434D62",alpha=0.6)+
+    ggtitle("Price Ranges")+
+    scale_y_continuous("Prices",labels = scales::dollar_format())+
+    theme_bw()+
+    theme(plot.title = element_text(hjust = 0.5))
+
+  return(p)
+}
