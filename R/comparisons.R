@@ -91,5 +91,5 @@ price_ranges <- function(zpid){
   rent_high <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/rentzestimate/valuationRange/high")))
   rents <- c(rent_low,rent_high)
 
-  return(c(prices,rents))
+  return(list(prices = prices,rents = rents))
 }
