@@ -1,3 +1,15 @@
+#' Get comparison data frame
+#'
+#' @description Retrives some of the attributes of comparable properties estimated by Zillow.
+#'
+#' @param zpid property ID
+#' @param count number of comparable properties (max 25)
+#'
+#' @return A data frame with n comparable properties and some of their main attributes.
+#'
+#' @export
+
+
 get_comp_df <- function(zpid,count){
   zwsid <- getOption("ZWSID")
   if (count > 25){
