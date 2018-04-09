@@ -15,7 +15,13 @@ ByteCompile: true
 Suggests: 
     testthat,
     covr
-Imports:
+Imports: 
     xml2,
-    httr
+    httr,
+    magrittr,
+    tibble,
+    dplyr,
+    ggplot2,
+    stringr,
+    scales
 RoxygenNote: 6.0.1
