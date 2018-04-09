@@ -38,9 +38,8 @@ get_comp_df <- function(zpid,count){
 #' @description Creates a boxplot with the price ranges of similar properties.
 #'
 #' @param zpid property ID
-#' @param count number of comparable properties (max 25)
 #'
-#' @return A data frame with n comparable properties and some of their main attributes.
+#' @return A gglot boxplot with the price ranges of similar properties.
 #'
 #' @export
 
@@ -56,7 +55,12 @@ price_plot <- function(zpid){
   price_high <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/zestimate/valuationRange/high")))
   prices <- c(price_low,price_high)
 
+  p <-ggplot2::ggplot(dplyr::data_frame(prices))+
+        geom_boxplot(aes(x="",y=prices),color="#434D62",fill="#434D62",alpha=0.6)+
+        ggtitle("Price Ranges")+
+        scale_y_continuous("Prices",labels = scales::dollar_format())+
+        theme_bw()+
+        theme(plot.title = element_text(hjust = 0.5))
 
-  z_df <- dplyr::data_frame(zpid,bedrooms,bathrooms,year,size,lot_size,value,rent)
-  return(z_df)
+  return(p)
 }
