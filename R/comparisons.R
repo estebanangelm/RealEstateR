@@ -65,13 +65,13 @@ price_plot <- function(zpid){
   return(p)
 }
 
-#' Price ranges plot
+#' Price and rent ranges.
 #'
-#' @description Creates a boxplot with the price ranges of similar properties.
+#' @description Retrieves some estimates for similar rent and house prices for a certain property.
 #'
 #' @param zpid property ID
 #'
-#' @return A gglot boxplot with the price ranges of similar properties.
+#' @return A list with two elements: similar prices and similar rents.
 #'
 #' @export
 
@@ -87,12 +87,9 @@ price_ranges <- function(zpid){
   price_high <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/zestimate/valuationRange/high")))
   prices <- c(price_low,price_high)
 
-  p <-ggplot2::ggplot(dplyr::data_frame(prices))+
-    geom_boxplot(aes(x="",y=prices),color="#434D62",fill="#434D62",alpha=0.6)+
-    ggtitle("Price Ranges")+
-    scale_y_continuous("Prices",labels = scales::dollar_format())+
-    theme_bw()+
-    theme(plot.title = element_text(hjust = 0.5))
+  rent_low <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/rentzestimate/valuationRange/low")))
+  rent_high <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/rentzestimate/valuationRange/high")))
+  rents <- c(rent_low,rent_high)
 
-  return(p)
+  return(c(prices,rents))
 }
