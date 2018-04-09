@@ -15,6 +15,7 @@ get_search_results <- function(address, citystatezip) {
   zwsid <- getOption("ZWSID")
   url_search <- 'http://www.zillow.com/webservice/GetSearchResults.htm?'
   result <- httr::GET(url = paste0(url_search, 'zws-id=', zwsid, '&address=', address, '&citystatezip=', citystatezip))
+  return(result)
 }
 
 #' Get Zillow Property ID
@@ -33,8 +34,7 @@ get_search_results <- function(address, citystatezip) {
 #' @export
 get_zpid <- function(address, citystatezip) {
   zwsid <- getOption("ZWSID")
-  url_search <- 'http://www.zillow.com/webservice/GetSearchResults.htm?'
-  result <- httr::GET(url = paste0(url_search, 'zws-id=', zwsid, '&address=', address, '&citystatezip=', citystatezip))
+  result <- get_search_results(address, citystatezip)
   search_xml <- xml2::read_xml(httr::content(result, "text"))
   zpid <- xml2::xml_text(xml2::xml_find_all(search_xml, ".//zpid"))
   return(zpid)
