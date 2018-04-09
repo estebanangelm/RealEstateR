@@ -18,6 +18,24 @@ get_search_results <- function(address, citystatezip) {
   return(result)
 }
 
+#' Format Address
+#'
+#' @description Converts the property address to the query param format
+#'
+#' @param address Address as a string (e.g., '2144 Bigelow Ave')
+#'
+#' @return proper format of address as a string (e.g., '2144+Bigelow+Ave')
+#'
+#' @export
+format_address <- function(address) {
+  if(stringr::str_detect(address, '\\+')){
+    formatted_address <- address
+    print("Address already formatted")
+  }
+  formatted_address <- gsub("\\s", "+", address)
+  return(formatted_address)
+}
+
 #' Get Zillow Property ID
 #'
 #' @description Retrieves the Zillow Property ID (zpid) for a house
