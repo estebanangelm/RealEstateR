@@ -18,9 +18,26 @@
 # library(xml2)
 # library(jsonlite)
 # library(rvest)
+# library(stringr)
 
 reviews_get_screennames <- function(city, state){
-  # transfrom inputs to lower case
+  # check conditions of city: an all-character input
+  if (!is.character(city)){
+    stop("Expect input of city to be a string.")
+  } else if (str_detect(city, "[[:digit:]]")){
+    stop("Expect input of city to be an all-character string.")
+  }
+
+  # check conditions of city: a 2-letter all-character input
+  if (!is.character(state)){
+    stop("Expect input of state to be a string.")
+  } else if (str_detect(city, "[[:digit:]]")){
+    stop("Expect input of state to be an all-character string.")
+  } else if (str_count(state) != 2){
+    stop("Expect 2-letter input of state (e.g. 'CA', 'OH', 'M').")
+  }
+
+  # initial setup
   city <- str_to_lower(city)
   state <- str_to_lower(state)
 
@@ -48,7 +65,7 @@ reviews_get_screennames <- function(city, state){
       html_text() %>%
       unique()
 
-    df <-  rbind(df, data.frame(name, screenname, phone))
+    df <-  rbind(df, data.frame(name, screenname, phone, stringsAsFactors = FALSE))
   }
 
   df <- df %>%
