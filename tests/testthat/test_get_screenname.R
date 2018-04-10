@@ -24,10 +24,9 @@ zwsid <- zwsid()
 # reviews_get_screennames
 # -----------------------------------------------------------------------------
 
-## test expected output
-response <- reviews_get_screennames("Cincinnati", "OH")
-
 test_that("reviews_get_screennames() outputs a dataframe given correct combination of city and state", {
+
+  response <- reviews_get_screennames("Cincinnati", "OH")
 
   # expect a dataframe with 5 columns
   expect_output(str(response), "5 variables", ignore.case = TRUE,
@@ -46,4 +45,13 @@ test_that("reviews_get_screennames() outputs a dataframe given correct combinati
   expect_is(response$phone, "character", "All columns should be in type character")
   expect_is(response$city, "character", "All columns should be in type character")
   expect_is(response$state, "character", "All columns should be in type character")
+
+  # expect an empty dataframe if city and state combination contains too many results
+  response_empty <- reviews_get_screennames("New-York", "NY")
+  expect_equal(nrow(response_empty), 0,
+               "Returns nothing since there are too many results from your interested location.
+               Try narrowing down your search.")
+
+  # expect results even if location combination does not exist -- Zillow shows the closest location instead
+
 })
