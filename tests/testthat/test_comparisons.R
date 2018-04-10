@@ -21,12 +21,12 @@ zwsid <- zwsid()
 
 test_that("get_comp_df() creates a dataframe", {
   set_zwsid(zwsid)
-  expect_true(is.data.frame(get_comp_df("111",2)))
+  expect_true(is.data.frame(get_comp_df("48749425",2)))
 })
 
 test_that("get_comp_df() with empty count retrieves 25 values", {
   set_zwsid(zwsid)
-  df <- get_comp_df("111")
+  df <- get_comp_df("48749425")
   expect_equal(nrow(df), 25)
 })
 
