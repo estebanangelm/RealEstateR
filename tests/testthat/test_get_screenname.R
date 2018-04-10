@@ -4,12 +4,13 @@ context("reviews_get_screenname.R")
 # Setup
 # -----------------------------------------------------------------------------
 
-library(tidyverse)
-library(xml2)
-library(jsonlite)
-library(rvest)
-library(stringr)
-library(testthat)
+# dependency
+# library(tidyverse)
+# library(xml2)
+# library(jsonlite)
+# library(rvest)
+# library(stringr)
+# library(testthat)
 
 zwsid <- function() {
   val <- Sys.getenv("ZWSID")
@@ -34,7 +35,7 @@ test_that("reviews_get_screennames() outputs a dataframe given a combination of 
 
   # expect 2-letter input for state
   expect_error(reviews_get_screennames("los-angeles", "Cali"),
-               "Expect 2-letter input of state (e.g. 'CA', 'OH', 'M').")
+               "Expect 2-letter input of state abbreviation.")
 
   # expect an all-character input for city
   expect_error(reviews_get_screennames(45220, "OH"),
@@ -69,13 +70,9 @@ test_that("reviews_get_screennames() outputs a dataframe given a combination of 
 
   # expect an empty dataframe if city and state combination contains too many results
   response_empty <- reviews_get_screennames("New-York", "NY")
-  expect_equal(nrow(response_empty), 0,
-               "Returns nothing since there are too many results from your interested location.
-               Try narrowing down your search.")
+  expect_equal(nrow(response_empty), 0)
 
   # expect an empty dataframe if location combination does not exist
   response_ghostLocation <- reviews_get_screennames("Madagasca", "CA")
-  expect_equal(nrow(response_ghostLocation), 0,
-               "Returns nothing since the location combination does not exist.")
-
+  expect_equal(nrow(response_ghostLocation), 0)
 })
