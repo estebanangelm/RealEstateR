@@ -29,6 +29,10 @@ get_comp_df <- function(zpid,count=25){
   value <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/zestimate/amount")))
   rent <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/rentzestimate/amount")))
 
+  #little trick for solving problem with missing values in the response.
+  value <- value[1:count]
+  rent <- rent[1:count]
+
   z_df <- dplyr::data_frame(zpid,bedrooms,bathrooms,year,size,lot_size,value,rent)
   return(z_df)
 }
