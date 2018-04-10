@@ -30,6 +30,13 @@ get_search_results <- function(address, city, state) {
   }
 }
 
+#' Get Neighbour Information
+get_neighbours <- function(address, city, state) {
+  street_number <- as.numeric(gsub("([0-9]+).*$", "\\1", address))
+  street_name <- gsub('[0-9]+', '', address)
+  neighbours <- append((street_number + c(1:10)), (street_number - c(1:10)))
+
+}
 
 #' Get Zillow Property ID
 #'
