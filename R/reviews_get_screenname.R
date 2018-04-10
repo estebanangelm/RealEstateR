@@ -80,7 +80,7 @@ reviews_get_screennames <- function(city, state){
   }
 
   df <- df %>%
-    mutate(city = city, state = state)
+    dplyr::mutate(city = city, state = state)
 
   return(df)
 }
