@@ -1,3 +1,5 @@
+source('R/format_params.R')
+
 #' GetSearchResults Response
 #'
 #' @description Retrieves GetSearchResults API response.
