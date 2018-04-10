@@ -23,5 +23,6 @@ Imports:
     dplyr,
     ggplot2,
     stringr,
-    scales
+    scales,
+    jsonlite
 RoxygenNote: 6.0.1

@@ -4,7 +4,7 @@
 \alias{get_comp_df}
 \title{Get comparison data frame}
 \usage{
-get_comp_df(zpid, count)
+get_comp_df(zpid, count = 25)
 }
 \arguments{
 \item{zpid}{property ID}
