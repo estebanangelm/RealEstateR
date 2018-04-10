@@ -1,12 +1,17 @@
-#' Scrape Agent IDs by Location
+#' Scrape Agent IDs Based On Location
 #'
-#' @param city
+#' @param city A city of interest as a string.
+#' (e.g. "Cincinnati")
 #'
-#'
-#' @return
-#' @export
+#' @param state A state of interest, where the city is in, as a string in 2 letters form.
+#' (e.g. "OH")
 #'
 #' @examples
+#' scrape_agentID('Cincinnati', 'OH')
+#'
+#' @return A dataframe that includes name, phone number, and id of agents in the location input.
+#'
+#' @export
 
 scrape_agentID <- function(city, state){
   # transfrom inputs to lower case
@@ -37,7 +42,7 @@ scrape_agentID <- function(city, state){
       html_text() %>%
       unique()
 
-    df <-  rbind(df, data.frame(name, id, phone))
+    df <-  rbind(df, data.frame(name, id, phone, city, state))
   }
 }
 
