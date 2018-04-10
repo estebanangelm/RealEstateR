@@ -1,8 +1,21 @@
+#' Get Review Details of Agents in a Location
+#'
+#' @param city A city of interest as a string.
+#' (e.g. "Cincinnati" or "Los-Angeles")
+#'
+#' @param state A state of interest, where the city is in, as a string in 2 letters form.
+#' (e.g. "OH")
+#'
+#' @return A dataframe that includes details of agents, and their star reviews.
+#'
+#' @examples
+#' reviews("Cincinnati", "OH")
+#'
+#' @export
 
 # dependency
 # library(tidyverse)
 # library(httr)
-# library(xml2)
 # library(jsonlite)
 # library(xml2)
 # library(rvest)
@@ -11,12 +24,9 @@ reviews <- function(city, state){
   # call API key from get_zwsid
   zwsid <- getOption("ZWSID")
 
-  city <- "Cincinnati"
-  state <- "OH"
-
   city <- str_to_lower(city)
   state <- str_to_lower(state)
-  screenname <- reviews_get_screennames(city, state, 1)$screenname
+  screenname <- reviews_get_screennames(city, state, 25)$screenname
 
   df <- NULL
 
@@ -24,7 +34,8 @@ reviews <- function(city, state){
   for (s in screenname){
     uri <- paste0("http://www.zillow.com/webservice/ProReviews.htm?zws-id=", zwsid, "&screenname=", s, "&output=json")
 
-    content <- httr::GET(uri) %>% httr::content("text")
+    content_json <- httr::GET(uri) %>% httr::content("text")
+    content <- jsonlite::fromJSON(content_json)
 
     name <- content$response$results$proInfo$name
     screenname <- content$response$results$screenname
@@ -48,7 +59,3 @@ reviews <- function(city, state){
 
   return(df)
 }
-
-
-
-
