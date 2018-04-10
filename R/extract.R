@@ -63,13 +63,13 @@ get_links <- function(response){
 #' }
 get_loc <- function(response){
   search_xml <- httr::content(response)
-  zip <- xml2::xml_text(xml2::xml_find_all(search_xml, "//address//zipcode"))
+  zip <- xml2::xml_integer(xml2::xml_find_all(search_xml, "//address//zipcode"))
   street <- xml2::xml_text(xml2::xml_find_all(search_xml, "//address//street"))
   city <- xml2::xml_text(xml2::xml_find_all(search_xml, "//address//city"))
   state <- xml2::xml_text(xml2::xml_find_all(search_xml, "//address//state"))
-  latitude <- xml2::xml_text(xml2::xml_find_all(search_xml, "//address//latitude"))
-  longtitude <- xml2::xml_text(xml2::xml_find_all(search_xml, "//address//longtitude"))
-  res <- tibble::tibble(zip, street, city, state, latitude, longtitude)
+  latitude <- round(xml2::xml_double(xml2::xml_find_all(search_xml, "//address//latitude")),4)
+  longitude <- round(xml2::xml_double(xml2::xml_find_all(search_xml, "//address//longitude")),4)
+  res <- tibble::tibble(zip, street, city, state, latitude, longitude)
   return(res)
 }
 
@@ -104,13 +104,13 @@ get_loc <- function(response){
 #' }
 get_zestimate_alt <- function(response){
   search_xml <- httr::content(response)
-  amount <- xml2::xml_text(xml2::xml_find_all(search_xml, "//zestimate//amount"))
+  amount <- xml2::xml_double(xml2::xml_find_all(search_xml, "//zestimate//amount"))
   currency <- xml2::xml_attr(xml2::xml_find_all(search_xml, "//zestimate//amount"), attr = "currency")
   last_updated <- xml2::xml_text(xml2::xml_find_all(search_xml, "//zestimate//last-updated"))
-  value_change <- xml2::xml_text(xml2::xml_find_all(search_xml, "//zestimate//valueChange"))
-  period <- xml2::xml_attr(xml2::xml_find_all(search_xml, "//zestimate//valueChange"), attr = "duration")
-  range_low <- xml2::xml_text(xml2::xml_find_all(search_xml, "//zestimate//valuationRange/low"))
-  range_high <- xml2::xml_text(xml2::xml_find_all(search_xml, "//zestimate//valuationRange/high"))
+  value_change <- xml2::xml_double(xml2::xml_find_all(search_xml, "//zestimate//valueChange"))
+  period <- as.numeric(xml2::xml_attr(xml2::xml_find_all(search_xml, "//zestimate//valueChange"), attr = "duration"))
+  range_low <- xml2::xml_double(xml2::xml_find_all(search_xml, "//zestimate//valuationRange/low"))
+  range_high <- xml2::xml_double(xml2::xml_find_all(search_xml, "//zestimate//valuationRange/high"))
   res <- tibble::tibble(currency, amount, last_updated, value_change, period, range_low,range_high)
   return(res)
 }
@@ -142,9 +142,11 @@ get_zestimate_alt <- function(response){
 get_near <- function(response){
   search_xml <- httr::content(response)
   region <- xml2::xml_attr(xml2::xml_find_all(search_xml, "//localRealEstate//region"), attr = "name")
-  id <- xml2::xml_attr(xml2::xml_find_all(search_xml, "//localRealEstate//region"), attr = "id")
+  id <- as.integer(xml2::xml_attr(xml2::xml_find_all(search_xml, "//localRealEstate//region"), attr = "id"))
   type <- xml2::xml_attr(xml2::xml_find_all(search_xml, "//localRealEstate//region"), attr = "type")
-  indexvalue <- xml2::xml_text(xml2::xml_find_all(search_xml, "//localRealEstate//zindexValue"))
+  indexvalue <- as.numeric(
+    gsub(",", "",
+      xml2::xml_text(xml2::xml_find_all(search_xml, "//localRealEstate//zindexValue"))))
   res <- tibble::tibble(region, id, type, indexvalue)
   return(res)
 }
