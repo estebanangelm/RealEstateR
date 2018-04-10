@@ -18,6 +18,7 @@ get_comp_df <- function(zpid,count=25){
   url_zillow <- 'http://www.zillow.com/webservice/GetDeepComps.htm?'
   url_zillow <- paste0(url_zillow,'zws-id=', zwsid, '&zpid=', zpid,'&count=',count,'&rentzestimate=true')
   result <- httr::GET(url_zillow)
+  stop_for_status(result)
   zillow_xml <- xml2::read_xml(httr::content(result, "text"))
 
   zpid <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/zpid")))
