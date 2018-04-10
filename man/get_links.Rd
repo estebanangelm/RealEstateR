@@ -2,13 +2,32 @@
 % Please edit documentation in R/extract.R
 \name{get_links}
 \alias{get_links}
-\title{Title}
+\title{Get links from the API response}
 \usage{
 get_links(response)
 }
 \arguments{
-\item{response}{}
+\item{response}{The API response from `get_search_results`}
+}
+\value{
+A data frame with several links associated with the property
+\itemize{
+  \item Home details page
+  \item Chart data page
+  \item Map this home page
+  \item Similar sales page
+  \item Link to Region overview Page
+}
 }
 \description{
-Title
+Get property related links of the response
+}
+\examples{
+\dontrun{
+response <- get_search_results("2144+Bigelow+Ave", "Seattle\%2C+WA")
+get_links(response)
+
+get_search_results("2144+Bigelow+Ave", "Seattle\%2C+WA") \%>\%
+  get_links()
+}
 }

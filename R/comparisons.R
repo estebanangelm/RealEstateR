@@ -9,8 +9,8 @@
 #'
 #' @export
 
+get_comp_df <- function(zpid,count=25){
 
-get_comp_df <- function(zpid,count){
   zwsid <- getOption("ZWSID")
   if (count > 25){
     count = 25
@@ -18,6 +18,7 @@ get_comp_df <- function(zpid,count){
   url_zillow <- 'http://www.zillow.com/webservice/GetDeepComps.htm?'
   url_zillow <- paste0(url_zillow,'zws-id=', zwsid, '&zpid=', zpid,'&count=',count,'&rentzestimate=true')
   result <- httr::GET(url_zillow)
+  httr::stop_for_status(result)
   zillow_xml <- xml2::read_xml(httr::content(result, "text"))
 
   zpid <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/zpid")))
@@ -28,6 +29,10 @@ get_comp_df <- function(zpid,count){
   lot_size <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/lotSizeSqFt")))
   value <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/zestimate/amount")))
   rent <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/rentzestimate/amount")))
+
+  #little trick for solving problem with missing values in the response.
+  value <- value[1:count]
+  rent <- rent[1:count]
 
   z_df <- dplyr::data_frame(zpid,bedrooms,bathrooms,year,size,lot_size,value,rent)
   return(z_df)
@@ -40,15 +45,14 @@ get_comp_df <- function(zpid,count){
 #' @param zpid property ID
 #'
 #' @return A gglot boxplot with the price ranges of similar properties.
-#'
+#' @import ggplot2
 #' @export
-
-
 price_plot <- function(zpid){
   zwsid <- getOption("ZWSID")
   url_zillow <- 'http://www.zillow.com/webservice/GetDeepComps.htm?'
   url_zillow <- paste0(url_zillow,'zws-id=', zwsid, '&zpid=', zpid,'&count=25&rentzestimate=true')
   result <- httr::GET(url_zillow)
+  httr::stop_for_status(result)
   zillow_xml <- xml2::read_xml(httr::content(result, "text"))
 
   price_low <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/zestimate/valuationRange/low")))
@@ -74,13 +78,12 @@ price_plot <- function(zpid){
 #' @return A list with two elements: similar prices and similar rents.
 #'
 #' @export
-
-
 price_ranges <- function(zpid){
   zwsid <- getOption("ZWSID")
   url_zillow <- 'http://www.zillow.com/webservice/GetDeepComps.htm?'
   url_zillow <- paste0(url_zillow,'zws-id=', zwsid, '&zpid=', zpid,'&count=25&rentzestimate=true')
   result <- httr::GET(url_zillow)
+  httr::stop_for_status(result)
   zillow_xml <- xml2::read_xml(httr::content(result, "text"))
 
   price_low <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/zestimate/valuationRange/low")))

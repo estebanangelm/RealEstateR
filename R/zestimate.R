@@ -1,22 +1,35 @@
+source('R/format_params.R')
+
 #' GetSearchResults Response
 #'
 #' @description Retrieves GetSearchResults API response.
 #'
 #' @param address Street address of interest as a string
-#' (e.g., '2144+Bigelow+Ave')
+#' (e.g., '2144 Bigelow Ave')
 #'
-#' @param citystatezip either the city and state or ZIP code
-#' of the street address (e.g., 'Seattle%2C+WA')
+#' @param city City of the property
+#'
+#' @param state State of the property. Can be abbreviated (e.g., 'WA' for Washington)
 #'
 #' @return API response
 #'
 #' @export
-get_search_results <- function(address, citystatezip) {
+get_search_results <- function(address, city, state) {
   zwsid <- getOption("ZWSID")
-  url_search <- 'http://www.zillow.com/webservice/GetSearchResults.htm?'
-  result <- httr::GET(url = paste0(url_search, 'zws-id=', zwsid, '&address=', address, '&citystatezip=', citystatezip))
-  return(result)
+  address <- format_address(address)
+  citystatezip <- format_citystate(city, state)
+  base_url <- 'http://www.zillow.com/webservice/GetSearchResults.htm?'
+  result <- httr::GET(url = paste0(base_url, 'zws-id=', zwsid, '&address=', address, '&citystatezip=', citystatezip))
+  xml_result <- httr::content(result,'text')
+  message <- xml2::xml_text(xml2::xml_find_all(xml2::read_xml(xml_result), ".//message/text"))
+  if(grepl("error", message, ignore.case=TRUE)) {
+    stop("Invalid address")
+  }
+  if(grepl("success", message, ignore.case=TRUE)) {
+    return(result)
+  }
 }
+
 
 #' Get Zillow Property ID
 #'
@@ -26,15 +39,16 @@ get_search_results <- function(address, citystatezip) {
 #' @param address Street address of interest as a string
 #' (e.g., '2144+Bigelow+Ave')
 #'
-#' @param citystatezip either the city and state or ZIP code
-#' of the street address (e.g., 'Seattle%2C+WA')
+#' @param city City of the property
+#'
+#' @param state State of the property. Can be abbreviated (e.g., 'WA' for Washington)
 #'
 #' @return zpid as a string
 #'
 #' @export
-get_zpid <- function(address, citystatezip) {
+get_zpid <- function(address, city, state) {
   zwsid <- getOption("ZWSID")
-  result <- get_search_results(address, citystatezip)
+  result <- get_search_results(address, city, state)
   search_xml <- xml2::read_xml(httr::content(result, "text"))
   zpid <- xml2::xml_text(xml2::xml_find_all(search_xml, ".//zpid"))
   return(zpid)
@@ -46,7 +60,7 @@ get_zpid <- function(address, citystatezip) {
 #'
 #' @param zpid property ID
 #'
-#' @return Zestimate of house (in USD)
+#' @return Estimated price of house as a numeric (in USD)
 #'
 #' @export
 get_zestimate <- function(zpid) {
@@ -56,7 +70,5 @@ get_zestimate <- function(zpid) {
   zillow_xml <- xml2::read_xml(httr::content(result, "text"))
   zestimate <- xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//zestimate/amount"))
   currency <- xml2::xml_attr(xml2::xml_find_all(zillow_xml, ".//zestimate/amount"), "currency")
-  return(zestimate)
+  return(as.numeric(zestimate))
 }
-
-

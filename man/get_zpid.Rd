@@ -4,14 +4,15 @@
 \alias{get_zpid}
 \title{Get Zillow Property ID}
 \usage{
-get_zpid(address, citystatezip)
+get_zpid(address, city, state)
 }
 \arguments{
 \item{address}{Street address of interest as a string
 (e.g., '2144+Bigelow+Ave')}
 
-\item{citystatezip}{either the city and state or ZIP code
-of the street address (e.g., 'Seattle%2C+WA')}
+\item{city}{City of the property}
+
+\item{state}{State of the property. Can be abbreviated (e.g., 'WA' for Washington)}
 }
 \value{
 zpid as a string

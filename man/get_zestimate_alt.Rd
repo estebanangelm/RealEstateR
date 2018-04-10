@@ -2,13 +2,36 @@
 % Please edit documentation in R/extract.R
 \name{get_zestimate_alt}
 \alias{get_zestimate_alt}
-\title{Title}
+\title{Get Zestimate related data from the API response}
 \usage{
 get_zestimate_alt(response)
 }
 \arguments{
-\item{response}{}
+\item{response}{The API response from `get_search_results`}
+}
+\value{
+A data frame including the following information:
+\itemize{
+  \item Currency
+  \item Zestimate
+  \item Last updated
+  \item 30-day change
+  \item Valuation range (low & high)
+}
 }
 \description{
-Title
+The Zestimate® home value is Zillow's estimated market value for
+an individual home and is calculated for about 100 million homes nationwide.
+It is a starting point in determining a home's value and is not an official appraisal.
+The Zestimate is automatically computed daily based on millions of public and
+user-submitted data points.
+}
+\examples{
+\dontrun{
+response <- get_search_results("2144+Bigelow+Ave", "Seattle\%2C+WA")
+get_zestimate_alt(response)
+
+get_search_results("2144+Bigelow+Ave", "Seattle\%2C+WA") \%>\%
+  get_zestimate_alt()
+}
 }
