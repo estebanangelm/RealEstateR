@@ -10,7 +10,7 @@
 #' @export
 
 
-get_comp_df <- function(zpid,count){
+get_comp_df <- function(zpid,count=25){
   zwsid <- getOption("ZWSID")
   if (count > 25){
     count = 25
