@@ -18,8 +18,8 @@ get_search_results <- function(address, city, state) {
   zwsid <- getOption("ZWSID")
   address <- format_address(address)
   citystatezip <- format_citystate(city, state)
-  url_search <- 'http://www.zillow.com/webservice/GetSearchResults.htm?'
-  result <- httr::GET(url = paste0(url_search, 'zws-id=', zwsid, '&address=', address, '&citystatezip=', citystatezip))
+  base_url <- 'http://www.zillow.com/webservice/GetSearchResults.htm?'
+  result <- httr::GET(url = paste0(base_url, 'zws-id=', zwsid, '&address=', address, '&citystatezip=', citystatezip))
   xml_result <- httr::content(result,'text')
   message <- xml2::xml_text(xml2::xml_find_all(xml2::read_xml(xml_result), ".//message/text"))
   if(grepl("error", message, ignore.case=TRUE)) {
