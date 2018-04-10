@@ -1,5 +1,6 @@
 context("comparisons.R")
 context("set_zwsid.R")
+library(ggplot2)
 
 # -----------------------------------------------------------------------------
 # Setup
@@ -7,24 +8,27 @@ context("set_zwsid.R")
 
 
 # -----------------------------------------------------------------------------
-# get_zpid()
+# get_comp_df()
 # -----------------------------------------------------------------------------
 
-test_that("get_zpid() generates appropriate zpid", {
+test_that("get_comp_df() creates a dataframe", {
   set_zwsid('X1-ZWz1gc1h7u3b4b_68qz7')
-  address <- '2144+Bigelow+Ave'
-  citystatezip <- 'Seattle%2C+WA'
-  output <- get_zpid(address, citystatezip)
-  expect_equal(output, '48879021')
+  expect_true(is.data.frame(get_comp_df("111",2)))
+})
+
+test_that("get_comp_df() with empty count retrieves 25 values", {
+  set_zwsid('X1-ZWz1gc1h7u3b4b_68qz7')
+  df <- get_comp_df("111")
+  expect_equal(nrow(df), 25)
 })
 
 # -----------------------------------------------------------------------------
-# get_zestimate()
+# price_plot()
 # -----------------------------------------------------------------------------
 
-test_that("get_zestimate() provides price estimate of house given zpid", {
+test_that("price_plot() creates a ggplot object", {
   set_zwsid('X1-ZWz1gc1h7u3b4b_68qz7')
-  zpid <- '48879021'
-  output <- get_zestimate(zpid)
-  expect_equal(output, '783654')
+  expect_true(is.ggplot(price_plot("111")))
 })
+
+
