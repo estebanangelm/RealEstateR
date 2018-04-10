@@ -1,24 +1,30 @@
 #' Get Agent IDs Based On Location
 #'
+#' @author Ha Dinh
+#'
 #' @param city A city of interest as a string.
 #' (e.g. "Cincinnati", "Los Angeles")
-#'
 #' @param state A state abbreviation of interest, where the city is in, as a string in 2 letters form.
 #' (e.g. "OH")
 #'
+#' @description
+#' This function inputs a combination of city and state of your choice,
+#' then output a dataframe that includes name, screenname, phone number,
+#' city and state of agents from the input location.
+#'
+#' @import stringr
+#' @import xml2
+#' @import jsonlite
+#' @import rvest
+#' @import tidyverse
+#' @import purrr
+#'
 #' @examples
-#' reviews_get_screennames('Cincinnati', 'OH')
+#' \dontrun{df <- reviews_get_screennames('Los Angeles', 'CA')}
 #'
 #' @return A dataframe that includes name, phone number, and id of agents in the location input.
 #'
 #' @export
-
-# dependency
-# library(tidyverse)
-# library(xml2)
-# library(jsonlite)
-# library(rvest)
-# library(stringr)
 
 reviews_get_screennames <- function(city, state){
   # check conditions of city: an all-character input

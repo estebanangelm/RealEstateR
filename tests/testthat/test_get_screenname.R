@@ -4,14 +4,6 @@ context("reviews_get_screenname.R")
 # Setup
 # -----------------------------------------------------------------------------
 
-# dependency
-# library(tidyverse)
-# library(xml2)
-# library(jsonlite)
-# library(rvest)
-# library(stringr)
-# library(testthat)
-
 zwsid <- function() {
   val <- Sys.getenv("ZWSID")
   if (identical(val, "")) {
