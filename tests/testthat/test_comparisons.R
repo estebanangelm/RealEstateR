@@ -31,4 +31,16 @@ test_that("price_plot() creates a ggplot object", {
   expect_true(is.ggplot(price_plot("111")))
 })
 
+# -----------------------------------------------------------------------------
+# price_ranges()
+# -----------------------------------------------------------------------------
 
+test_that("price_ranges() creates a list", {
+  set_zwsid('X1-ZWz1gc1h7u3b4b_68qz7')
+  expect_true(is.list(price_ranges("111")))
+})
+
+test_that("price_ranges() creates a list with two values", {
+  set_zwsid('X1-ZWz1gc1h7u3b4b_68qz7')
+  expect_equal(length(price_ranges("111")),2)
+})
