@@ -1,6 +1,6 @@
 context("test-extract.R")
 
-response <- get_search_results("2144+Bigelow+Ave", "Seattle%2C+WA")
+response <- get_search_results("2144+Bigelow+Ave", "Seattle", "WA")
 zwsid <- Sys.getenv("ZWSID")
 set_zwsid(zwsid)
 
