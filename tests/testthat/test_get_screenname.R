@@ -20,11 +20,32 @@ zwsid <- function() {
 }
 zwsid <- zwsid()
 
-# -----------------------------------------------------------------------------
-# reviews_get_screennames
-# -----------------------------------------------------------------------------
-
 test_that("reviews_get_screennames() outputs a dataframe given a combination of city and state", {
+
+  # -----------------------------------------------------------------------------
+  # test input
+  # -----------------------------------------------------------------------------
+
+  # expect an all-character input for state
+  expect_error(reviews_get_screennames("cincinnati", 45220),
+               "Expect input of state to be a string.")
+  expect_error(reviews_get_screennames("cincinnati", "A4"),
+               "Expect input of state to be an all-character string.")
+
+  # expect 2-letter input for state
+  expect_error(reviews_get_screennames("los-angeles", "Cali"),
+               "Expect 2-letter input of state (e.g. 'CA', 'OH', 'M').")
+
+  # expect an all-character input for city
+  expect_error(reviews_get_screennames(45220, "OH"),
+               "Expect input of city to be a string.")
+  expect_error(reviews_get_screennames("c1nc1n4t1", "OH"),
+               "Expect input of city to be an all-character string.")
+
+
+  # -----------------------------------------------------------------------------
+  # test output
+  # -----------------------------------------------------------------------------
 
   response <- reviews_get_screennames("Cincinnati", "OH")
 
@@ -40,11 +61,11 @@ test_that("reviews_get_screennames() outputs a dataframe given a combination of 
   expect_output(str(response), "$ state", fixed = TRUE)
 
   # expect type charactor for all columns
-  expect_is(response$name, "character", "All columns should be in type character")
-  expect_is(response$screenname, "character", "All columns should be in type character")
-  expect_is(response$phone, "character", "All columns should be in type character")
-  expect_is(response$city, "character", "All columns should be in type character")
-  expect_is(response$state, "character", "All columns should be in type character")
+  expect_is(response$name, "character", "All columns should be in type character.")
+  expect_is(response$screenname, "character", "All columns should be in type character.")
+  expect_is(response$phone, "character", "All columns should be in type character.")
+  expect_is(response$city, "character", "All columns should be in type character.")
+  expect_is(response$state, "character", "All columns should be in type character.")
 
   # expect an empty dataframe if city and state combination contains too many results
   response_empty <- reviews_get_screennames("New-York", "NY")
