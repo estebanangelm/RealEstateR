@@ -22,9 +22,11 @@ A data frame with local real estate data
 Get local real estate data, e.g. Region, id, type(i.e. neighbour), Zillow Home Value Index
 }
 \examples{
+\dontrun{
 response <- get_search_results("2144+Bigelow+Ave", "Seattle\%2C+WA")
 get_near(response)
 
 get_search_results("2144+Bigelow+Ave", "Seattle\%2C+WA") \%>\%
   get_near()
+}
 }

@@ -16,11 +16,13 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' response <- get_search_results("2144+Bigelow+Ave", "Seattle%2C+WA")
 #' get_links(response)
 #'
 #' get_search_results("2144+Bigelow+Ave", "Seattle%2C+WA") %>%
 #'   get_links()
+#' }
 get_links <- function(response){
   search_xml <- httr::content(response)
   home_details <- xml2::xml_text(xml2::xml_find_all(search_xml, "//links//homedetails"))
@@ -52,11 +54,13 @@ get_links <- function(response){
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' response <- get_search_results("2144+Bigelow+Ave", "Seattle%2C+WA")
 #' get_loc(response)
 #'
 #' get_search_results("2144+Bigelow+Ave", "Seattle%2C+WA") %>%
 #'   get_loc()
+#' }
 get_loc <- function(response){
   search_xml <- httr::content(response)
   zip <- xml2::xml_text(xml2::xml_find_all(search_xml, "//address//zipcode"))
@@ -91,11 +95,13 @@ get_loc <- function(response){
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' response <- get_search_results("2144+Bigelow+Ave", "Seattle%2C+WA")
 #' get_zestimate_alt(response)
 #'
 #' get_search_results("2144+Bigelow+Ave", "Seattle%2C+WA") %>%
 #'   get_zestimate_alt()
+#' }
 get_zestimate_alt <- function(response){
   search_xml <- httr::content(response)
   amount <- xml2::xml_text(xml2::xml_find_all(search_xml, "//zestimate//amount"))
@@ -126,11 +132,13 @@ get_zestimate_alt <- function(response){
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' response <- get_search_results("2144+Bigelow+Ave", "Seattle%2C+WA")
 #' get_near(response)
 #'
 #' get_search_results("2144+Bigelow+Ave", "Seattle%2C+WA") %>%
 #'   get_near()
+#' }
 get_near <- function(response){
   search_xml <- httr::content(response)
   region <- xml2::xml_attr(xml2::xml_find_all(search_xml, "//localRealEstate//region"), attr = "name")

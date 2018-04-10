@@ -22,9 +22,11 @@ Get the location data of the property from the API response,
 e.g. ZIP, full address, latitude and longtitude
 }
 \examples{
+\dontrun{
 response <- get_search_results("2144+Bigelow+Ave", "Seattle\%2C+WA")
 get_loc(response)
 
 get_search_results("2144+Bigelow+Ave", "Seattle\%2C+WA") \%>\%
   get_loc()
+}
 }

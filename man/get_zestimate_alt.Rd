@@ -27,9 +27,11 @@ The Zestimate is automatically computed daily based on millions of public and
 user-submitted data points.
 }
 \examples{
+\dontrun{
 response <- get_search_results("2144+Bigelow+Ave", "Seattle\%2C+WA")
 get_zestimate_alt(response)
 
 get_search_results("2144+Bigelow+Ave", "Seattle\%2C+WA") \%>\%
   get_zestimate_alt()
+}
 }
