@@ -1,4 +1,4 @@
-context("test-extract.R")
+context("test_extract.R")
 
 test_that("'get_links' Output the correct links", {
 
