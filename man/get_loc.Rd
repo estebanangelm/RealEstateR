@@ -23,10 +23,10 @@ e.g. ZIP, full address, latitude and longtitude
 }
 \examples{
 \dontrun{
-response <- get_search_results("2144+Bigelow+Ave", "Seattle\%2C+WA")
+response <- get_search_results("2144 Bigelow Ave", "Seattle", "WA")
 get_loc(response)
 
-get_search_results("2144+Bigelow+Ave", "Seattle\%2C+WA") \%>\%
+get_search_results("2144 Bigelow Ave", "Seattle", "WA") \%>\%
   get_loc()
 }
 }

@@ -24,10 +24,10 @@ Get property related links of the response
 }
 \examples{
 \dontrun{
-response <- get_search_results("2144+Bigelow+Ave", "Seattle\%2C+WA")
+response <- get_search_results("2144 Bigelow Ave", "Seattle", "WA")
 get_links(response)
 
-get_search_results("2144+Bigelow+Ave", "Seattle\%2C+WA") \%>\%
+get_search_results("2144 Bigelow Ave", "Seattle", "WA") \%>\%
   get_links()
 }
 }
