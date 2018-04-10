@@ -31,8 +31,9 @@ test_that("set_zwsid() is able to set zwsid as a global var", {
 test_that("get_zpid() generates appropriate zpid", {
   set_zwsid(zwsid)
   address <- '2144+Bigelow+Ave'
-  citystatezip <- 'Seattle%2C+WA'
-  output <- get_zpid(address, citystatezip)
+  city <- 'Seattle'
+  state <- 'WA'
+  output <- get_zpid(address, city, state)
   expect_equal(output, '48879021')
 })
 
@@ -44,5 +45,5 @@ test_that("get_zestimate() provides price estimate of house given zpid", {
   set_zwsid(zwsid)
   zpid <- '48879021'
   output <- get_zestimate(zpid)
-  expect_equal(output, '783654')
+  expect_gte(output, 79000)
 })

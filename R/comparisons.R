@@ -9,8 +9,8 @@
 #'
 #' @export
 
-
 get_comp_df <- function(zpid,count=25){
+
   zwsid <- getOption("ZWSID")
   if (count > 25){
     count = 25
@@ -44,10 +44,8 @@ get_comp_df <- function(zpid,count=25){
 #' @param zpid property ID
 #'
 #' @return A gglot boxplot with the price ranges of similar properties.
-#'
+#' @import ggplot2
 #' @export
-
-
 price_plot <- function(zpid){
   zwsid <- getOption("ZWSID")
   url_zillow <- 'http://www.zillow.com/webservice/GetDeepComps.htm?'
@@ -78,8 +76,6 @@ price_plot <- function(zpid){
 #' @return A list with two elements: similar prices and similar rents.
 #'
 #' @export
-
-
 price_ranges <- function(zpid){
   zwsid <- getOption("ZWSID")
   url_zillow <- 'http://www.zillow.com/webservice/GetDeepComps.htm?'

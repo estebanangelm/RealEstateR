@@ -10,7 +10,7 @@ get_zestimate(zpid)
 \item{zpid}{property ID}
 }
 \value{
-Zestimate of house (in USD)
+Estimated price of house as a numeric (in USD)
 }
 \description{
 Retrives zestimate information for a specified zpid.
