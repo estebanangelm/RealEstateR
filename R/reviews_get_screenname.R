@@ -3,7 +3,7 @@
 #' @param city A city of interest as a string.
 #' (e.g. "Cincinnati", "Los Angeles")
 #'
-#' @param state A state of interest, where the city is in, as a string in 2 letters form.
+#' @param state A state abbreviation of interest, where the city is in, as a string in 2 letters form.
 #' (e.g. "OH")
 #'
 #' @examples
@@ -28,13 +28,13 @@ reviews_get_screennames <- function(city, state){
     stop("Expect input of city to be an all-character string.")
   }
 
-  # check conditions of city: a 2-letter all-character input
+  # check conditions of state: a 2-letter all-character input
   if (!is.character(state)){
     stop("Expect input of state to be a string.")
-  } else if (str_detect(city, "[[:digit:]]")){
+  } else if (str_detect(state, "[[:digit:]]")){
     stop("Expect input of state to be an all-character string.")
   } else if (str_count(state) != 2){
-    stop("Expect 2-letter input of state (e.g. 'CA', 'OH', 'M').")
+    stop("Expect 2-letter input of state abbreviation.")
   }
 
   # initial setup
