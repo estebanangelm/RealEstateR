@@ -5,6 +5,8 @@ RealEstateR
 
 [![Travis build status](https://travis-ci.org/estebanangelm/RealEstateR.svg?branch=master)](https://travis-ci.org/estebanangelm/RealEstateR)[![Coverage status](https://codecov.io/gh/estebanangelm/RealEstateR/branch/master/graph/badge.svg)](https://codecov.io/github/estebanangelm/RealEstateR?branch=master)
 
+[](badge.png)
+
 Set of R tools for analyzing real estate data from Zillow and other sources.
 
 Installation
