@@ -24,7 +24,7 @@ zwsid <- zwsid()
 # reviews_get_screennames
 # -----------------------------------------------------------------------------
 
-test_that("reviews_get_screennames() outputs a dataframe given correct combination of city and state", {
+test_that("reviews_get_screennames() outputs a dataframe given a combination of city and state", {
 
   response <- reviews_get_screennames("Cincinnati", "OH")
 
@@ -52,6 +52,9 @@ test_that("reviews_get_screennames() outputs a dataframe given correct combinati
                "Returns nothing since there are too many results from your interested location.
                Try narrowing down your search.")
 
-  # expect results even if location combination does not exist -- Zillow shows the closest location instead
+  # expect an empty dataframe if location combination does not exist
+  response_ghostLocation <- reviews_get_screennames("Madagasca", "CA")
+  expect_equal(nrow(response_ghostLocation), 0,
+               "Returns nothing since the location combination does not exist.")
 
 })
