@@ -1,7 +1,7 @@
 #' Get Agent IDs Based On Location
 #'
 #' @param city A city of interest as a string.
-#' (e.g. "Cincinnati")
+#' (e.g. "Cincinnati", "Los Angeles")
 #'
 #' @param state A state of interest, where the city is in, as a string in 2 letters form.
 #' (e.g. "OH")
@@ -40,9 +40,14 @@ reviews_get_screennames <- function(city, state){
   # initial setup
   city <- str_to_lower(city)
   state <- str_to_lower(state)
-
   page_range <- 1:25
   df <- NULL
+
+  # alternate dash to whitespace in city
+  city <- ifelse(str_detect(city, "[[:space:]]"),
+         str_replace_all(city, "[[:space:]]", "-"),
+         city
+  )
 
   # scrape links and output info to dataframe
   for (p in page_range){
