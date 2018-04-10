@@ -25,12 +25,37 @@ test_that("set_zwsid() is able to set zwsid as a global var", {
 })
 
 # -----------------------------------------------------------------------------
+# get_search_results()
+# -----------------------------------------------------------------------------
+
+test_that("get_search_results() outputs a response when
+          valid property information is passed in", {
+  set_zwsid(zwsid)
+  address <- '2144 Bigelow Ave'
+  city <- 'Seattle'
+  state <- 'WA'
+  output <- get_search_results(address, city, state)
+  expect_equal(class(output), "response")
+})
+
+test_that("get_search_results() stops if property information is invalid", {
+  set_zwsid(zwsid)
+  address <- '2141 Bigelow Ave'
+  city <- 'Seattle'
+  state <- 'WA'
+  expect_error(get_search_results(address,
+                                  city,
+                                  state), "Invalid address")
+})
+
+
+# -----------------------------------------------------------------------------
 # get_zpid()
 # -----------------------------------------------------------------------------
 
 test_that("get_zpid() generates appropriate zpid", {
   set_zwsid(zwsid)
-  address <- '2144+Bigelow+Ave'
+  address <- '2144 Bigelow Ave'
   city <- 'Seattle'
   state <- 'WA'
   output <- get_zpid(address, city, state)

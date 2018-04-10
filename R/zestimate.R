@@ -23,7 +23,7 @@ get_search_results <- function(address, city, state) {
   xml_result <- httr::content(result,'text')
   message <- xml2::xml_text(xml2::xml_find_all(xml2::read_xml(xml_result), ".//message/text"))
   if(grepl("error", message, ignore.case=TRUE)) {
-    stop(message)
+    stop("Invalid address")
   }
   if(grepl("success", message, ignore.case=TRUE)) {
     return(result)
