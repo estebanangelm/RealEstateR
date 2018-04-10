@@ -15,7 +15,14 @@ get_search_results <- function(address, citystatezip) {
   zwsid <- getOption("ZWSID")
   url_search <- 'http://www.zillow.com/webservice/GetSearchResults.htm?'
   result <- httr::GET(url = paste0(url_search, 'zws-id=', zwsid, '&address=', address, '&citystatezip=', citystatezip))
-  return(result)
+  xml_result <- httr::content(result,'text')
+  message <- xml2::xml_text(xml2::xml_find_all(xml2::read_xml(xml_result), ".//message/text"))
+  if(grepl("error", message, ignore.case=TRUE)) {
+    stop(message)
+  }
+  if(grepl("success", message, ignore.case=TRUE)) {
+    return(result)
+  }
 }
 
 #' Format Address
@@ -28,13 +35,24 @@ get_search_results <- function(address, citystatezip) {
 #'
 #' @export
 format_address <- function(address) {
-  if(stringr::str_detect(address, '\\+')){
-    formatted_address <- address
-    print("Address already formatted")
-  }
   formatted_address <- gsub("\\s", "+", address)
   return(formatted_address)
 }
+
+#' Format City and State
+#'
+#' @description Format city and state query parameter
+#'
+#' @param city City of property (e.g., 'Seattle')
+#'
+#' @param state State of property. Can be abbreviated (e.g., 'WA' for Washington)
+#'
+#' @return proper format of city/state as a string (e.g., 'Seattle%2C+WA')
+#' @export
+format_citystate <- function(city, state) {
+  paste0(city,'%2C+',state)
+}
+
 
 #' Get Zillow Property ID
 #'
@@ -76,5 +94,3 @@ get_zestimate <- function(zpid) {
   currency <- xml2::xml_attr(xml2::xml_find_all(zillow_xml, ".//zestimate/amount"), "currency")
   return(zestimate)
 }
-
-

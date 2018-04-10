@@ -7,9 +7,11 @@
 get_search_results(address, citystatezip)
 }
 \arguments{
-\item{address}{Street address of interest as a string (e.g., '2144+Bigelow+Ave')}
+\item{address}{Street address of interest as a string
+(e.g., '2144+Bigelow+Ave')}
 
-\item{citystatezip}{either the city and state or ZIP code of the street address (e.g., 'Seattle%2C+WA')}
+\item{citystatezip}{either the city and state or ZIP code
+of the street address (e.g., 'Seattle%2C+WA')}
 }
 \value{
 API response
