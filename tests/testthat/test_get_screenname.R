@@ -34,9 +34,16 @@ test_that("reviews_get_screennames() outputs a dataframe given correct combinati
                           "There should be 5 columns in the dataframe")
 
   # expect a dataframe with column `name`, `screenname`, `phone`, `city`, `state`
-  expect_output (str(response), "$ name", fixed = TRUE)
-  expect_output (str(response), "$ screenname", fixed = TRUE)
-  expect_output (str(response), "$ phone", fixed = TRUE)
-  expect_output (str(response), "$ city", fixed = TRUE)
-  expect_output (str(response), "$ state", fixed = TRUE)
+  expect_output(str(response), "$ name", fixed = TRUE)
+  expect_output(str(response), "$ screenname", fixed = TRUE)
+  expect_output(str(response), "$ phone", fixed = TRUE)
+  expect_output(str(response), "$ city", fixed = TRUE)
+  expect_output(str(response), "$ state", fixed = TRUE)
+
+  # expect type charactor for all columns
+  expect_is(response$name, "character", "All columns should be in type character")
+  expect_is(response$screenname, "character", "All columns should be in type character")
+  expect_is(response$phone, "character", "All columns should be in type character")
+  expect_is(response$city, "character", "All columns should be in type character")
+  expect_is(response$state, "character", "All columns should be in type character")
 })
