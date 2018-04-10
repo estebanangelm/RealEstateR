@@ -23,5 +23,6 @@ format_address <- function(address) {
 #' @return proper format of city/state as a string (e.g., 'Seattle%2C+WA')
 #' @export
 format_citystate <- function(city, state) {
-  paste0(city,'%2C+',state)
+  formatted_city <- gsub("\\s", "+", city)
+  paste0(formatted_city,'%2C+',state)
 }
