@@ -29,6 +29,7 @@ get_comp_df <- function(zpid,count=25){
   if (count > 25){
     count <- 25
   }
+  zwsid <- getOption("ZWSID")
   response <- get_deep_comps(zpid, count)
   zillow_xml <- xml2::read_xml(httr::content(response, "text"))
 

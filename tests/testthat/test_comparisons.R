@@ -28,22 +28,22 @@ test_that("get_deep_comps() outputs a response when
 # get_comp_df()
 # -----------------------------------------------------------------------------
 
-# test_that("get_comp_df() creates a dataframe", {
-#   set_zwsid(zwsid)
-#   expect_true(is.data.frame(get_comp_df("48749425",2)))
-# })
-#
-# test_that("get_comp_df() with empty count retrieves 25 values", {
-#   set_zwsid(zwsid)
-#   df <- get_comp_df("48749425")
-#   expect_equal(nrow(df), 25)
-# })
-#
-# test_that("get_comp_df() with count > 25 retrieves 25 values", {
-#   set_zwsid(zwsid)
-#   df <- get_comp_df("48749425", count=30)
-#   expect_equal(nrow(df), 25)
-# })
+test_that("get_comp_df() creates a dataframe", {
+  set_zwsid(zwsid)
+  expect_true(is.data.frame(get_comp_df("48749425",2)))
+})
+
+test_that("get_comp_df() with empty count retrieves 25 values", {
+  set_zwsid(zwsid)
+  df <- get_comp_df("48749425")
+  expect_equal(nrow(df), 25)
+})
+
+test_that("get_comp_df() with count > 25 retrieves 25 values", {
+  set_zwsid(zwsid)
+  df <- get_comp_df("48749425", count=30)
+  expect_equal(nrow(df), 25)
+})
 
 # -----------------------------------------------------------------------------
 # price_plot()
