@@ -55,9 +55,6 @@ get_links <- function(response){
   structure(res, class = "zillow_api")
 }
 
-
-
-
 #' Get location data from the API response
 #'
 #' @description Get the location data of the property from the API response,

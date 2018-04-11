@@ -30,6 +30,12 @@ test_that("get_comp_df() with empty count retrieves 25 values", {
   expect_equal(nrow(df), 25)
 })
 
+test_that("get_comp_df() with count > 25 retrieves 25 values", {
+  set_zwsid(zwsid)
+  df <- get_comp_df("48749425", count=30)
+  expect_equal(nrow(df), 25)
+})
+
 # -----------------------------------------------------------------------------
 # price_plot()
 # -----------------------------------------------------------------------------

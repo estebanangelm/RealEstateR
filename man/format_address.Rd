@@ -15,3 +15,4 @@ proper format of address as a string (e.g., '2144+Bigelow+Ave')
 \description{
 Converts the property address to the query param format
 }
+\keyword{internal}
