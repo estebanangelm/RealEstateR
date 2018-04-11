@@ -33,18 +33,14 @@ get_comp_df <- function(zpid,count=25){
   response <- get_deep_comps(zpid, count)
   zillow_xml <- xml2::read_xml(httr::content(response, "text"))
 
-  zpid <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/zpid")))
-  bedrooms <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/bedrooms")))
-  bathrooms <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/bathrooms")))
-  year <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/yearBuilt")))
-  size <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/finishedSqFt")))
-  lot_size <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/lotSizeSqFt")))
-  value <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/zestimate/amount")))
-  rent <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/rentzestimate/amount")))
-
-  #little trick for solving problem with missing values in the response.
-  value <- value[1:count]
-  rent <- rent[1:count]
+  zpid <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/zpid")))[1:count]
+  bedrooms <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/bedrooms")))[1:count]
+  bathrooms <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/bathrooms")))[1:count]
+  year <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/yearBuilt")))[1:count]
+  size <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/finishedSqFt")))[1:count]
+  lot_size <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/lotSizeSqFt")))[1:count]
+  value <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/zestimate/amount")))[1:count]
+  rent <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/rentzestimate/amount")))[1:count]
 
   z_df <- dplyr::data_frame(zpid,bedrooms,bathrooms,year,size,lot_size,value,rent)
   return(z_df)

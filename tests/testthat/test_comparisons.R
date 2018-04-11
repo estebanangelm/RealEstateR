@@ -20,6 +20,7 @@ zwsid <- zwsid()
 
 test_that("get_deep_comps() outputs a response when
           a valid property ID is passed in", {
+            set_zwsid(zwsid)
             output <- get_deep_comps(zpid="48749425", count=25)
             expect_equal(class(output), c("response"))
           })
