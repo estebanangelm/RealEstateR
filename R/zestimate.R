@@ -18,8 +18,8 @@ get_search_results <- function(address, city, state) {
   zwsid <- getOption("ZWSID")
   address <- format_address(address)
   citystatezip <- format_citystate(city, state)
-  url_search <- 'http://www.zillow.com/webservice/GetSearchResults.htm?'
-  result <- httr::GET(url = paste0(url_search, 'zws-id=', zwsid, '&address=', address, '&citystatezip=', citystatezip))
+  base_url <- 'http://www.zillow.com/webservice/GetSearchResults.htm?'
+  result <- httr::GET(url = paste0(base_url, 'zws-id=', zwsid, '&address=', address, '&citystatezip=', citystatezip))
   xml_result <- httr::content(result,'text')
   message <- xml2::xml_text(xml2::xml_find_all(xml2::read_xml(xml_result), ".//message/text"))
   if(grepl("error", message, ignore.case=TRUE)) {
@@ -49,27 +49,27 @@ get_neighbours <- function(address, city, state) {
 #' @description Retrieves the Zillow Property ID (zpid) for a house
 #' from the GetSearchResults API.
 #'
-#' @param address Street address of interest as a string
-#' (e.g., '2144+Bigelow+Ave')
-#'
-#' @param city City of the property
-#'
-#' @param state State of the property. Can be abbreviated (e.g., 'WA' for Washington)
+#' @param response API response of get_search_results()
 #'
 #' @return zpid as a string
 #'
+#' @example
+#' \dontrun{
+#' response <- get_search_results("2144 Bigelow Ave", "Seattle", "WA")
+#' get_zpid(response)
+#' }
+#'
 #' @export
-get_zpid <- function(address, city, state) {
+get_zpid <- function(response) {
   zwsid <- getOption("ZWSID")
-  result <- get_search_results(address, city, state)
-  search_xml <- xml2::read_xml(httr::content(result, "text"))
+  search_xml <- xml2::read_xml(httr::content(response, "text"))
   zpid <- xml2::xml_text(xml2::xml_find_all(search_xml, ".//zpid"))
   return(zpid)
 }
 
 #' Get Zestimate
 #'
-#' @description Retrives zestimate information for a specified zpid.
+#' @description Retrieves zestimate information for a specified zpid.
 #'
 #' @param zpid property ID
 #'

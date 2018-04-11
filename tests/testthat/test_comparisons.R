@@ -6,19 +6,33 @@ library(ggplot2)
 # Setup
 # -----------------------------------------------------------------------------
 
+zwsid <- function() {
+  val <- Sys.getenv("ZWSID")
+  if (identical(val, "")) {
+    stop("`ZWSID` env var has not been set")
+  }
+  val
+}
+zwsid <- zwsid()
 
 # -----------------------------------------------------------------------------
 # get_comp_df()
 # -----------------------------------------------------------------------------
 
 test_that("get_comp_df() creates a dataframe", {
-  set_zwsid('X1-ZWz1gc1h7u3b4b_68qz7')
-  expect_true(is.data.frame(get_comp_df("111",2)))
+  set_zwsid(zwsid)
+  expect_true(is.data.frame(get_comp_df("48749425",2)))
 })
 
 test_that("get_comp_df() with empty count retrieves 25 values", {
-  set_zwsid('X1-ZWz1gc1h7u3b4b_68qz7')
-  df <- get_comp_df("111")
+  set_zwsid(zwsid)
+  df <- get_comp_df("48749425")
+  expect_equal(nrow(df), 25)
+})
+
+test_that("get_comp_df() with count > 25 retrieves 25 values", {
+  set_zwsid(zwsid)
+  df <- get_comp_df("48749425", count=30)
   expect_equal(nrow(df), 25)
 })
 
@@ -27,7 +41,7 @@ test_that("get_comp_df() with empty count retrieves 25 values", {
 # -----------------------------------------------------------------------------
 
 test_that("price_plot() creates a ggplot object", {
-  set_zwsid('X1-ZWz1gc1h7u3b4b_68qz7')
+  set_zwsid(zwsid)
   expect_true(is.ggplot(price_plot("111")))
 })
 
@@ -36,11 +50,11 @@ test_that("price_plot() creates a ggplot object", {
 # -----------------------------------------------------------------------------
 
 test_that("price_ranges() creates a list", {
-  set_zwsid('X1-ZWz1gc1h7u3b4b_68qz7')
+  set_zwsid(zwsid)
   expect_true(is.list(price_ranges("111")))
 })
 
 test_that("price_ranges() creates a list with two values", {
-  set_zwsid('X1-ZWz1gc1h7u3b4b_68qz7')
+  set_zwsid(zwsid)
   expect_equal(length(price_ranges("111")),2)
 })

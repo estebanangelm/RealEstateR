@@ -58,7 +58,8 @@ test_that("get_zpid() generates appropriate zpid", {
   address <- '2144 Bigelow Ave'
   city <- 'Seattle'
   state <- 'WA'
-  output <- get_zpid(address, city, state)
+  response <- get_search_results(address, city, state)
+  output <- get_zpid(response)
   expect_equal(output, '48879021')
 })
 

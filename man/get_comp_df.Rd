@@ -4,7 +4,7 @@
 \alias{get_comp_df}
 \title{Get comparison data frame}
 \usage{
-get_comp_df(zpid, count)
+get_comp_df(zpid, count = 25)
 }
 \arguments{
 \item{zpid}{property ID}
@@ -15,5 +15,5 @@ get_comp_df(zpid, count)
 A data frame with n comparable properties and some of their main attributes.
 }
 \description{
-Retrives some of the attributes of comparable properties estimated by Zillow.
+Retrieves some of the attributes of comparable properties estimated by Zillow.
 }

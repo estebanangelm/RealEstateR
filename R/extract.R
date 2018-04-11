@@ -17,31 +17,48 @@
 #'
 #' @examples
 #' \dontrun{
-#' response <- get_search_results("2144+Bigelow+Ave", "Seattle%2C+WA")
+#' response <- get_search_results("2144 Bigelow Ave", "Seattle", "WA")
 #' get_links(response)
 #'
-#' get_search_results("2144+Bigelow+Ave", "Seattle%2C+WA") %>%
+#' get_search_results("2144 Bigelow Ave", "Seattle", "WA") %>%
 #'   get_links()
 #' }
 get_links <- function(response){
-  search_xml <- httr::content(response)
+
+  check_type(response)
+
+  url <- response$url
+  search_xml <- xml2::read_xml(response)
+
+  check_code <- xml2::xml_text(xml2::xml_find_first(search_xml, "message/code"))
+  message <- xml2::xml_text(xml2::xml_find_first(search_xml, "message/text"))
+
+  check_status(response)
+
   home_details <- xml2::xml_text(xml2::xml_find_all(search_xml, "//links//homedetails"))
   char_data <- xml2::xml_text(xml2::xml_find_all(search_xml, "//links//graphsanddata"))
   map_this_home <- xml2::xml_text(xml2::xml_find_all(search_xml, "//links//mapthishome"))
   similar_sales <- xml2::xml_text(xml2::xml_find_all(search_xml, "//links//comparables"))
   region_overview <- xml2::xml_text(xml2::xml_find_all(search_xml, "//links//overview"))
-  res <- tibble::tibble(home_details,
-                             char_data,
-                             map_this_home,
-                             similar_sales,
-                             region_overview)
-  return(res)
+  sale_by_owner <- xml2::xml_text(xml2::xml_find_all(search_xml, "//links//forSaleByOwner"))
+
+  res <- list(status = message,
+              url = url,
+              response = response,
+              content = tibble::tibble(home_details,
+                                       char_data,
+                                       map_this_home,
+                                       similar_sales,
+                                       region_overview,
+                                       sale_by_owner)
+              )
+  structure(res, class = "zillow_api")
 }
 
 #' Get location data from the API response
 #'
 #' @description Get the location data of the property from the API response,
-#' e.g. ZIP, full address, latitude and longtitude
+#' e.g. ZIP, full address, latitude and longitude
 #'
 #' @param response The API response from `get_search_results`
 #'
@@ -49,28 +66,44 @@ get_links <- function(response){
 #' \itemize{
 #'   \item ZIP code
 #'   \item Full address: street, city, state
-#'   \item Latitude and longtitude
+#'   \item Latitude and longitude
 #' }
 #' @export
-#'
+#' @import magrittr
 #' @examples
 #' \dontrun{
-#' response <- get_search_results("2144+Bigelow+Ave", "Seattle%2C+WA")
+#' response <- get_search_results("2144 Bigelow Ave", "Seattle", "WA")
 #' get_loc(response)
 #'
-#' get_search_results("2144+Bigelow+Ave", "Seattle%2C+WA") %>%
+#' get_search_results("2144 Bigelow Ave", "Seattle", "WA") %>%
 #'   get_loc()
 #' }
 get_loc <- function(response){
-  search_xml <- httr::content(response)
-  zip <- xml2::xml_text(xml2::xml_find_all(search_xml, "//address//zipcode"))
+
+  check_type(response)
+
+  url <- response$url
+  search_xml <- xml2::read_xml(response)
+
+  check_code <- xml2::xml_text(xml2::xml_find_first(search_xml, "message/code"))
+  message <- xml2::xml_text(xml2::xml_find_first(search_xml, "message/text"))
+
+  check_status(response)
+
+  zip <- xml2::xml_integer(xml2::xml_find_all(search_xml, "//address//zipcode"))
   street <- xml2::xml_text(xml2::xml_find_all(search_xml, "//address//street"))
   city <- xml2::xml_text(xml2::xml_find_all(search_xml, "//address//city"))
   state <- xml2::xml_text(xml2::xml_find_all(search_xml, "//address//state"))
-  latitude <- xml2::xml_text(xml2::xml_find_all(search_xml, "//address//latitude"))
-  longtitude <- xml2::xml_text(xml2::xml_find_all(search_xml, "//address//longtitude"))
-  res <- tibble::tibble(zip, street, city, state, latitude, longtitude)
-  return(res)
+  latitude <- round(xml2::xml_double(xml2::xml_find_all(search_xml, "//address//latitude")),4)
+  longitude <- round(xml2::xml_double(xml2::xml_find_all(search_xml, "//address//longitude")),4)
+
+  res <- list(status = message,
+              url = url,
+              response = response,
+              content = tibble::tibble(zip, street, city, state, latitude, longitude))
+
+  structure(res, class = "zillow_api")
+
 }
 
 #' Get Zestimate related data from the API response
@@ -96,23 +129,38 @@ get_loc <- function(response){
 #'
 #' @examples
 #' \dontrun{
-#' response <- get_search_results("2144+Bigelow+Ave", "Seattle%2C+WA")
+#' response <- get_search_results("2144 Bigelow Ave", "Seattle", "WA")
 #' get_zestimate_alt(response)
 #'
-#' get_search_results("2144+Bigelow+Ave", "Seattle%2C+WA") %>%
+#' get_search_results("2144 Bigelow Ave", "Seattle", "WA") %>%
 #'   get_zestimate_alt()
 #' }
 get_zestimate_alt <- function(response){
-  search_xml <- httr::content(response)
-  amount <- xml2::xml_text(xml2::xml_find_all(search_xml, "//zestimate//amount"))
+
+  check_type(response)
+
+  url <- response$url
+  search_xml <- xml2::read_xml(response)
+
+  check_code <- xml2::xml_text(xml2::xml_find_first(search_xml, "message/code"))
+  message <- xml2::xml_text(xml2::xml_find_first(search_xml, "message/text"))
+
+  check_status(response)
+
+  amount <- xml2::xml_double(xml2::xml_find_all(search_xml, "//zestimate//amount"))
   currency <- xml2::xml_attr(xml2::xml_find_all(search_xml, "//zestimate//amount"), attr = "currency")
   last_updated <- xml2::xml_text(xml2::xml_find_all(search_xml, "//zestimate//last-updated"))
-  value_change <- xml2::xml_text(xml2::xml_find_all(search_xml, "//zestimate//valueChange"))
-  period <- xml2::xml_attr(xml2::xml_find_all(search_xml, "//zestimate//valueChange"), attr = "duration")
-  range_low <- xml2::xml_text(xml2::xml_find_all(search_xml, "//zestimate//valuationRange/low"))
-  range_high <- xml2::xml_text(xml2::xml_find_all(search_xml, "//zestimate//valuationRange/high"))
-  res <- tibble::tibble(currency, amount, last_updated, value_change, period, range_low,range_high)
-  return(res)
+  value_change <- xml2::xml_double(xml2::xml_find_all(search_xml, "//zestimate//valueChange"))
+  period <- as.numeric(xml2::xml_attr(xml2::xml_find_all(search_xml, "//zestimate//valueChange"), attr = "duration"))
+  range_low <- xml2::xml_double(xml2::xml_find_all(search_xml, "//zestimate//valuationRange/low"))
+  range_high <- xml2::xml_double(xml2::xml_find_all(search_xml, "//zestimate//valuationRange/high"))
+
+  res <- list(status = message,
+              url = url,
+              response = response,
+              content = tibble::tibble(currency, amount, last_updated, value_change, period, range_low,range_high))
+
+  structure(res, class = "zillow_api")
 }
 
 #' Get local real estate data from the API response
@@ -133,18 +181,46 @@ get_zestimate_alt <- function(response){
 #'
 #' @examples
 #' \dontrun{
-#' response <- get_search_results("2144+Bigelow+Ave", "Seattle%2C+WA")
+#' response <- get_search_results("2144 Bigelow Ave", "Seattle", "WA")
 #' get_near(response)
 #'
-#' get_search_results("2144+Bigelow+Ave", "Seattle%2C+WA") %>%
+#' get_search_results("2144 Bigelow Ave", "Seattle", "WA") %>%
 #'   get_near()
 #' }
 get_near <- function(response){
-  search_xml <- httr::content(response)
+
+  check_type(response)
+
+  url <- response$url
+  search_xml <- xml2::read_xml(response)
+
+  check_code <- xml2::xml_text(xml2::xml_find_first(search_xml, "message/code"))
+  message <- xml2::xml_text(xml2::xml_find_first(search_xml, "message/text"))
+
+  check_status(response)
+
   region <- xml2::xml_attr(xml2::xml_find_all(search_xml, "//localRealEstate//region"), attr = "name")
-  id <- xml2::xml_attr(xml2::xml_find_all(search_xml, "//localRealEstate//region"), attr = "id")
+  id <- as.integer(xml2::xml_attr(xml2::xml_find_all(search_xml, "//localRealEstate//region"), attr = "id"))
   type <- xml2::xml_attr(xml2::xml_find_all(search_xml, "//localRealEstate//region"), attr = "type")
-  indexvalue <- xml2::xml_text(xml2::xml_find_all(search_xml, "//localRealEstate//zindexValue"))
-  res <- tibble::tibble(region, id, type, indexvalue)
-  return(res)
+  indexvalue <- as.numeric(
+    gsub(",", "",
+      xml2::xml_text(xml2::xml_find_all(search_xml, "//localRealEstate//zindexValue"))))
+
+  res <- list(status = message,
+              url = url,
+              response = response,
+              content = tibble::tibble(region, id, type, indexvalue))
+  structure(res , class = "zillow_api")
+}
+
+
+
+#' @export
+print.zillow_api <-  function(x, ...){
+  cat("\n")
+  cat("Status: ", x$status, "\n")
+  cat("<Zillow: ", x$url, ">", sep = "")
+  cat("\n\n")
+  print(x$content)
+  invisible(x)
 }
