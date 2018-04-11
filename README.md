@@ -1,11 +1,11 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-RealEstateR <img src="realestater_logo.png" align="right" width="140" />
-------------------------------------------------------------------------
+RealEstateR <img src="man/figures/realestater_logo.png" align="right" width="140" />
+------------------------------------------------------------------------------------
 
 [![Travis build status](https://travis-ci.org/estebanangelm/RealEstateR.svg?branch=master)](https://travis-ci.org/estebanangelm/RealEstateR)[![Coverage status](https://codecov.io/gh/estebanangelm/RealEstateR/branch/master/graph/badge.svg)](https://codecov.io/github/estebanangelm/RealEstateR?branch=master)
 
-RealEstateR is a Zillow API wrapper . Set of R tools for analyzing real estate data from Zillow and other sources.
+RealEstateR is a package that analyzes real estate data from the Zillow API.
 
 Installation
 ------------
@@ -35,14 +35,27 @@ This allows you to make API calls within the package without having to pass in y
 Example
 -------
 
-To get a property ID:
+To get search results response:
 
-    get_zpid("2144 Bigelow Ave", "Seattle", "WA")
+    response <- get_search_results("2144 Bigelow Ave", "Seattle", "WA")
+
+To get information about the property's `zpid`:
+
+    response <- get_search_results("2144 Bigelow Ave", "Seattle", "WA")
+    get_zpid(response)
 
 To get location data:
 
     response <- get_search_results("2144 Bigelow Ave", "Seattle", "WA")
     get_loc(response)
+
+To get information about similar recent sales for a specific property:
+
+    get_comp_df(zpid = "48749425", count = 5)
+
+To get information about real estate agents for a specific city:
+
+    reviews_get_screennames(city = 'Los Angeles', state = 'CA')
 
 Contribution
 ------------
