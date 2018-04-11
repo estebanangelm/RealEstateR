@@ -12,21 +12,13 @@
 #' reviews("Cincinnati", "OH")
 #'
 #' @export
-
-# dependency
-# library(tidyverse)
-# library(httr)
-# library(jsonlite)
-# library(xml2)
-# library(rvest)
-
 reviews <- function(city, state){
   # call API key from get_zwsid
   zwsid <- getOption("ZWSID")
 
   city <- str_to_lower(city)
   state <- str_to_lower(state)
-  screenname <- reviews_get_screennames(city, state, 25)$screenname
+  screenname <- reviews_get_screennames(city, state)$screenname
 
   df <- NULL
 

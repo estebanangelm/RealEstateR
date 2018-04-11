@@ -14,10 +14,7 @@
 #'
 #' @import stringr
 #' @import xml2
-#' @import jsonlite
 #' @import rvest
-#' @import tidyverse
-#' @import purrr
 #'
 #' @examples
 #' \dontrun{df <- reviews_get_screennames('Los Angeles', 'CA')}
@@ -62,8 +59,8 @@ reviews_get_screennames <- function(city, state){
     screenname <- content %>%
       html_nodes('p a') %>%
       html_attr('href') %>%
-      strsplit(., "[/]") %>%
-      map_chr(3) %>%
+      strsplit("[/]") %>%
+      purrr::map_chr(3) %>%
       unique()
 
     name <- content %>%
