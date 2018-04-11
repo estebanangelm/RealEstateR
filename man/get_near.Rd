@@ -19,7 +19,7 @@ A data frame with local real estate data
 }
 }
 \description{
-Get local real estate data, e.g. Region, id, type(i.e. neighbour), Zillow Home Value Index
+Get local real estate data, e.g. Region, id, type(i.e. neighborhood), Zillow Home Value Index
 }
 \examples{
 \dontrun{

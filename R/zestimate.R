@@ -40,7 +40,7 @@ get_search_results <- function(address, city, state) {
 #'
 #' @return zpid as a string
 #'
-#' @example
+#' @examples
 #' \dontrun{
 #' response <- get_search_results("2144 Bigelow Ave", "Seattle", "WA")
 #' get_zpid(response)

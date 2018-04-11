@@ -55,7 +55,7 @@ get_comp_df <- function(zpid,count=25){
 #'
 #' @param zpid property ID
 #'
-#' @return A gglot boxplot with the price ranges of similar properties.
+#' @return A ggplot boxplot with the price ranges of similar properties.
 #' @import ggplot2
 #' @export
 price_plot <- function(zpid) {
