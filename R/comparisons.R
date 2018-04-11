@@ -1,6 +1,6 @@
 #' Get comparison data frame
 #'
-#' @description Retrives some of the attributes of comparable properties estimated by Zillow.
+#' @description Retrieves some of the attributes of comparable properties estimated by Zillow.
 #'
 #' @param zpid property ID
 #' @param count number of comparable properties (max 25)

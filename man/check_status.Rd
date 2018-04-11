@@ -11,7 +11,7 @@ check_status(response)
 }
 \description{
 Check if the API request is successful. Note that Zillow API always return `200`,
-and the exact request status and message is burried inside the response.
+and the exact request status and message is buried inside the response.
 }
 \details{
 Throw errors if request is not successful and return the failed request code and messages.

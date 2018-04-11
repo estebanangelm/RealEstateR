@@ -15,5 +15,5 @@ get_comp_df(zpid, count = 25)
 A data frame with n comparable properties and some of their main attributes.
 }
 \description{
-Retrives some of the attributes of comparable properties estimated by Zillow.
+Retrieves some of the attributes of comparable properties estimated by Zillow.
 }

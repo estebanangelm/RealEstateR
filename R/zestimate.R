@@ -56,7 +56,7 @@ get_zpid <- function(response) {
 
 #' Get Zestimate
 #'
-#' @description Retrives zestimate information for a specified zpid.
+#' @description Retrieves zestimate information for a specified zpid.
 #'
 #' @param zpid property ID
 #'

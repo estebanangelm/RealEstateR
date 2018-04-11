@@ -61,7 +61,7 @@ get_links <- function(response){
 #' Get location data from the API response
 #'
 #' @description Get the location data of the property from the API response,
-#' e.g. ZIP, full address, latitude and longtitude
+#' e.g. ZIP, full address, latitude and longitude
 #'
 #' @param response The API response from `get_search_results`
 #'
@@ -69,7 +69,7 @@ get_links <- function(response){
 #' \itemize{
 #'   \item ZIP code
 #'   \item Full address: street, city, state
-#'   \item Latitude and longtitude
+#'   \item Latitude and longitude
 #' }
 #' @export
 #' @import magrittr
