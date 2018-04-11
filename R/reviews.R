@@ -1,13 +1,7 @@
-#' Get Review Details of Agents in a Location
+#' Get Review Details of Agents of your Choice
 #'
-#' @param city A city of interest as a string.
-#' (e.g. "Cincinnati" or "Los-Angeles")
+#' @param screennames Agent screenname(s) of your choice (up to 5 screennames)
 #'
-#' @param state A state of interest, where the city is in, as a string in 2 letters form.
-#' (e.g. "OH")
-#'
-#' @import stringr
-#' @import xml2
 #' @import jsonlite
 #' @import rvest
 #' @import tidyverse
@@ -17,15 +11,16 @@
 #' @return A dataframe that includes details of agents, and their star reviews.
 #'
 #' @examples
-#' reviews("Cincinnati", "OH")
+#' \dontrun{screennames <- c("mwalley0", "pamelarporter")
+#' reviews(screennames)}
 #'
 #' @export
 
-reviews <- function(city, state){
+agents_reviews <- function(screennames){
   # call API key from get_zwsid
   zwsid <- getOption("ZWSID")
 
-  screenname <- reviews_get_screennames(city, state)$screenname
+  # screenname <- reviews_get_screennames(city, state)$screenname
 
   df <- NULL
 
