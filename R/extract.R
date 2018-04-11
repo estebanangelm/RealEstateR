@@ -130,12 +130,12 @@ get_loc <- function(response){
 #' @examples
 #' \dontrun{
 #' response <- get_search_results("2144 Bigelow Ave", "Seattle", "WA")
-#' get_zestimate_alt(response)
+#' get_zestimate_all(response)
 #'
 #' get_search_results("2144 Bigelow Ave", "Seattle", "WA") %>%
-#'   get_zestimate_alt()
+#'   get_zestimate_all()
 #' }
-get_zestimate_alt <- function(response){
+get_zestimate_all <- function(response){
 
   check_type(response)
 
