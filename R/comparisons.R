@@ -12,8 +12,7 @@ get_deep_comps <- function(zpid, count) {
   base_url <- 'http://www.zillow.com/webservice/GetDeepComps.htm?'
   url_zillow <- paste0(base_url,'zws-id=', zwsid, '&zpid=', zpid,'&count=',count,'&rentzestimate=true')
   result <- httr::GET(url_zillow)
-  zillow_xml <- xml2::read_xml(httr::content(result, "text"))
-  return(zillow_xml)
+  return(result)
 }
 
 #' Get comparison data frame
@@ -30,7 +29,8 @@ get_comp_df <- function(zpid,count=25){
   if (count > 25){
     count <- 25
   }
-  zillow_xml <- get_deep_comps(zpid, count)
+  response <- get_deep_comps(zpid, count)
+  zillow_xml <- xml2::read_xml(httr::content(response, "text"))
 
   zpid <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/zpid")))
   bedrooms <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/bedrooms")))
@@ -59,7 +59,8 @@ get_comp_df <- function(zpid,count=25){
 #' @import ggplot2
 #' @export
 price_plot <- function(zpid) {
-  zillow_xml <- get_deep_comps(zpid, count=25)
+  response <- get_deep_comps(zpid, count=25)
+  zillow_xml <- xml2::read_xml(httr::content(response, "text"))
 
   price_low <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/zestimate/valuationRange/low")))
   price_high <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/zestimate/valuationRange/high")))
@@ -85,7 +86,9 @@ price_plot <- function(zpid) {
 #'
 #' @export
 price_ranges <- function(zpid){
-  zillow_xml <- get_deep_comps(zpid, count=25)
+  response <- get_deep_comps(zpid, count=25)
+  zillow_xml <- xml2::read_xml(httr::content(response, "text"))
+
   price_low <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/zestimate/valuationRange/low")))
   price_high <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/zestimate/valuationRange/high")))
   prices <- c(price_low,price_high)
