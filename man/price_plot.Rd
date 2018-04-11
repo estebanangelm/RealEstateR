@@ -10,7 +10,7 @@ price_plot(zpid)
 \item{zpid}{property ID}
 }
 \value{
-A gglot boxplot with the price ranges of similar properties.
+A ggplot boxplot with the price ranges of similar properties.
 }
 \description{
 Creates a boxplot with the price ranges of similar properties.

@@ -165,7 +165,7 @@ get_zestimate_alt <- function(response){
 
 #' Get local real estate data from the API response
 #'
-#' @description Get local real estate data, e.g. Region, id, type(i.e. neighbour), Zillow Home Value Index
+#' @description Get local real estate data, e.g. Region, id, type(i.e. neighborhood), Zillow Home Value Index
 #'
 #' @param response The API response from `get_search_results`
 #'

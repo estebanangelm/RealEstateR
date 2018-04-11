@@ -16,3 +16,10 @@ zpid as a string
 Retrieves the Zillow Property ID (zpid) for a house
 from the GetSearchResults API.
 }
+\examples{
+\dontrun{
+response <- get_search_results("2144 Bigelow Ave", "Seattle", "WA")
+get_zpid(response)
+}
+
+}
