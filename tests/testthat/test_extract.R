@@ -1,7 +1,10 @@
 context("test_extract.R")
 
-test_that("'get_links' Output the correct links", {
+# -----------------------------------------------------------------------------
+# get_links()
+# -----------------------------------------------------------------------------
 
+test_that("'get_links' Output the correct links", {
   response <- get_search_results("2144 Bigelow Ave", "Seattle", "WA")
   zwsid <- Sys.getenv("ZWSID")
   set_zwsid(zwsid)
@@ -30,6 +33,11 @@ test_that("'get_links' Output the correct links", {
 
 })
 
+
+# -----------------------------------------------------------------------------
+# get_loc()
+# -----------------------------------------------------------------------------
+
 test_that("'get_loc' output correct location data", {
 
   response <- get_search_results("2144 Bigelow Ave", "Seattle", "WA")
@@ -54,6 +62,10 @@ test_that("'get_loc' output correct location data", {
 
 })
 
+# -----------------------------------------------------------------------------
+# get_zestimate_alt()
+# -----------------------------------------------------------------------------
+
 test_that("'get_zestimate_alt' output correct zestimate data", {
 
   response <- get_search_results("2144 Bigelow Ave", "Seattle", "WA")
@@ -73,6 +85,10 @@ test_that("'get_zestimate_alt' output correct zestimate data", {
 
 })
 
+
+# -----------------------------------------------------------------------------
+# get_near()
+# -----------------------------------------------------------------------------
 
 test_that("'get_near' output correct region data", {
 
@@ -95,6 +111,5 @@ test_that("'get_near' output correct region data", {
   expect_equal(res$url, response$url)
   expect_equal(res$response, response)
   expect_s3_class(res, "zillow_api" )
-
 })
 
