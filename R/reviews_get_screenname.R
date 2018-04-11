@@ -76,11 +76,17 @@ reviews_get_screennames <- function(city, state){
       html_text() %>%
       unique()
 
-    df <-  rbind(df, data.frame(name, screenname, phone, stringsAsFactors = FALSE))
+    city_full <- content %>%
+      html_nodes('.zsg-breadcrumbs-text') %>%
+      html_text() %>%
+      unique()
+
+    df <-  rbind(df, data.frame(name, screenname, phone, city_full, stringsAsFactors = FALSE))
   }
 
   df <- df %>%
-    dplyr::mutate(city = city, state = state)
+    dplyr::mutate(state = str_to_upper(state)) %>%
+    dplyr::rename("city" = city_full)
 
   return(df)
 }
