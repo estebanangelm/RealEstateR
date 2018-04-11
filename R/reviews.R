@@ -6,6 +6,14 @@
 #' @param state A state of interest, where the city is in, as a string in 2 letters form.
 #' (e.g. "OH")
 #'
+#' @import stringr
+#' @import xml2
+#' @import jsonlite
+#' @import rvest
+#' @import tidyverse
+#' @import purrr
+#' @import httr
+#'
 #' @return A dataframe that includes details of agents, and their star reviews.
 #'
 #' @examples
@@ -13,20 +21,11 @@
 #'
 #' @export
 
-# dependency
-# library(tidyverse)
-# library(httr)
-# library(jsonlite)
-# library(xml2)
-# library(rvest)
-
 reviews <- function(city, state){
   # call API key from get_zwsid
   zwsid <- getOption("ZWSID")
 
-  city <- str_to_lower(city)
-  state <- str_to_lower(state)
-  screenname <- reviews_get_screennames(city, state, 25)$screenname
+  screenname <- reviews_get_screennames(city, state)$screenname
 
   df <- NULL
 
