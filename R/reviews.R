@@ -11,16 +11,14 @@
 #' @return A dataframe that includes details of agents, and their star reviews.
 #'
 #' @examples
-#' \dontrun{screennames <- c("mwalley0", "pamelarporter")
+#' \dontrun{screennames <- c("mwalley0", "pamelarporter", "klamping4", "brettkeppler", "Cincysrealtor")
 #' reviews(screennames)}
 #'
 #' @export
 
-agents_reviews <- function(screennames){
+reviews <- function(screennames){
   # call API key from get_zwsid
   zwsid <- getOption("ZWSID")
-
-  # screenname <- reviews_get_screennames(city, state)$screenname
 
   df <- NULL
 
@@ -38,6 +36,7 @@ agents_reviews <- function(screennames){
     businessAddress <- content$response$results$proInfo$address
     phone <- content$response$results$proInfo$phone
     specialties <- content$response$results$proInfo$specialties
+    # serviceArea <- content$response$results$proInfo$serviceAreas
     recentSaleCount <- content$response$results$proInfo$recentSaleCount
     reviewCount <- content$response$results$proInfo$reviewCount
     localknowledgeRating <- content$response$results$proInfo$localknowledgeRating
@@ -49,6 +48,7 @@ agents_reviews <- function(screennames){
                                 businessName, businessAddress, phone,
                                 specialties, recentSaleCount, reviewCount,
                                 localknowledgeRating, processexpertiseRating, responsivenessRating, negotiationskillsRating))
+
   }
 
   return(df)
