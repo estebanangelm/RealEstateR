@@ -33,14 +33,37 @@ get_comp_df <- function(zpid,count=25){
   response <- get_deep_comps(zpid, count)
   zillow_xml <- xml2::read_xml(httr::content(response, "text"))
 
-  zpid <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/zpid")))[1:count]
-  bedrooms <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/bedrooms")))[1:count]
-  bathrooms <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/bathrooms")))[1:count]
-  year <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/yearBuilt")))[1:count]
-  size <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/finishedSqFt")))[1:count]
-  lot_size <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/lotSizeSqFt")))[1:count]
-  value <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/zestimate/amount")))[1:count]
-  rent <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/rentzestimate/amount")))[1:count]
+  #Define empty arrays for each property attribute
+
+  zpid <- rep(NA,count)
+  bedrooms <- rep(NA,count)
+  bathrooms <- rep(NA,count)
+  year <- rep(NA,count)
+  size <- rep(NA,count)
+  lot_size <- rep(NA,count)
+  value <- rep(NA,count)
+  rent <- rep(NA,count)
+
+  comps <- xml2:::xml_find_all(zillow_xml, ".//comp")
+
+  for (i in (1:count)){
+    new_zpid <- as.numeric(xml2::xml_text(xml2::xml_find_all(comps[i], ".//zpid")))
+    zpid[i] <- ifelse(!identical(new_zpid,character(0)),new_zpid,NA)
+    new_bedrooms <- as.numeric(xml2::xml_text(xml2::xml_find_all(comps[i], ".//bedrooms")))
+    bedrooms[i] <- ifelse(!identical(new_bedrooms,character(0)),new_bedrooms,NA)
+    new_bathrooms <- as.numeric(xml2::xml_text(xml2::xml_find_all(comps[i], ".//bathrooms")))
+    bathrooms[i] <- ifelse(!identical(new_bathrooms,character(0)),new_bathrooms,NA)
+    new_year <- as.numeric(xml2::xml_text(xml2::xml_find_all(comps[i], ".//yearBuilt")))
+    year[i] <- ifelse(!identical(new_year,character(0)),new_year,NA)
+    new_size <- as.numeric(xml2::xml_text(xml2::xml_find_all(comps[i], ".//finishedSqFt")))
+    size[i] <- ifelse(!identical(new_size,character(0)),new_size,NA)
+    new_lot_size <- as.numeric(xml2::xml_text(xml2::xml_find_all(comps[i], ".//lotSizeSqFt")))
+    lot_size[i] <- ifelse(!identical(new_lot_size,character(0)),new_lot_size,NA)
+    new_value <- as.numeric(xml2::xml_text(xml2::xml_find_all(comps[i], ".//zestimate/amount")))
+    value[i] <- ifelse(!identical(new_value,character(0)),new_value,NA)
+    new_rent <- as.numeric(xml2::xml_text(xml2::xml_find_all(comps[i], ".//rentzestimate/amount")))
+    rent[i] <- ifelse(!identical(new_rent,character(0)),new_rent,NA)
+  }
 
   z_df <- dplyr::data_frame(zpid,bedrooms,bathrooms,year,size,lot_size,value,rent)
   return(z_df)
