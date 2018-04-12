@@ -64,11 +64,24 @@ reviews_get_screennames <- function(name, city, state){
   # scrape links and output info to dataframe
   content <- read_html(paste0("https://www.zillow.com/", city, "-", state, "/real-estate-agent-reviews/?name=", name))
 
-  screenname <- content %>%
-    html_node('p a') %>%
-    html_attr('href') %>%
-    strsplit(., "[/]") %>%
-    map_chr(3)
+  city_full <- trimws(content %>%
+    html_nodes('.zsg-breadcrumbs-text') %>%
+    html_text() %>%
+    unique())
+
+  if (name %in% (content %>%
+    html_nodes('p a') %>%
+    html_nodes('.ldb-font-bold a') %>%
+    html_text() %>%
+    unique())){
+    screenname <- content %>%
+      html_node('p a') %>%
+      html_attr('href') %>%
+      strsplit(., "[/]") %>%
+      map_chr(3)
+  } else {
+    paste("The agent name you want to search for in", city_full, ",", str_to_upper(state), "does not exist.", sep = " ")
+  }
 
   return(screenname)
 }
