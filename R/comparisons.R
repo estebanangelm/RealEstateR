@@ -33,30 +33,30 @@ get_comp_df <- function(zpid,count=25){
   response <- get_deep_comps(zpid, count)
   zillow_xml <- xml2::read_xml(httr::content(response, "text"))
 
+  #Define empty arrays for each property attribute
+
   zpid <- rep(NA,count)
-  bedrooms <-
-  bathrooms <-
-  year <-
-  size <-
-  lot_size <-
-  value <-
-  rent <-
+  bedrooms <- rep(NA,count)
+  bathrooms <- rep(NA,count)
+  year <- rep(NA,count)
+  size <- rep(NA,count)
+  lot_size <- rep(NA,count)
+  value <- rep(NA,count)
+  rent <- rep(NA,count)
 
   comps <- xml2:::xml_find_all(zillow_xml, ".//comp")
 
-  for (i in (1:length(comps))){
+  for (i in (1:count)){
     xml_text(xml2::xml_find_all(hola[3], ".//zpid"))
-    zpid <- as.numeric(xml2::xml_text(xml2::xml_find_all(comps[i], ".//zpid")))
-    bedrooms <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/bedrooms")))
-    bathrooms <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/bathrooms")))
-    year <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/yearBuilt")))
-    size <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/finishedSqFt")))
-    lot_size <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/lotSizeSqFt")))
-    value <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/zestimate/amount")))
-    rent <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/rentzestimate/amount")))
+    zpid[i] <- as.numeric(xml2::xml_text(xml2::xml_find_all(comps[i], ".//zpid")))
+    bedrooms[i] <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//bedrooms")))
+    bathrooms[i] <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//bathrooms")))
+    year[i] <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//yearBuilt")))
+    size[i] <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//finishedSqFt")))
+    lot_size[i] <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//lotSizeSqFt")))
+    value[i] <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//zestimate/amount")))
+    rent[i] <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//rentzestimate/amount")))
   }
-
-
 
   z_df <- dplyr::data_frame(zpid,bedrooms,bathrooms,year,size,lot_size,value,rent)
   return(z_df)
