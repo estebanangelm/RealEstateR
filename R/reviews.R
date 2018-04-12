@@ -1,6 +1,12 @@
 #' Get Review Details of Agents of your Choice
 #'
-#' @param screennames Agent screenname(s) of your choice (up to 5 screennames)
+#' @author Ha Dinh
+#'
+#' @description
+#' This function inputs up to 5 agents' screenname,
+#' then output the agents' information and their review stars.
+#'
+#' @param screennames Agent screenname(s) of your choice (at most 5 screennames)
 #'
 #' @import jsonlite
 #' @import rvest
