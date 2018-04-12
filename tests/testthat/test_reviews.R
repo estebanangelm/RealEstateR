@@ -34,7 +34,7 @@ screennames <- c("mwalley0", "pamelarporter", "klamping4", "Cincysrealtor")
 test_df <- reviews(screennames)
 
 # Expect type of dataframe to be a tibble
-expect_is(test_df, "tibble")
+expect_is(test_df, c("tbl_df","tbl","data.frame"))
 
 # Check output dataframe
 expect_output(str(test_df), "15 variables", ignore.case = TRUE)
