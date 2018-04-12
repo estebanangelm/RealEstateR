@@ -4,9 +4,11 @@
 \alias{reviews_get_screennames}
 \title{Get Agent IDs Based On Location}
 \usage{
-reviews_get_screennames(city, state)
+reviews_get_screennames(name, city, state)
 }
 \arguments{
+\item{name}{Full name of an agent/real-estate company you want to search for.}
+
 \item{city}{A city of interest as a string.
 (e.g. "Cincinnati", "Los Angeles")}
 
@@ -14,15 +16,14 @@ reviews_get_screennames(city, state)
 (e.g. "OH")}
 }
 \value{
-A dataframe that includes name, phone number, and id of agents in the location input.
+A string.
 }
 \description{
-This function inputs a combination of city and state of your choice,
-then output a dataframe that includes name, screenname, phone number,
-city and state of agents from the input location.
+This function inputs a combination of agent name, city and state the agent is in,
+then output the agent's screenname.
 }
 \examples{
-\dontrun{df <- reviews_get_screennames('Los Angeles', 'CA')}
+\dontrun{reviews_get_screennames('Rakesh Ram Real Estate Group', 'Cincinnati', 'OH')}
 
 }
 \author{

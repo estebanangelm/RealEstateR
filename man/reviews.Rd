@@ -2,24 +2,25 @@
 % Please edit documentation in R/reviews.R
 \name{reviews}
 \alias{reviews}
-\title{Get Review Details of Agents in a Location}
+\title{Get Review Details of Agents of your Choice}
 \usage{
-reviews(city, state)
+reviews(screennames)
 }
 \arguments{
-\item{city}{A city of interest as a string.
-(e.g. "Cincinnati" or "Los-Angeles")}
-
-\item{state}{A state of interest, where the city is in, as a string in 2 letters form.
-(e.g. "OH")}
+\item{screennames}{Agent screenname(s) of your choice (at most 5 screennames)}
 }
 \value{
 A dataframe that includes details of agents, and their star reviews.
 }
 \description{
-Get Review Details of Agents in a Location
+This function inputs up to 5 agents' screenname,
+then output the agents' information and their review stars.
 }
 \examples{
-reviews("Cincinnati", "OH")
+\dontrun{screennames <- c("mwalley0", "pamelarporter", "klamping4", "Cincysrealtor")
+reviews(screennames)}
 
+}
+\author{
+Ha Dinh
 }
