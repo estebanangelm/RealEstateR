@@ -17,3 +17,4 @@ proper format of city/state as a string (e.g., 'Seattle%2C+WA')
 \description{
 Format city and state query parameter
 }
+\keyword{internal}

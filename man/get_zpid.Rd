@@ -4,15 +4,10 @@
 \alias{get_zpid}
 \title{Get Zillow Property ID}
 \usage{
-get_zpid(address, city, state)
+get_zpid(response)
 }
 \arguments{
-\item{address}{Street address of interest as a string
-(e.g., '2144+Bigelow+Ave')}
-
-\item{city}{City of the property}
-
-\item{state}{State of the property. Can be abbreviated (e.g., 'WA' for Washington)}
+\item{response}{API response of get_search_results()}
 }
 \value{
 zpid as a string
@@ -20,4 +15,11 @@ zpid as a string
 \description{
 Retrieves the Zillow Property ID (zpid) for a house
 from the GetSearchResults API.
+}
+\examples{
+\dontrun{
+response <- get_search_results("2144 Bigelow Ave", "Seattle", "WA")
+get_zpid(response)
+}
+
 }

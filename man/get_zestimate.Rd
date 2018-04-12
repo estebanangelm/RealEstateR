@@ -13,5 +13,5 @@ get_zestimate(zpid)
 Estimated price of house as a numeric (in USD)
 }
 \description{
-Retrives zestimate information for a specified zpid.
+Retrieves zestimate information for a specified zpid.
 }

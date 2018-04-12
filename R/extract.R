@@ -33,7 +33,7 @@ get_links <- function(response){
   check_code <- xml2::xml_text(xml2::xml_find_first(search_xml, "message/code"))
   message <- xml2::xml_text(xml2::xml_find_first(search_xml, "message/text"))
 
-  check_status(check_code, message)
+  check_status(response)
 
   home_details <- xml2::xml_text(xml2::xml_find_all(search_xml, "//links//homedetails"))
   char_data <- xml2::xml_text(xml2::xml_find_all(search_xml, "//links//graphsanddata"))
@@ -55,13 +55,10 @@ get_links <- function(response){
   structure(res, class = "zillow_api")
 }
 
-
-
-
 #' Get location data from the API response
 #'
 #' @description Get the location data of the property from the API response,
-#' e.g. ZIP, full address, latitude and longtitude
+#' e.g. ZIP, full address, latitude and longitude
 #'
 #' @param response The API response from `get_search_results`
 #'
@@ -69,7 +66,7 @@ get_links <- function(response){
 #' \itemize{
 #'   \item ZIP code
 #'   \item Full address: street, city, state
-#'   \item Latitude and longtitude
+#'   \item Latitude and longitude
 #' }
 #' @export
 #' @import magrittr
@@ -91,7 +88,7 @@ get_loc <- function(response){
   check_code <- xml2::xml_text(xml2::xml_find_first(search_xml, "message/code"))
   message <- xml2::xml_text(xml2::xml_find_first(search_xml, "message/text"))
 
-  check_status(check_code, message)
+  check_status(response)
 
   zip <- xml2::xml_integer(xml2::xml_find_all(search_xml, "//address//zipcode"))
   street <- xml2::xml_text(xml2::xml_find_all(search_xml, "//address//street"))
@@ -133,12 +130,12 @@ get_loc <- function(response){
 #' @examples
 #' \dontrun{
 #' response <- get_search_results("2144 Bigelow Ave", "Seattle", "WA")
-#' get_zestimate_alt(response)
+#' get_zestimate_all(response)
 #'
 #' get_search_results("2144 Bigelow Ave", "Seattle", "WA") %>%
-#'   get_zestimate_alt()
+#'   get_zestimate_all()
 #' }
-get_zestimate_alt <- function(response){
+get_zestimate_all <- function(response){
 
   check_type(response)
 
@@ -148,7 +145,7 @@ get_zestimate_alt <- function(response){
   check_code <- xml2::xml_text(xml2::xml_find_first(search_xml, "message/code"))
   message <- xml2::xml_text(xml2::xml_find_first(search_xml, "message/text"))
 
-  check_status(check_code, message)
+  check_status(response)
 
   amount <- xml2::xml_double(xml2::xml_find_all(search_xml, "//zestimate//amount"))
   currency <- xml2::xml_attr(xml2::xml_find_all(search_xml, "//zestimate//amount"), attr = "currency")
@@ -168,7 +165,7 @@ get_zestimate_alt <- function(response){
 
 #' Get local real estate data from the API response
 #'
-#' @description Get local real estate data, e.g. Region, id, type(i.e. neighbour), Zillow Home Value Index
+#' @description Get local real estate data, e.g. Region, id, type(i.e. neighborhood), Zillow Home Value Index
 #'
 #' @param response The API response from `get_search_results`
 #'
@@ -200,7 +197,7 @@ get_near <- function(response){
   check_code <- xml2::xml_text(xml2::xml_find_first(search_xml, "message/code"))
   message <- xml2::xml_text(xml2::xml_find_first(search_xml, "message/text"))
 
-  check_status(check_code, message)
+  check_status(response)
 
   region <- xml2::xml_attr(xml2::xml_find_all(search_xml, "//localRealEstate//region"), attr = "name")
   id <- as.integer(xml2::xml_attr(xml2::xml_find_all(search_xml, "//localRealEstate//region"), attr = "id"))
@@ -217,30 +214,6 @@ get_near <- function(response){
 }
 
 
-
-
-
-# check the type of the response
-check_type <- function(response){
-  if (httr::http_type(response) != "text/xml") {
-    stop("API did not return XML", call. = FALSE)
-  }
-}
-
-# check request status
-check_status <- function(check_code, message){
-  if (check_code  != "0") {
-    stop(
-      sprintf(
-        "Zillow API request failed [%s]\n%s\n<%s>",
-        check_code,
-        message,
-        "https://www.zillow.com/howto/api/APIOverview.htm"
-      ),
-      call. = FALSE
-    )
-  }
-}
 
 #' @export
 print.zillow_api <-  function(x, ...){

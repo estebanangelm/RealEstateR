@@ -15,10 +15,7 @@
 #'
 #' @import stringr
 #' @import xml2
-#' @import jsonlite
 #' @import rvest
-#' @import tidyverse
-#' @import purrr
 #'
 #' @examples
 #' \dontrun{reviews_get_screennames('Rakesh Ram Real Estate Group', 'Cincinnati', 'OH')}
@@ -81,7 +78,7 @@ reviews_get_screennames <- function(name, city, state){
       html_node('p a') %>%
       html_attr('href') %>%
       strsplit(., "[/]") %>%
-      map_chr(3)
+      purrr::map_chr(3)
   }
 
   return(screenname)

@@ -1,10 +1,14 @@
-context("test-extract.R")
+context("extract.R")
+
+# -----------------------------------------------------------------------------
+# get_links()
+# -----------------------------------------------------------------------------
 
 test_that("'get_links' Output the correct links", {
-
-  response <- get_search_results("2144 Bigelow Ave", "Seattle", "WA")
   zwsid <- Sys.getenv("ZWSID")
   set_zwsid(zwsid)
+
+  response <- get_search_results("2144 Bigelow Ave", "Seattle", "WA")
   search_xml <- xml2::read_xml(response)
   message <- xml2::xml_text(xml2::xml_find_first(search_xml, "message/text"))
 
@@ -30,11 +34,16 @@ test_that("'get_links' Output the correct links", {
 
 })
 
-test_that("'get_loc' output correct location data", {
 
-  response <- get_search_results("2144 Bigelow Ave", "Seattle", "WA")
+# -----------------------------------------------------------------------------
+# get_loc()
+# -----------------------------------------------------------------------------
+
+test_that("'get_loc' output correct location data", {
   zwsid <- Sys.getenv("ZWSID")
   set_zwsid(zwsid)
+
+  response <- get_search_results("2144 Bigelow Ave", "Seattle", "WA")
   search_xml <- xml2::read_xml(response)
   message <- xml2::xml_text(xml2::xml_find_first(search_xml, "message/text"))
 
@@ -54,16 +63,21 @@ test_that("'get_loc' output correct location data", {
 
 })
 
-test_that("'get_zestimate_alt' output correct zestimate data", {
+# -----------------------------------------------------------------------------
+# get_zestimate_all()
+# -----------------------------------------------------------------------------
 
-  response <- get_search_results("2144 Bigelow Ave", "Seattle", "WA")
+test_that("'get_zestimate_all' output correct zestimate data", {
+
   zwsid <- Sys.getenv("ZWSID")
   set_zwsid(zwsid)
+
+  response <- get_search_results("2144 Bigelow Ave", "Seattle", "WA")
   search_xml <- xml2::read_xml(response)
   message <- xml2::xml_text(xml2::xml_find_first(search_xml, "message/text"))
 
 
-  res <- get_zestimate_alt(response)
+  res <- get_zestimate_all(response)
 
   expect_is(res$content, c("tbl_df", "tbl", "data.frame"))
   expect_equal(res$status, message)
@@ -74,11 +88,16 @@ test_that("'get_zestimate_alt' output correct zestimate data", {
 })
 
 
+# -----------------------------------------------------------------------------
+# get_near()
+# -----------------------------------------------------------------------------
+
 test_that("'get_near' output correct region data", {
 
-  response <- get_search_results("2144 Bigelow Ave", "Seattle", "WA")
   zwsid <- Sys.getenv("ZWSID")
   set_zwsid(zwsid)
+
+  response <- get_search_results("2144 Bigelow Ave", "Seattle", "WA")
   search_xml <- xml2::read_xml(response)
   message <- xml2::xml_text(xml2::xml_find_first(search_xml, "message/text"))
 
@@ -95,6 +114,18 @@ test_that("'get_near' output correct region data", {
   expect_equal(res$url, response$url)
   expect_equal(res$response, response)
   expect_s3_class(res, "zillow_api" )
-
 })
 
+# -----------------------------------------------------------------------------
+# print.zillow_api()
+# -----------------------------------------------------------------------------
+
+test_that("'get_near' output correct region data", {
+
+  zwsid <- Sys.getenv("ZWSID")
+  set_zwsid(zwsid)
+
+  response <- get_search_results("2144 Bigelow Ave", "Seattle", "WA")
+  loc <- get_loc(response)
+  expect_equal(print.zillow_api(loc), loc)
+})

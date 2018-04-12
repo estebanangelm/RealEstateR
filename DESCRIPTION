@@ -14,13 +14,20 @@ LazyData: true
 ByteCompile: true
 Suggests:
     testthat,
-    covr
-Imports:
+    covr,
+    knitr,
+    rmarkdown
+Imports: 
     xml2,
     httr,
     stringr,
     scales,
     jsonlite,
-    tidyverse,
-    purrr
+    ggplot2,
+    magrittr,
+    rvest,
+    purrr,
+    tibble,
+    dplyr
 RoxygenNote: 6.0.1
+VignetteBuilder: knitr
