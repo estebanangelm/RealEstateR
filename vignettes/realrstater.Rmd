@@ -1,6 +1,6 @@
 ---
-title: "Vignette Title"
-author: "Vignette Author"
+title: "RealEstateR"
+author: "Jill-Ha-Xinbin-Esteban"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -15,6 +15,14 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
+
+RealEstateR is a package that analyzes real estate data from the Zillow API. Zillow is a group of real estate portals containing information from properties all around the United States. Through their APIs, Zillow shares their information about their properties and some of the results of their in-house datascience models. Some of these models include:
+
+- `Zestimate`: using all the data from their listings they can estimate the price of a particular property just knowing some of the property's features. Also, they can estimate the rent price for an specific property.
+
+- `Comparables`: using the information from the database it's possible to find similar properties and even recommend to a customer a property that could be interesting.
+
+The objective of the `RealEstateR` package is extracting some of the information that is available in the Zillow's API, and making it suitable for data analysis in R.
 
 Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
 
