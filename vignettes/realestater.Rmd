@@ -42,9 +42,11 @@ zpid <- get_zpid(response)
 
 Now that we have the `zpid` stored, we can retrieve some data and do some analysis. We can extract some individual information from the property like Zillow's price estimate:
 
+```{r}
+get_zestimate(zpid)
+```
 
-
-Or we can also retrieve the exact latitude and longitude of the property:
+For example this property has an estimated price of $655.924.We can also retrieve the exact latitude and longitude of the property if we want to check it on Google Maps:
 
 ```{r}
 get_loc(response)
@@ -63,23 +65,44 @@ comp_df <- get_comp_df(zpid, count = 25)
 head(comp_df)
 ```
 
-We can also create an automatic plot of the different price ranges for the similar properties to the one we stored in our `zpid`:
+```{r}
+library(tidyverse)
+ggplot(comp_df %>% group_by(bedrooms = as.factor(bedrooms)) %>% summarize(count = n()))+
+  geom_col(aes(bedrooms,count),color="#40A379",fill="#40A379",alpha=0.6)+
+  scale_y_continuous("Frequency")+
+  scale_x_discrete("Number of Bedrooms")+
+  ggtitle("Number of bedrooms in similar properties",subtitle = "18114 Liscum Hill San Antonio, TX")+
+  theme_bw()
+```
+
+There's a rule of thumb in real estate that a property has a rent price approximately of 0.7% of the property value. We can run a simple analysis to find opportunities of investment in similar properties that are "undervalued" from their theorical price:
+
+```{r}
+rule_thumb <- comp_df %>% 
+                mutate(value_approx = rent/0.007,
+                       opportunity = value_approx - value) %>% 
+                select(zpid,opportunity)
+
+ggplot(rule_thumb)+
+  geom_point(aes(as.character(zpid),opportunity),fill="#40A379",color="#40A379")+
+  geom_hline(yintercept = 0)+
+  scale_x_discrete("Property Id")+
+  ggtitle("Investment Opportunities")+
+  theme_bw()+
+  theme(axis.text.x=element_text(angle=90,hjust=1))
+```
+
+We can also create an automatic plot of the different price ranges for the similar properties to the one we stored in our `zpid` with the function `price_plot()`:
 
 ```{r}
 price_plot(zpid)
 ```
 
+We can also get information from the agents covering a certain city if we plan to do anything:
 
+```{r}
+reviews_get_screennames(city = 'Los Angeles', state = 'CA')
+```
 
-
-
-
-To get information about similar recent sales for a specific property:
-
-    get_comp_df(zpid = "48749425", count = 5)
-
-To get information about real estate agents for a specific city:
-
-    reviews_get_screennames(city = 'Los Angeles', state = 'CA')
 
 
