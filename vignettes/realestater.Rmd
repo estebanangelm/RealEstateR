@@ -98,11 +98,25 @@ We can also create an automatic plot of the different price ranges for the simil
 price_plot(zpid)
 ```
 
-We can also get information from the agents covering a certain city if we plan to do anything:
+We can also get information and review details for different real estate agents using their screenname (Zillow's id). First, if we don't know an agent's screenname, but have their exact name and a location where their business occupies, we can use function `reviews_get_screennames()` to get this information:
 
 ```{r}
-reviews_get_screennames(city = 'Los Angeles', state = 'CA')
+reviews_get_screennames(name = 'Guy and Patrick Cagney', city = 'Cincinnati', state = 'OH')
 ```
+
+Now given that we have several screennames and want to figure out which agent has highest ratings among all, we can use function `reviews()` to get this information. This function allows us to find out information of up to 5 screennames. 
+
+```{r}
+screennames <- c("mwalley0", "pamelarporter", "klamping4", "Cincysrealtor", "Guy24") 
+
+review_df <- reviews(screennames)
+ggplot(data = review_df) +
+  geom_col(aes(name, negotiationskillsRating)) + 
+  labs(title = "Negotiation Skill Comparison", subtitle = "Among 5 agents in Cincinnati, OH", caption = "Data from Zillow.com",  
+       x = "", y = "Rating") + 
+  theme_bw()
+```
+
 
 
 

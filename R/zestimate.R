@@ -14,6 +14,7 @@ source('R/format_params.R')
 #' @return API response
 #'
 #' @export
+
 get_search_results <- function(address, city, state) {
   zwsid <- getOption("ZWSID")
   address <- format_address(address)
