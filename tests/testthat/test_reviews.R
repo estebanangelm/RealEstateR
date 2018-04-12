@@ -14,27 +14,47 @@ zwsid <- function() {
 zwsid <- zwsid()
 
 # -----------------------------------------------------------------------------
-# test input - inherit from reviews_get_screenname.R
+# test input
 # -----------------------------------------------------------------------------
 
-# expect an all-character input for state
-expect_error(reviews("cincinnati", 45220),
-             "Expect input of state to be a string.")
-expect_error(reviews("cincinnati", "A4"),
-             "Expect input of state to be an all-character string.")
+# expect character input for screennames
+expect_error(reviews(1:5),
+             "Expect screennames input to be character.")
 
-# expect 2-letter input for state
-expect_error(reviews("los-angeles", "Cali"),
-             "Expect 2-letter input of state abbreviation.")
+expect_error(reviews(c(1,2,3)),
+             "Expect screennames input to be character.")
 
-# expect an all-character input for city
-expect_error(reviews(45220, "OH"),
-             "Expect input of city to be a string.")
-expect_error(reviews("c1nc1n4t1", "OH"),
-             "Expect input of city to be an all-character string.")
+expect_error(reviews(c("abd", "marvey", "batman", "123", "ppp", "fff")),
+             "Expect at most 5 screennames.")
 
 # -----------------------------------------------------------------------------
 # test output
 # -----------------------------------------------------------------------------
+screennames <- c("mwalley0", "pamelarporter", "klamping4", "Cincysrealtor")
+test_df <- reviews(screennames)
+
+# Expect type of dataframe to be a tibble
+expect_is(test_df, "tibble")
+
+# Check output dataframe
+expect_output(str(test_df), "15 variables", ignore.case = TRUE)
+
+expect_output(str(test_df), "$ status", fixed = TRUE)
+expect_output(str(test_df), "$ name", fixed = TRUE)
+expect_output(str(test_df), "$ screenname", fixed = TRUE)
+expect_output(str(test_df), "$ title", fixed = TRUE)
+expect_output(str(test_df), "$ businessName", fixed = TRUE)
+expect_output(str(test_df), "$ businessAddress", fixed = TRUE)
+expect_output(str(test_df), "$ phone", fixed = TRUE)
+expect_output(str(test_df), "$ specialties", fixed = TRUE)
+expect_output(str(test_df), "$ serviceArea", fixed = TRUE)
+expect_output(str(test_df), "$ recentSaleCount", fixed = TRUE)
+expect_output(str(test_df), "$ reviewCount", fixed = TRUE)
+expect_output(str(test_df), "$ localknowledgeRating", fixed = TRUE)
+expect_output(str(test_df), "$ processexpertiseRating", fixed = TRUE)
+expect_output(str(test_df), "$ responsivenessRating", fixed = TRUE)
+expect_output(str(test_df), "$ negotiationskillsRating", fixed = TRUE)
+
+
 
 
