@@ -13,7 +13,7 @@ zwsid <- function() {
 }
 zwsid <- zwsid()
 
-test_that("reviews_get_screennames() outputs a dataframe given a combination of city and state", {
+test_that("reviews_get_screennames() outputs an agent screenname given name, city and state", {
 
   # -----------------------------------------------------------------------------
   # test input

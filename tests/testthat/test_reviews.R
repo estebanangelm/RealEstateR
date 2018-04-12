@@ -24,7 +24,7 @@ expect_error(reviews(1:5),
 expect_error(reviews(c(1,2,3)),
              "Expect screennames input to be character.")
 
-expect_error(reviews(c("abd", "marvey", "batman", "123", "ppp", "fff")),
+expect_error(reviews(c("mwalley0", "pamelarporter", "klamping4", "Cincysrealtor", "Gordon", "everydoorrealestate")),
              "Expect at most 5 screennames.")
 
 # -----------------------------------------------------------------------------
