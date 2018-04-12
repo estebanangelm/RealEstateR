@@ -50,37 +50,38 @@ reviews_get_screennames <- function(name, city, state){
   }
 
   # initial setup
-  name <- str_to_lower(name)
+  name_search <- str_to_lower(name)
   city <- str_to_lower(city)
   state <- str_to_lower(state)
 
   # alternate dash to whitespace in name and city
-  name <- ifelse(str_detect(name, "[[:space:]]"),
-                 str_replace_all(name, "[[:space:]]", "%20"), name)
+  name_search <- ifelse(str_detect(name, "[[:space:]]"),
+                 str_replace_all(name, "[[:space:]]", "%20"), name_search)
 
   city <- ifelse(str_detect(city, "[[:space:]]"),
          str_replace_all(city, "[[:space:]]", "-"), city)
 
-  # scrape links and output info to dataframe
-  content <- read_html(paste0("https://www.zillow.com/", city, "-", state, "/real-estate-agent-reviews/?name=", name))
+  # search through links and output info to dataframe
+  content <- read_html(paste0("https://www.zillow.com/", city, "-", state, "/real-estate-agent-reviews/?name=", name_search))
 
   city_full <- trimws(content %>%
     html_nodes('.zsg-breadcrumbs-text') %>%
     html_text() %>%
     unique())
 
-  if (name %in% (content %>%
-    html_nodes('p a') %>%
+  name_list <- content %>%
     html_nodes('.ldb-font-bold a') %>%
     html_text() %>%
-    unique())){
+    unique()
+
+  if (!(name %in% name_list)){
+    stop(paste("The agent name you want to search for in", city_full, ",", str_to_upper(state), "does not exist.", sep = " "))
+  } else {
     screenname <- content %>%
       html_node('p a') %>%
       html_attr('href') %>%
       strsplit(., "[/]") %>%
       map_chr(3)
-  } else {
-    paste("The agent name you want to search for in", city_full, ",", str_to_upper(state), "does not exist.", sep = " ")
   }
 
   return(screenname)

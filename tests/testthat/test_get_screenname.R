@@ -24,19 +24,19 @@ test_that("reviews_get_screennames() outputs an agent screenname given name, cit
                "Expect input of name to be a string")
 
   # expect an all-character input for state
-  expect_error(reviews_get_screennames("cincinnati", 45220),
+  expect_error(reviews_get_screennames("Rakesh Ram Real Estate Group", "cincinnati", 45220),
                "Expect input of state to be a string.")
-  expect_error(reviews_get_screennames("cincinnati", "A4"),
+  expect_error(reviews_get_screennames("Rakesh Ram Real Estate Group", "cincinnati", "A4"),
                "Expect input of state to be an all-character string.")
 
   # expect 2-letter input for state
-  expect_error(reviews_get_screennames("los-angeles", "Cali"),
+  expect_error(reviews_get_screennames("Katie Pardee", "los-angeles", "Cali"),
                "Expect 2-letter input of state abbreviation.")
 
   # expect an all-character input for city
-  expect_error(reviews_get_screennames(45220, "OH"),
+  expect_error(reviews_get_screennames("Rakesh Ram Real Estate Group", 45220, "OH"),
                "Expect input of city to be a string.")
-  expect_error(reviews_get_screennames("c1nc1n4t1", "OH"),
+  expect_error(reviews_get_screennames("Rakesh Ram Real Estate Group", "c1nc1n4t1", "OH"),
                "Expect input of city to be an all-character string.")
 
 
@@ -49,6 +49,6 @@ test_that("reviews_get_screennames() outputs an agent screenname given name, cit
   expect_equal(length(reviews_get_screennames("Anthony Butera", "Rochester", "NY")), 1)
 
   # output when inputs combination does not exist
-  expect_equal(reviews_get_screennames("Ha Dinh", "Seattle", "WA"),
+  expect_error(reviews_get_screennames("Ha Dinh", "Seattle", "WA"),
                "The agent name you want to search for in Seattle , WA does not exist.")
 })
