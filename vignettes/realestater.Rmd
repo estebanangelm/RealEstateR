@@ -1,0 +1,85 @@
+---
+title: "RealEstateR"
+author: "Jill - Ha - Xinbin - Esteban"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+RealEstateR is a package that analyzes real estate data from the Zillow API. Zillow is a group of real estate portals containing information from properties all around the United States. Through their APIs, Zillow shares their information about their properties and some of the results of their in-house datascience models. Some of these models include:
+
+- `Zestimate`: using all the data from their listings they can estimate the price of a particular property just knowing some of the property's features. Also, they can estimate the rent price for an specific property.
+
+- `Comparables`: using the information from the database it's possible to find similar properties and even recommend to a customer a property that could be interesting.
+
+The objective of the `RealEstateR` package is extracting some of the information that is available in the Zillow's API, and making it suitable for data analysis in R. In the following lines, we'll describe a typical worflow for using the `RealEstateR` package, showing how it can be integrated in to a real estate analyst/agent job.
+
+## RealEstateR Workflow
+
+Since the Zillow's API requires some authentication, the first thing the user should do is registering [here](http://www.zillow.com/webservice/Registration.htm) and getting a `ZWSID`, which works as the API's key. For simplicity, after getting the token it should be set up using the `set_zwsid()` function like this:
+
+```
+set_zwsid("your-zwsid-here")
+```
+
+Now that we have the authentication ready, the next thing we need to do is getting the `zpid` from an address we're interested in, which is the unique id for each property in Zillow's database. So we search the address using the `get_search_results()` function and then we extract the `zpid` from it using the `get_zpid()` function:
+
+```{r}
+response <- get_search_results('18114 Liscum Hill', 'San Antonio', 'TX')
+zpid <- get_zpid(response)
+```
+
+
+Now that we have the `zpid` stored, we can retrieve some data and do some analysis. We can extract some individual information from the property like Zillow's price estimate:
+
+
+
+Or we can also retrieve the exact latitude and longitude of the property:
+
+```{r}
+get_loc(response)
+```
+
+Or the links to the property's Zillow link if we want to check the photos associated to it:
+
+```{r}
+get_links(response)
+```
+
+Additional to the one by one data extraction, we can also do some bulk retrieval for further analysis of a property and other comparable properties. The most detailed way of extracting data of similar properties from the database is using the `get_comp_df()` function. We input an specific `zpid` and we can decide the number of similar properties we want to get with the parameter count. For this exercise we'll get 20 of them
+
+```{r}
+comp_df <- get_comp_df(zpid, count = 25)
+head(comp_df)
+```
+
+We can also create an automatic plot of the different price ranges for the similar properties to the one we stored in our `zpid`:
+
+```{r}
+price_plot(zpid)
+```
+
+
+
+
+
+
+To get information about similar recent sales for a specific property:
+
+    get_comp_df(zpid = "48749425", count = 5)
+
+To get information about real estate agents for a specific city:
+
+    reviews_get_screennames(city = 'Los Angeles', state = 'CA')
+
+
