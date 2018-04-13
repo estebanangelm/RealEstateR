@@ -8,10 +8,8 @@
 #'
 #' @param screennames Agent screenname(s) of your choice (at most 5 screennames)
 #'
-#' @import jsonlite
+#'
 #' @import rvest
-#' @import tidyverse
-#' @import purrr
 #' @import httr
 #'
 #' @return A dataframe that includes details of agents, and their star reviews.
