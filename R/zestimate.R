@@ -83,15 +83,15 @@ get_neighbour_zestimates <- function(address, city, state) {
 
 #' Plot neighbour zestimates
 #'
-#' @param dataframe Dataframe returned from get_neighbour_zestimates()
-#'
-#' @import ggplot2
+#' @param df Dataframe returned from get_neighbour_zestimates()
 #'
 #' @return A ggplot map
 #'
+#' @importFrom ggmap ggmap get_map
+#'
 #' @export
 plot_neighbour_zestimates <- function(df) {
-  base <- suppressWarnings(ggmap::ggmap(ggmap::get_map(location = c(lon = mean(df$longitude),
+  base <- suppressWarnings(ggmap(get_map(location = c(lon = mean(df$longitude),
                                           lat = mean(df$latitude)), zoom=18, maptype="roadmap"), extent="device"))
   p <- base +
     geom_point(data = df, aes(x=longitude, y=latitude, color=zestimate), size=7) +
