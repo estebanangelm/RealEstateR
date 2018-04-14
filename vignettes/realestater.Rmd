@@ -26,6 +26,12 @@ The objective of the `RealEstateR` package is extracting some of the information
 
 ## RealEstateR Workflow
 
+Install RealEstateR using:
+
+```
+devtools::install_github("estebanangelm/RealEstateR")
+```
+
 After installing our package, load it using:
 
 ```{r}
