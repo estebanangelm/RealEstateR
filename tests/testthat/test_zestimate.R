@@ -1,4 +1,5 @@
 context("zestimate.R")
+library(ggplot2)
 
 # -----------------------------------------------------------------------------
 # Setup
@@ -83,4 +84,15 @@ test_that("get_neighbour_zestimates() returns a dataframe with correct dimension
   output <- get_neighbour_zestimates("2144 Bigelow Ave", "Seattle", "WA")
   expect_equal(is.data.frame(output), TRUE)
   expect_equal(nrow(output), 4)
+})
+
+# -----------------------------------------------------------------------------
+# plot_neighbour_zestimates()
+# -----------------------------------------------------------------------------
+
+test_that("plot_neighbour_zestimates() returns a ggplot", {
+  set_zwsid(zwsid)
+  df <- get_neighbour_zestimates("2144 Bigelow Ave", "Seattle", "WA")
+  output <- plot_neighbour_zestimates(df)
+  expect_true(is.ggplot(output))
 })
