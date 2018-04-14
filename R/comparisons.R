@@ -86,7 +86,7 @@ price_plot <- function(zpid) {
   prices <- c(price_low,price_high)
 
   p <- ggplot(dplyr::data_frame(prices))+
-        geom_boxplot(aes(x=zpid,y=prices),color="#434D62",fill="#434D62",alpha=0.6)+
+        geom_boxplot(aes(x="",y=prices),color="#434D62",fill="#434D62",alpha=0.6)+
         ggtitle("Price Ranges")+
         scale_y_continuous("Prices",labels = scales::dollar_format())+
         theme_bw()+

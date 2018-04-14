@@ -112,12 +112,6 @@ ggplot(rule_thumb)+
   theme(axis.text.x=element_text(angle=90,hjust=1))
 ```
 
-We can also create an automatic plot of the different price ranges for the similar properties to the one we stored in our `zpid` with the function `price_plot()`:
-
-```{r}
-price_plot(zpid)
-```
-
 We can also get information and review details for different real estate agents using their screenname (Zillow's id). First, if we don't know an agent's screenname, but have their exact name and a location where their business occupies, we can use function `reviews_get_screennames()` to get this information:
 
 ```{r}
