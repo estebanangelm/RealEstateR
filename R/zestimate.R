@@ -21,14 +21,9 @@ get_search_results <- function(address, city, state) {
   citystatezip <- format_citystate(city, state)
   base_url <- 'http://www.zillow.com/webservice/GetSearchResults.htm?'
   result <- httr::GET(url = paste0(base_url, 'zws-id=', zwsid, '&address=', address, '&citystatezip=', citystatezip))
-  xml_result <- httr::content(result,'text')
-  message <- xml2::xml_text(xml2::xml_find_all(xml2::read_xml(xml_result), ".//message/text"))
-  if(grepl("error", message, ignore.case=TRUE)) {
-    stop("Invalid address")
-  }
-  if(grepl("success", message, ignore.case=TRUE)) {
-    return(result)
-  }
+  check_status(result)
+
+  return(result)
 }
 
 #' Get Neighbour Zestimates

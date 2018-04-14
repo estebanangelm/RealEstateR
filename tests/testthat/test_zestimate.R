@@ -46,7 +46,7 @@ test_that("get_search_results() stops if property information is invalid", {
   state <- 'WA'
   expect_error(get_search_results(address,
                                   city,
-                                  state), "Invalid address")
+                                  state))
 })
 
 
