@@ -64,12 +64,11 @@ reviews <- function(zwsid = NULL, screennames){
     negotiationskillsRating <- content$response$results$proInfo$negotiationskillsRating
 
 
-
     df <-  tryCatch(dplyr::bind_rows(df, tibble::tibble(status, name, screenname, title,
                                     businessName, businessAddress, phone,
                                     specialties, serviceArea =  list(serviceArea), recentSaleCount, reviewCount,
                                     localknowledgeRating, processexpertiseRating, responsivenessRating, negotiationskillsRating)),
-                    error=function(e) paste0("There must be something wrong with your ZWSID, or you have reached 1000 API calls limit for today!"))
+                    error=function(e) paste0("Either screenname or ZWSID input is invalid, or you have reached 1000 API calls limit for today!"))
 
   }
 
