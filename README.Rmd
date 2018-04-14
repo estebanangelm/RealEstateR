@@ -54,7 +54,7 @@ This allows you to make API calls within the package without having to pass in y
 Sys.setenv(ZWSID='your-key-here')
 ```
 
-## Example
+## Usage Examples
 
 For a more comprehensive overview of all functions, check out the [vignette](https://s3-us-west-2.amazonaws.com/realestater/vignette.html).
 

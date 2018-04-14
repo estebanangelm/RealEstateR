@@ -37,8 +37,8 @@ This allows you to make API calls within the package without having to pass in y
 
     Sys.setenv(ZWSID='your-key-here')
 
-Example
--------
+Usage Examples
+--------------
 
 For a more comprehensive overview of all functions, check out the [vignette](https://s3-us-west-2.amazonaws.com/realestater/vignette.html).
 
@@ -80,10 +80,10 @@ get_comp_df(zpid = zpid, count = 5)
 #>        zpid bedrooms bathrooms  year  size lot_size    value  rent
 #>       <dbl>    <dbl>     <dbl> <dbl> <dbl>    <dbl>    <dbl> <dbl>
 #> 1 48689886.       4.      1.00 1919. 1590.    3049. 1067538. 2600.
-#> 2 61768005.       2.      1.00 1928. 1150.     871.  805660. 2750.
-#> 3 61679133.       2.      1.00 1928. 1010.     710.  744056. 2650.
-#> 4 84755631.       3.      1.10 2008. 1424.    1306.  863170. 2995.
-#> 5 48953643.       5.      3.00 1912. 2600.    4000. 1139262. 3000.
+#> 2 48689945.       4.      2.00 1912. 2500.    2500. 1113082. 3350.
+#> 3 48690160.       4.      3.00 1915. 2420.    2613. 1298157. 3950.
+#> 4 48690000.       2.      1.00 1905. 1730.    3920.  895289. 2600.
+#> 5 48690267.       2.      1.50 1911. 1570.    3500.  953882. 3350.
 ```
 
 This returns a dataframe with information about bedrooms, bathrooms, lot size of properties that are similar to your property.
