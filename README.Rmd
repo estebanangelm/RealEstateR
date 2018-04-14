@@ -56,6 +56,8 @@ Sys.setenv(ZWSID='your-key-here')
 
 ## Example
 
+For a more comprehensive overview of all functions, check out the [vignette](inst/doc/realestater.md).
+
 To get search results response, use `get_search_results()`:
 ```{r}
 response <- get_search_results("2144 Bigelow Ave", "Seattle", "WA")
@@ -81,10 +83,11 @@ get_comp_df(zpid = zpid, count = 5)
 This returns a dataframe with information about bedrooms, bathrooms, lot size of properties that are similar to your property.
 
 You can also get price estimates of other properties in the neighbourhood and plot them on a map:
-```{r, fig.width=5, fig.height=4}
+```r
 neighbours <- get_neighbour_zestimates('2144 Bigelow Ave', 'Seattle', 'WA')
 plot_neighbour_zestimates(neighbours)
 ```
+<img src="man/figures/neighbour_plot.png" width=55%/>
 
 To get screenname of a real estate agent in a specific city:
 ```
@@ -97,8 +100,6 @@ screennames <- c("Rakesh Ram Real Estate Group", "mwalley0", "pamelarporter", "k
 
 reviews(screennames)
 ```
-
-For a more comprehensive overview of all functions, check out the [vignette](inst/doc/realestater.md).
 
 ## Limitations
 

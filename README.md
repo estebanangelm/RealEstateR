@@ -40,6 +40,8 @@ This allows you to make API calls within the package without having to pass in y
 Example
 -------
 
+For a more comprehensive overview of all functions, check out the [vignette](inst/doc/realestater.md).
+
 To get search results response, use `get_search_results()`:
 
 ``` r
@@ -77,11 +79,11 @@ get_comp_df(zpid = zpid, count = 5)
 #> # A tibble: 5 x 8
 #>        zpid bedrooms bathrooms  year  size lot_size    value  rent
 #>       <dbl>    <dbl>     <dbl> <dbl> <dbl>    <dbl>    <dbl> <dbl>
-#> 1 48879047.       4.        4. 1916. 2707.    3484. 1513786. 4460.
-#> 2 48690160.       4.        3. 1915. 2420.    2613. 1298157. 3950.
-#> 3 48689945.       4.        2. 1912. 2500.    2500. 1113082. 3350.
-#> 4 89138050.       3.        4. 2009. 1905.    1398. 1042789. 3850.
-#> 5 48690000.       2.        1. 1905. 1730.    3920.  895289. 2600.
+#> 1 48689886.       4.      1.00 1919. 1590.    3049. 1067538. 2600.
+#> 2 48689945.       4.      2.00 1912. 2500.    2500. 1113082. 3350.
+#> 3 48690160.       4.      3.00 1915. 2420.    2613. 1298157. 3950.
+#> 4 48690000.       2.      1.00 1905. 1730.    3920.  895289. 2600.
+#> 5 48690267.       2.      1.50 1911. 1570.    3500.  953882. 3350.
 ```
 
 This returns a dataframe with information about bedrooms, bathrooms, lot size of properties that are similar to your property.
@@ -91,12 +93,9 @@ You can also get price estimates of other properties in the neighbourhood and pl
 ``` r
 neighbours <- get_neighbour_zestimates('2144 Bigelow Ave', 'Seattle', 'WA')
 plot_neighbour_zestimates(neighbours)
-#> Map from URL : http://maps.googleapis.com/maps/api/staticmap?center=47.630575,-122.349425&zoom=18&size=640x640&scale=2&maptype=roadmap&language=en-EN&sensor=false
-#> Warning: `panel.margin` is deprecated. Please use `panel.spacing` property
-#> instead
 ```
 
-<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
+<img src="man/figures/neighbour_plot.png" width=55%/>
 
 To get screenname of a real estate agent in a specific city:
 
@@ -107,8 +106,6 @@ To get information of up-to 5 real estate agents based on their screennames:
     screennames <- c("Rakesh Ram Real Estate Group", "mwalley0", "pamelarporter", "klamping4", "Cincysrealtor")
 
     reviews(screennames)
-
-For a more comprehensive overview of all functions, check out the [vignette](inst/doc/realestater.md).
 
 Limitations
 -----------
