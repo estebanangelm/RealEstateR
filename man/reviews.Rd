@@ -4,9 +4,11 @@
 \alias{reviews}
 \title{Get Review Details of Agents of your Choice}
 \usage{
-reviews(screennames)
+reviews(zwsid = NULL, screennames)
 }
 \arguments{
+\item{zwsid}{Your Zillow's API token. If you use the default, the function takes zwsid set in `set_zwsid`.}
+
 \item{screennames}{Agent screenname(s) of your choice (at most 5 screennames)}
 }
 \value{
@@ -17,8 +19,8 @@ This function inputs up to 5 agents' screenname,
 then output the agents' information and their review stars.
 }
 \examples{
-\dontrun{screennames <- c("mwalley0", "pamelarporter", "klamping4", "Cincysrealtor")
-reviews(screennames)}
+\dontrun{screennames <- c("mwalley0", "pamelarporter", "klamping4", "Cincysrealtor", "Guy24")
+reviews(zwsid, screennames)}
 
 }
 \author{

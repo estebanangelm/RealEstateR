@@ -2,7 +2,9 @@
 title: "RealEstateR"
 author: "Jill - Ha - Xinbin - Esteban"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+    keep_md: TRUE
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
   %\VignetteEngine{knitr::rmarkdown}
@@ -136,10 +138,14 @@ Now given that we have several screennames and want to figure out which agent ha
 ```{r, fig.width=6, fig.height=5}
 screennames <- c("mwalley0", "pamelarporter", "klamping4", "Cincysrealtor", "Guy24") 
 
-review_df <- reviews(screennames)
+review_df <- reviews(zwsid, screennames)
+
+# this function might yield error if ZWSID is invalid, or if we have reached 1000 request limits
+if (is.data.frame(review_df)){
 ggplot(review_df) +
   geom_col(aes(name, negotiationskillsRating), color="#40A379", fill="#40A379", alpha=0.6) + 
   labs(title = "Negotiation Skill Comparison", subtitle = "Among 5 agents in Cincinnati, OH", caption = "Data from Zillow.com",  
        x = "", y = "Rating") + 
   theme_bw()
+}
 ```
