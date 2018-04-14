@@ -14,6 +14,7 @@ source('R/format_params.R')
 #' @return API response
 #'
 #' @export
+
 get_search_results <- function(address, city, state) {
   zwsid <- getOption("ZWSID")
   address <- format_address(address)
@@ -53,7 +54,7 @@ get_neighbours <- function(address, city, state) {
 #'
 #' @return zpid as a string
 #'
-#' @example
+#' @examples
 #' \dontrun{
 #' response <- get_search_results("2144 Bigelow Ave", "Seattle", "WA")
 #' get_zpid(response)

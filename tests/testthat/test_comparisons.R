@@ -1,5 +1,4 @@
 context("comparisons.R")
-context("set_zwsid.R")
 library(ggplot2)
 
 # -----------------------------------------------------------------------------
@@ -14,6 +13,17 @@ zwsid <- function() {
   val
 }
 zwsid <- zwsid()
+
+# -----------------------------------------------------------------------------
+# get_deep_comps()
+# -----------------------------------------------------------------------------
+
+test_that("get_deep_comps() outputs a response when
+          a valid property ID is passed in", {
+            set_zwsid(zwsid)
+            output <- get_deep_comps(zpid="48749425", count=25)
+            expect_equal(class(output), c("response"))
+          })
 
 # -----------------------------------------------------------------------------
 # get_comp_df()

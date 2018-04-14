@@ -13,26 +13,30 @@ zwsid <- function() {
 }
 zwsid <- zwsid()
 
-test_that("reviews_get_screennames() outputs a dataframe given a combination of city and state", {
+test_that("reviews_get_screennames() outputs an agent screenname given name, city and state", {
 
   # -----------------------------------------------------------------------------
   # test input
   # -----------------------------------------------------------------------------
 
+  # expect a character input for name
+  expect_error(reviews_get_screennames(456, "cincinnati", "oh"),
+               "Expect input of name to be a string")
+
   # expect an all-character input for state
-  expect_error(reviews_get_screennames("cincinnati", 45220),
+  expect_error(reviews_get_screennames("Rakesh Ram Real Estate Group", "cincinnati", 45220),
                "Expect input of state to be a string.")
-  expect_error(reviews_get_screennames("cincinnati", "A4"),
+  expect_error(reviews_get_screennames("Rakesh Ram Real Estate Group", "cincinnati", "A4"),
                "Expect input of state to be an all-character string.")
 
   # expect 2-letter input for state
-  expect_error(reviews_get_screennames("los-angeles", "Cali"),
+  expect_error(reviews_get_screennames("Katie Pardee", "los-angeles", "Cali"),
                "Expect 2-letter input of state abbreviation.")
 
   # expect an all-character input for city
-  expect_error(reviews_get_screennames(45220, "OH"),
+  expect_error(reviews_get_screennames("Rakesh Ram Real Estate Group", 45220, "OH"),
                "Expect input of city to be a string.")
-  expect_error(reviews_get_screennames("c1nc1n4t1", "OH"),
+  expect_error(reviews_get_screennames("Rakesh Ram Real Estate Group", "c1nc1n4t1", "OH"),
                "Expect input of city to be an all-character string.")
 
 
@@ -40,31 +44,11 @@ test_that("reviews_get_screennames() outputs a dataframe given a combination of 
   # test output
   # -----------------------------------------------------------------------------
 
-  response <- reviews_get_screennames("Cincinnati", "OH")
+  # output when inputs combination exist
+  expect_equal(reviews_get_screennames("Anthony Butera", "Rochester", "NY"), "Anthony-Butera")
+  expect_equal(length(reviews_get_screennames("Anthony Butera", "Rochester", "NY")), 1)
 
-  # expect a dataframe with 5 columns
-  expect_output(str(response), "5 variables", ignore.case = TRUE,
-                          "There should be 5 columns in the dataframe")
-
-  # expect a dataframe with column `name`, `screenname`, `phone`, `city`, `state`
-  expect_output(str(response), "$ name", fixed = TRUE)
-  expect_output(str(response), "$ screenname", fixed = TRUE)
-  expect_output(str(response), "$ phone", fixed = TRUE)
-  expect_output(str(response), "$ city", fixed = TRUE)
-  expect_output(str(response), "$ state", fixed = TRUE)
-
-  # expect type charactor for all columns
-  expect_is(response$name, "character", "All columns should be in type character.")
-  expect_is(response$screenname, "character", "All columns should be in type character.")
-  expect_is(response$phone, "character", "All columns should be in type character.")
-  expect_is(response$city, "character", "All columns should be in type character.")
-  expect_is(response$state, "character", "All columns should be in type character.")
-
-  # expect an empty dataframe if city and state combination contains too many results
-  response_empty <- reviews_get_screennames("New-York", "NY")
-  expect_equal(nrow(response_empty), 0)
-
-  # expect an empty dataframe if location combination does not exist
-  response_ghostLocation <- reviews_get_screennames("Madagasca", "CA")
-  expect_equal(nrow(response_ghostLocation), 0)
+  # output when inputs combination does not exist
+  expect_error(reviews_get_screennames("Ha Dinh", "Seattle", "WA"),
+               "The agent name you want to search for in Seattle , WA does not exist.")
 })

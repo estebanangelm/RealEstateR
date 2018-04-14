@@ -130,12 +130,12 @@ get_loc <- function(response){
 #' @examples
 #' \dontrun{
 #' response <- get_search_results("2144 Bigelow Ave", "Seattle", "WA")
-#' get_zestimate_alt(response)
+#' get_zestimate_all(response)
 #'
 #' get_search_results("2144 Bigelow Ave", "Seattle", "WA") %>%
-#'   get_zestimate_alt()
+#'   get_zestimate_all()
 #' }
-get_zestimate_alt <- function(response){
+get_zestimate_all <- function(response){
 
   check_type(response)
 
@@ -165,7 +165,7 @@ get_zestimate_alt <- function(response){
 
 #' Get local real estate data from the API response
 #'
-#' @description Get local real estate data, e.g. Region, id, type(i.e. neighbour), Zillow Home Value Index
+#' @description Get local real estate data, e.g. Region, id, type(i.e. neighborhood), Zillow Home Value Index
 #'
 #' @param response The API response from `get_search_results`
 #'
