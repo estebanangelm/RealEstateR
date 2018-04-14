@@ -5,7 +5,7 @@
 #' @param zpid property ID
 #'
 #' @param count number of comparable properties
-#'
+#' @import ggplot2
 #' @return A data frame with n comparable properties and some of their main attributes.
 get_deep_comps <- function(zpid, count) {
   zwsid <- getOption("ZWSID")
@@ -44,7 +44,7 @@ get_comp_df <- function(zpid,count=25){
   value <- rep(NA,count)
   rent <- rep(NA,count)
 
-  comps <- xml2:::xml_find_all(zillow_xml, ".//comp")
+  comps <- xml2::xml_find_all(zillow_xml, ".//comp")
 
   for (i in (1:count)){
     new_zpid <- as.numeric(xml2::xml_text(xml2::xml_find_all(comps[i], ".//zpid")))
@@ -85,7 +85,7 @@ price_plot <- function(zpid) {
   price_high <- as.numeric(xml2::xml_text(xml2::xml_find_all(zillow_xml, ".//comp/zestimate/valuationRange/high")))
   prices <- c(price_low,price_high)
 
-  p <-ggplot2::ggplot(dplyr::data_frame(prices))+
+  p <- ggplot(dplyr::data_frame(prices))+
         geom_boxplot(aes(x="",y=prices),color="#434D62",fill="#434D62",alpha=0.6)+
         ggtitle("Price Ranges")+
         scale_y_continuous("Prices",labels = scales::dollar_format())+

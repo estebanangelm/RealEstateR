@@ -26,14 +26,23 @@ The objective of the `RealEstateR` package is extracting some of the information
 
 ## RealEstateR Workflow
 
-Since the Zillow's API requires some authentication, the first thing the user should do is registering [here](http://www.zillow.com/webservice/Registration.htm) and getting a `ZWSID`, which works as the API's key. For simplicity, after getting the token it should be set up using the `set_zwsid()` function like this:
-
-```{r, include=FALSE}
-zwsid <- "X1-ZWz18oiyrpllhn_4vl2o"
-```
+After installing our package, load it using:
 
 ```{r}
 library(RealEstateR)
+```
+
+Since the Zillow's API requires some authentication, the first thing the user should do is registering [here](http://www.zillow.com/webservice/Registration.htm) and getting a `ZWSID`, which works as the API's key. For simplicity, after getting the token it should be set up using the `set_zwsid()` function like this:
+
+```r
+set_zwsid("your_zwsid")
+```
+
+```{r, include=FALSE}
+zwsid <- Sys.getenv("ZWSID")
+```
+
+```{r, include=FALSE}
 set_zwsid(zwsid)
 ```
 
@@ -121,7 +130,3 @@ ggplot(data = review_df) +
        x = "", y = "Rating") + 
   theme_bw()
 ```
-
-
-
-

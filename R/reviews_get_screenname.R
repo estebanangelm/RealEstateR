@@ -77,7 +77,7 @@ reviews_get_screennames <- function(name, city, state){
     screenname <- content %>%
       html_node('p a') %>%
       html_attr('href') %>%
-      strsplit(., "[/]") %>%
+      strsplit("[/]") %>%
       purrr::map_chr(3)
   }
 
