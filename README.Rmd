@@ -56,7 +56,7 @@ Sys.setenv(ZWSID='your-key-here')
 
 ## Example
 
-For a more comprehensive overview of all functions, check out the [vignette](inst/doc/realestater.md).
+For a more comprehensive overview of all functions, check out the [vignette](https://s3-us-west-2.amazonaws.com/realestater/vignette.html).
 
 To get search results response, use `get_search_results()`:
 ```{r}
