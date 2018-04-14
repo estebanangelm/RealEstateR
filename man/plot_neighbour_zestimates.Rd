@@ -10,7 +10,7 @@ plot_neighbour_zestimates(df)
 \item{dataframe}{Dataframe returned from get_neighbour_zestimates()}
 }
 \value{
-A leaflet map
+A ggplot map
 }
 \description{
 Plot neighbour zestimates
