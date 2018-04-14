@@ -79,30 +79,32 @@ get_neighbour_zestimates <- function(address, city, state) {
   return(neighbourhood_df)
 }
 
+
+
 #' Plot neighbour zestimates
 #'
 #' @param dataframe Dataframe returned from get_neighbour_zestimates()
 #'
-#' @import leaflet
+#' @import ggmap
 #'
 #' @return A leaflet map
 #'
 #' @export
 plot_neighbour_zestimates <- function(df) {
-  pal <- colorNumeric(
-    palette = "RdYlBu",
-    domain = df$zestimate,
-    n = 10
-  )
-  m <- leaflet(data=df)
-  m <- setView(m, lat=mean(df$latitude), lng=mean(df$longitude), zoom=18)
-  m <- addTiles(m)
-  m <- addCircleMarkers(m, lat=~latitude, lng=~longitude,
-                        color = ~pal(zestimate), label = ~address)
-  m <- addLegend(m, "bottomright", pal=pal,
-                 values=~zestimate, opacity=0.7, labFormat = labelFormat(prefix = "$"))
-  return(m)
+  base <- ggmap(get_map(location = c(lon = mean(df$longitude),
+                                          lat = mean(df$latitude)), zoom=18, maptype="roadmap"), extent="device")
+  p <- base +
+    geom_point(data = df, aes(x=longitude, y=latitude, color=zestimate), size=7) +
+    geom_text(data = df, aes(x=longitude, y=latitude, label=address),
+              size = 3) +
+    scale_color_distiller(palette="Spectral", labels = scales::dollar_format("$")) +
+    ggtitle("Neighbourhood Zestimates") +
+    theme_minimal() +
+    theme(legend.text=element_text(size=6),
+          legend.title=element_text(size=7))
+  return(p)
 }
+
 
 #' Get Zillow Property ID
 #'

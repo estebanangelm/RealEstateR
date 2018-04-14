@@ -87,7 +87,7 @@ head(neighbours)
 
 You can also plot the neighbourhood price estimates using `plot_neighbour_zestimates()`. The size of each property marker corresponds to its zestimate.
 
-```{r}
+```{r, fig.width=7, fig.height=6}
 plot_neighbour_zestimates(neighbours)
 ```
 
