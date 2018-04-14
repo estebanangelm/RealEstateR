@@ -7,7 +7,7 @@
 plot_neighbour_zestimates(df)
 }
 \arguments{
-\item{dataframe}{Dataframe returned from get_neighbour_zestimates()}
+\item{df}{Dataframe returned from get_neighbour_zestimates()}
 }
 \value{
 A ggplot map
