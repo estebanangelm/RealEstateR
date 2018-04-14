@@ -57,4 +57,4 @@ expect_output(str(test_df), "$ negotiationskillsRating", fixed = TRUE)
 
 # check when ZWSID is invalid (or if users have already reached API limit)
 expect_equal(reviews("abcd", "mwalley0"),
-             "There must be something wrong with your ZWSID, or you have reached 1000 API calls limit for today!")
+             "Either screenname or ZWSID input is invalid, or you have reached 1000 API calls limit for today!")
