@@ -7,7 +7,11 @@
 #' @return proper format of address as a string (e.g., '2144+Bigelow+Ave')
 #' @keywords internal
 format_address <- function(address) {
-  formatted_address <- gsub("\\s", "+", address)
+  if(grepl('[0-9]+', address)) {
+    formatted_address <- gsub("\\s", "+", address)
+  } else {
+    stop("Address must have a street number.")
+  }
   return(formatted_address)
 }
 

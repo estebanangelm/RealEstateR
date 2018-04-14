@@ -21,14 +21,9 @@ get_search_results <- function(address, city, state) {
   citystatezip <- format_citystate(city, state)
   base_url <- 'http://www.zillow.com/webservice/GetSearchResults.htm?'
   result <- httr::GET(url = paste0(base_url, 'zws-id=', zwsid, '&address=', address, '&citystatezip=', citystatezip))
-  xml_result <- httr::content(result,'text')
-  message <- xml2::xml_text(xml2::xml_find_all(xml2::read_xml(xml_result), ".//message/text"))
-  if(grepl("error", message, ignore.case=TRUE)) {
-    stop("Invalid address")
-  }
-  if(grepl("success", message, ignore.case=TRUE)) {
-    return(result)
-  }
+  check_status(result)
+
+  return(result)
 }
 
 #' Get Neighbour Zestimates
@@ -83,16 +78,16 @@ get_neighbour_zestimates <- function(address, city, state) {
 
 #' Plot neighbour zestimates
 #'
-#' @param dataframe Dataframe returned from get_neighbour_zestimates()
+#' @param df Dataframe returned from get_neighbour_zestimates()
 #'
-#' @import ggmap
+#' @return A ggplot map
 #'
-#' @return A leaflet map
+#' @importFrom ggmap ggmap get_map
 #'
 #' @export
 plot_neighbour_zestimates <- function(df) {
-  base <- ggmap(get_map(location = c(lon = mean(df$longitude),
-                                          lat = mean(df$latitude)), zoom=18, maptype="roadmap"), extent="device")
+  base <- suppressWarnings(ggmap(get_map(location = c(lon = mean(df$longitude),
+                                          lat = mean(df$latitude)), zoom=18, maptype="roadmap"), extent="device"))
   p <- base +
     geom_point(data = df, aes(x=longitude, y=latitude, color=zestimate), size=7) +
     geom_text(data = df, aes(x=longitude, y=latitude, label=address),

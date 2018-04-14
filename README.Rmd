@@ -1,5 +1,5 @@
 ---
-output: md_document
+output: github_document
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -32,8 +32,17 @@ To use the Zillow API in this package, you will need to get a Zillow Web Service
 
 Once you have your ZWSID, you can set it:
 
-```
+```{r}
 library(RealEstateR)
+```
+
+```{r, include=FALSE}
+zwsid <- Sys.getenv("ZWSID")
+set_zwsid(zwsid)
+library(ggmap)
+```
+
+```r
 set_zwsid("your-zwsid-here")
 ```
 
@@ -45,29 +54,40 @@ This allows you to make API calls within the package without having to pass in y
 Sys.setenv(ZWSID='your-key-here')
 ```
 
-## Example
+## Usage Examples
 
-To get search results response:
-```
+For a more comprehensive overview of all functions, check out the [vignette](https://s3-us-west-2.amazonaws.com/realestater/vignette.html).
+
+To get search results response, use `get_search_results()`:
+```{r}
 response <- get_search_results("2144 Bigelow Ave", "Seattle", "WA")
 ```
 
-To get information about the property's `zpid`:
-```
-response <- get_search_results("2144 Bigelow Ave", "Seattle", "WA")
+Note that the address must be include a street number. Passing in `"Bigelow Ave"` without the street number will result in an error. `get_search_results()` gives you the raw Zillow API response. You can use this response in other functions to extract information from it.
+
+For example, you can get information about the property's `zpid`:
+```{r}
 get_zpid(response)
 ```
 
-To get location data:
-```
-response <- get_search_results("2144 Bigelow Ave", "Seattle", "WA")
+You can also extract the location data (e.g., geocoordinates) from the response:
+```{r}
 get_loc(response)
 ```
 
-To get information about similar recent sales for a specific property:
+To get information about similar recent sales, use `get_comp_df()`:
+```{r}
+zpid <- get_zpid(response)
+get_comp_df(zpid = zpid, count = 5)
 ```
-get_comp_df(zpid = "48749425", count = 5)
+This returns a dataframe with information about bedrooms, bathrooms, lot size of properties that are similar to your property.
+
+You can also get price estimates of other properties in the neighbourhood and plot them on a map:
+```r
+neighbours <- get_neighbour_zestimates('2144 Bigelow Ave', 'Seattle', 'WA')
+plot_neighbour_zestimates(neighbours)
 ```
+<img src="man/figures/neighbour_plot.png" width=55%/>
 
 To get screenname of a real estate agent in a specific city:
 ```
