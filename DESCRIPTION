@@ -18,7 +18,7 @@ Suggests:
     knitr,
     rmarkdown,
     tidyverse
-Imports: 
+Imports:
     xml2,
     httr,
     stringr,
@@ -29,6 +29,7 @@ Imports:
     rvest,
     purrr,
     tibble,
-    dplyr
+    dplyr,
+    ggmap
 RoxygenNote: 6.0.1
 VignetteBuilder: knitr
