@@ -2,7 +2,9 @@
 title: "RealEstateR"
 author: "Jill - Ha - Xinbin - Esteban"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+    keep_md: TRUE
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
   %\VignetteEngine{knitr::rmarkdown}
