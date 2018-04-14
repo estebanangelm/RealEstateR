@@ -15,7 +15,8 @@ get_neighbour_zestimates(address, city, state)
 \item{state}{State of the property. Can be abbreviated (e.g., 'WA' for Washington)}
 }
 \value{
-Dataframe with neighbour address and corresponding zestimate
+Dataframe with neighbour address, latitude and longitude coordinates,
+and corresponding zestimate
 }
 \description{
 Gets zestimates of neighbouring houses on the same street.

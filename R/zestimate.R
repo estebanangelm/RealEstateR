@@ -1,4 +1,5 @@
 source('R/format_params.R')
+source('R/utils.R')
 
 #' GetSearchResults Response
 #'
@@ -41,7 +42,8 @@ get_search_results <- function(address, city, state) {
 #'
 #' @param state State of the property. Can be abbreviated (e.g., 'WA' for Washington)
 #'
-#' @return Dataframe with neighbour address and corresponding zestimate
+#' @return Dataframe with neighbour address, latitude and longitude coordinates,
+#' and corresponding zestimate
 #'
 #' @export
 get_neighbour_zestimates <- function(address, city, state) {
@@ -51,6 +53,8 @@ get_neighbour_zestimates <- function(address, city, state) {
   neighbours <- paste0(neighbour_numbers, street_name)
   neighbour_list <- c()
   zestimate_list <- c()
+  lat_list <- c()
+  long_list <- c()
   for(n in neighbours) {
     tryCatch({
       response <- get_search_results(n, city, state)
@@ -58,6 +62,8 @@ get_neighbour_zestimates <- function(address, city, state) {
       neighbour_zestimate <- get_zestimate(zpid)
       zestimate_list <- c(zestimate_list, neighbour_zestimate)
       neighbour_list <- c(neighbour_list, n)
+      lat_list <- c(lat_list, get_lat(response))
+      long_list <- c(long_list, get_long(response))
     },
     error=function(cond) {
       return(invisible())
@@ -66,10 +72,37 @@ get_neighbour_zestimates <- function(address, city, state) {
   if(length(neighbour_list) == 0) {
     stop("No neighbours detected for this address")
   }
-  neighbour_zestiamtes <- data.frame(address = neighbour_list, zestimate = zestimate_list)
-  return(neighbour_zestiamtes)
+  neighbourhood_df <- data.frame(address = neighbour_list,
+                                     zestimate = zestimate_list,
+                                     latitude = lat_list,
+                                     longitude = long_list)
+  return(neighbourhood_df)
 }
 
+#' Plot neighbour zestimates
+#'
+#' @param dataframe Dataframe returned from get_neighbour_zestimates()
+#'
+#' @import leaflet
+#'
+#' @return A leaflet map
+#'
+#' @export
+plot_neighbour_zestimates <- function(df) {
+  pal <- colorNumeric(
+    palette = "RdYlBu",
+    domain = df$zestimate,
+    n = 10
+  )
+  m <- leaflet(data=df)
+  m <- setView(m, lat=mean(df$latitude), lng=mean(df$longitude), zoom=18)
+  m <- addTiles(m)
+  m <- addCircleMarkers(m, lat=~latitude, lng=~longitude,
+                        color = ~pal(zestimate), label = ~address)
+  m <- addLegend(m, "bottomright", pal=pal,
+                 values=~zestimate, opacity=0.7, labFormat = labelFormat(prefix = "$"))
+  return(m)
+}
 
 #' Get Zillow Property ID
 #'

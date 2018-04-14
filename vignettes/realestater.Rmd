@@ -85,6 +85,11 @@ neighbours <- get_neighbour_zestimates('18114 Liscum Hill', 'San Antonio', 'TX')
 head(neighbours)
 ```
 
+You can also plot the neighbourhood price estimates using `plot_neighbour_zestimates()`. The size of each property marker corresponds to its zestimate.
+
+```{r}
+plot_neighbour_zestimates(neighbours)
+```
 
 Additional to the one by one data extraction, we can also do some bulk retrieval for further analysis of a property and other comparable properties. The most detailed way of extracting data of similar properties from the database is using the `get_comp_df()` function. We input an specific `zpid` and we can decide the number of similar properties we want to get with the parameter count. For this exercise we'll get 20 of them
 

@@ -106,6 +106,7 @@ get_loc <- function(response){
 
 }
 
+
 #' Get Zestimate related data from the API response
 #'
 #' @description The Zestimate® home value is Zillow's estimated market value for
