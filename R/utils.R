@@ -11,6 +11,34 @@ check_type <- function(response){
   }
 }
 
+#' Get latitude of property
+#'
+#' @description Gets latitude coordinate of a given property
+#'
+#' @param response Object returned from get_search_results()
+#'
+#' @return Latitude as a float
+#' @keywords internal
+get_lat <- function(response) {
+  search_xml <- xml2::read_xml(response)
+  latitude <- round(xml2::xml_double(xml2::xml_find_all(search_xml, "//address//latitude")),4)
+  return(latitude)
+}
+
+#' Get longitude of property
+#'
+#' @description Gets longitude coordinate of a given property
+#'
+#' @param response Object returned from get_search_results()
+#'
+#' @return Longitude as a float
+#' @keywords internal
+get_long <- function(response) {
+  search_xml <- xml2::read_xml(response)
+  longitude <- round(xml2::xml_double(xml2::xml_find_all(search_xml, "//address//longitude")),4)
+  return(longitude)
+}
+
 
 
 #' Exception handler: response status

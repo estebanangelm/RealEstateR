@@ -1,4 +1,5 @@
 source('R/format_params.R')
+source('R/utils.R')
 
 #' GetSearchResults Response
 #'
@@ -14,7 +15,6 @@ source('R/format_params.R')
 #' @return API response
 #'
 #' @export
-
 get_search_results <- function(address, city, state) {
   zwsid <- getOption("ZWSID")
   address <- format_address(address)
@@ -29,6 +29,80 @@ get_search_results <- function(address, city, state) {
   if(grepl("success", message, ignore.case=TRUE)) {
     return(result)
   }
+}
+
+#' Get Neighbour Zestimates
+#'
+#' @description Gets zestimates of neighbouring houses on the same street.
+#'
+#' @param address Street address of interest as a string
+#' (e.g., '2144 Bigelow Ave')
+#'
+#' @param city City of the property
+#'
+#' @param state State of the property. Can be abbreviated (e.g., 'WA' for Washington)
+#'
+#' @return Dataframe with neighbour address, latitude and longitude coordinates,
+#' and corresponding zestimate
+#'
+#' @export
+get_neighbour_zestimates <- function(address, city, state) {
+  street_number <- as.numeric(gsub("([0-9]+).*$", "\\1", address))
+  street_name <- gsub('[0-9]+', '', address)
+  neighbour_numbers <- append((street_number + c(1:10)), (street_number - c(1:10)))
+  neighbours <- paste0(neighbour_numbers, street_name)
+  neighbour_list <- c()
+  zestimate_list <- c()
+  lat_list <- c()
+  long_list <- c()
+  for(n in neighbours) {
+    tryCatch({
+      response <- get_search_results(n, city, state)
+      zpid <- get_zpid(response)
+      neighbour_zestimate <- get_zestimate(zpid)
+      zestimate_list <- c(zestimate_list, neighbour_zestimate)
+      neighbour_list <- c(neighbour_list, n)
+      lat_list <- c(lat_list, get_lat(response))
+      long_list <- c(long_list, get_long(response))
+    },
+    error=function(cond) {
+      return(invisible())
+    })
+  }
+  if(length(neighbour_list) == 0) {
+    stop("No neighbours detected for this address")
+  }
+  neighbourhood_df <- data.frame(address = neighbour_list,
+                                     zestimate = zestimate_list,
+                                     latitude = lat_list,
+                                     longitude = long_list)
+  return(neighbourhood_df)
+}
+
+
+
+#' Plot neighbour zestimates
+#'
+#' @param dataframe Dataframe returned from get_neighbour_zestimates()
+#'
+#' @import ggmap
+#'
+#' @return A leaflet map
+#'
+#' @export
+plot_neighbour_zestimates <- function(df) {
+  base <- ggmap(get_map(location = c(lon = mean(df$longitude),
+                                          lat = mean(df$latitude)), zoom=18, maptype="roadmap"), extent="device")
+  p <- base +
+    geom_point(data = df, aes(x=longitude, y=latitude, color=zestimate), size=7) +
+    geom_text(data = df, aes(x=longitude, y=latitude, label=address),
+              size = 3) +
+    scale_color_distiller(palette="Spectral", labels = scales::dollar_format("$")) +
+    ggtitle("Neighbourhood Zestimates") +
+    theme_minimal() +
+    theme(legend.text=element_text(size=6),
+          legend.title=element_text(size=7))
+  return(p)
 }
 
 

@@ -66,7 +66,7 @@ Now that we have the `zpid` stored, we can retrieve some data and do some analys
 get_zestimate(zpid)
 ```
 
-For example this property has an estimated price of $655.924.We can also retrieve the exact latitude and longitude of the property if we want to check it on Google Maps:
+For example this property has an estimated price of $655.924. We can also retrieve the exact latitude and longitude of the property if we want to check it on Google Maps:
 
 ```{r}
 get_loc(response)
@@ -78,6 +78,19 @@ Or the links to the property's Zillow link if we want to check the photos associ
 get_links(response)
 ```
 
+We can also check the price estimates of the neighbourhood of a given property. The `get_neighbour_zestimates()` function searches for zestimates of 10 street numbers greater than and less than the given property's address. If there are no neighbours on the same street, an error message will get returned. The maximum number of neighbours that could get returned is 20.
+
+```{r}
+neighbours <- get_neighbour_zestimates('18114 Liscum Hill', 'San Antonio', 'TX')
+head(neighbours)
+```
+
+You can also plot the neighbourhood price estimates using `plot_neighbour_zestimates()`. The size of each property marker corresponds to its zestimate.
+
+```{r, fig.width=7, fig.height=6}
+plot_neighbour_zestimates(neighbours)
+```
+
 Additional to the one by one data extraction, we can also do some bulk retrieval for further analysis of a property and other comparable properties. The most detailed way of extracting data of similar properties from the database is using the `get_comp_df()` function. We input an specific `zpid` and we can decide the number of similar properties we want to get with the parameter count. For this exercise we'll get 20 of them
 
 ```{r}
@@ -85,7 +98,7 @@ comp_df <- get_comp_df(zpid, count = 25)
 head(comp_df)
 ```
 
-```{r}
+```{r, fig.width=6, fig.height=5, warning=FALSE, message=FALSE}
 library(tidyverse)
 ggplot(comp_df %>% group_by(bedrooms = as.factor(bedrooms)) %>% summarize(count = n()))+
   geom_col(aes(bedrooms,count),color="#40A379",fill="#40A379",alpha=0.6)+
@@ -97,7 +110,7 @@ ggplot(comp_df %>% group_by(bedrooms = as.factor(bedrooms)) %>% summarize(count 
 
 There's a rule of thumb in real estate that a property has a rent price approximately of 0.7% of the property value. We can run a simple analysis to find opportunities of investment in similar properties that are "undervalued" from their theorical price:
 
-```{r}
+```{r, fig.width=6, fig.height=5, warning=FALSE, message=FALSE}
 rule_thumb <- comp_df %>% 
                 mutate(value_approx = rent/0.007,
                        opportunity = value_approx - value) %>% 
@@ -120,12 +133,12 @@ reviews_get_screennames(name = 'Guy and Patrick Cagney', city = 'Cincinnati', st
 
 Now given that we have several screennames and want to figure out which agent has highest ratings among all, we can use function `reviews()` to get this information. This function allows us to find out information of up to 5 screennames. 
 
-```{r}
+```{r, fig.width=6, fig.height=5}
 screennames <- c("mwalley0", "pamelarporter", "klamping4", "Cincysrealtor", "Guy24") 
 
 review_df <- reviews(screennames)
-ggplot(data = review_df) +
-  geom_col(aes(name, negotiationskillsRating)) + 
+ggplot(review_df) +
+  geom_col(aes(name, negotiationskillsRating), color="#40A379", fill="#40A379", alpha=0.6) + 
   labs(title = "Negotiation Skill Comparison", subtitle = "Among 5 agents in Cincinnati, OH", caption = "Data from Zillow.com",  
        x = "", y = "Rating") + 
   theme_bw()

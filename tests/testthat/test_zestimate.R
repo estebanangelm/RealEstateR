@@ -73,3 +73,14 @@ test_that("get_zestimate() provides price estimate of house given zpid", {
   output <- get_zestimate(zpid)
   expect_gte(output, 79000)
 })
+
+# -----------------------------------------------------------------------------
+# get_neighbour_zestimates()
+# -----------------------------------------------------------------------------
+
+test_that("get_neighbour_zestimates() returns a dataframe with correct dimensions", {
+  set_zwsid(zwsid)
+  output <- get_neighbour_zestimates("2144 Bigelow Ave", "Seattle", "WA")
+  expect_equal(is.data.frame(output), TRUE)
+  expect_equal(nrow(output), 4)
+})
