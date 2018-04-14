@@ -1,5 +1,5 @@
 ---
-output: github_document
+output: md_document
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -69,10 +69,21 @@ To get information about similar recent sales for a specific property:
 get_comp_df(zpid = "48749425", count = 5)
 ```
 
-To get information about real estate agents for a specific city:
+To get screenname of a real estate agent in a specific city:
 ```
-reviews_get_screennames(city = 'Los Angeles', state = 'CA')
+reviews_get_screennames(name = 'Rakesh Ram Real Estate Group', city = 'Cincinnati', state = 'OH')
 ```
+
+To get information of up-to 5 real estate agents based on their screennames:
+```
+screennames <- c("Rakesh Ram Real Estate Group", "mwalley0", "pamelarporter", "klamping4", "Cincysrealtor")
+
+reviews(screennames)
+```
+
+## Limitations
+
+In Zillow's Terms of Use, reverse-engineering like scrapping is not allowed. Thus, it is not possible to get screennames of all real-estate agents in a location through web scrapping method. At the same time, Zillow API allows 1000 requests per day, which also limits the number of agents' reviews information you can get. Reflecting from this limitation, our `reviews` function only allows you to search for reviews information of 5 agents at most. 
 
 ## Contribution
 
