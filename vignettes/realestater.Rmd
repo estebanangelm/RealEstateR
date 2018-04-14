@@ -28,8 +28,13 @@ The objective of the `RealEstateR` package is extracting some of the information
 
 Since the Zillow's API requires some authentication, the first thing the user should do is registering [here](http://www.zillow.com/webservice/Registration.htm) and getting a `ZWSID`, which works as the API's key. For simplicity, after getting the token it should be set up using the `set_zwsid()` function like this:
 
+```{r, include=FALSE}
+zwsid <- "X1-ZWz18oiyrpllhn_4vl2o"
 ```
-set_zwsid("your-zwsid-here")
+
+```{r}
+library(RealEstateR)
+set_zwsid(zwsid)
 ```
 
 Now that we have the authentication ready, the next thing we need to do is getting the `zpid` from an address we're interested in, which is the unique id for each property in Zillow's database. So we search the address using the `get_search_results()` function and then we extract the `zpid` from it using the `get_zpid()` function:
