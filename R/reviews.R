@@ -8,6 +8,7 @@
 #'
 #' @param screennames Agent screenname(s) of your choice (at most 5 screennames)
 #'
+#' @param zwsid Your Zillow's API token. If you use the default, the function takes zwsid set in `set_zwsid`.
 #'
 #' @import rvest
 #' @import httr
@@ -15,14 +16,15 @@
 #' @return A dataframe that includes details of agents, and their star reviews.
 #'
 #' @examples
-#' \dontrun{screennames <- c("mwalley0", "pamelarporter", "klamping4", "Cincysrealtor")
-#' reviews(screennames)}
+#' \dontrun{screennames <- c("mwalley0", "pamelarporter", "klamping4", "Cincysrealtor", "Guy24")
+#' reviews(zwsid, screennames)}
 #'
 #' @export
 
-reviews <- function(screennames){
+reviews <- function(zwsid = NULL, screennames){
   # call API key from get_zwsid
-  zwsid <- getOption("ZWSID")
+  if (is.null(zwsid)){
+  zwsid <- getOption("ZWSID")}
 
   df <- NULL
 
@@ -61,10 +63,13 @@ reviews <- function(screennames){
     responsivenessRating <- content$response$results$proInfo$responsivenessRating
     negotiationskillsRating <- content$response$results$proInfo$negotiationskillsRating
 
-    df <-  rbind(df, tibble::tibble(status, name, screenname, title,
+
+
+    df <-  tryCatch(dplyr::bind_rows(df, tibble::tibble(status, name, screenname, title,
                                     businessName, businessAddress, phone,
                                     specialties, serviceArea =  list(serviceArea), recentSaleCount, reviewCount,
-                                    localknowledgeRating, processexpertiseRating, responsivenessRating, negotiationskillsRating))
+                                    localknowledgeRating, processexpertiseRating, responsivenessRating, negotiationskillsRating)),
+                    error=function(e) paste0("There must be something wrong with your ZWSID, or you have reached 1000 API calls limit for today!"))
 
   }
 

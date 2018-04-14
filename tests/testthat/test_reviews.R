@@ -18,20 +18,20 @@ zwsid <- zwsid()
 # -----------------------------------------------------------------------------
 
 # expect character input for screennames
-expect_error(reviews(1:5),
+expect_error(reviews(zwsid, 1:5),
              "Expect screennames input to be character.")
 
-expect_error(reviews(c(1,2,3)),
+expect_error(reviews(zwsid, c(1,2,3)),
              "Expect screennames input to be character.")
 
-expect_error(reviews(c("mwalley0", "pamelarporter", "klamping4", "Cincysrealtor", "Gordon", "everydoorrealestate")),
+expect_error(reviews(zwsid, c("mwalley0", "pamelarporter", "klamping4", "Cincysrealtor", "Gordon", "everydoorrealestate")),
              "Expect at most 5 screennames.")
 
 # -----------------------------------------------------------------------------
 # test output
 # -----------------------------------------------------------------------------
 screennames <- c("mwalley0", "pamelarporter", "klamping4", "Cincysrealtor")
-test_df <- reviews(screennames)
+test_df <- reviews(zwsid, screennames)
 
 # Expect type of dataframe to be a tibble
 expect_is(test_df, c("tbl_df","tbl","data.frame"))
@@ -55,6 +55,6 @@ expect_output(str(test_df), "$ processexpertiseRating", fixed = TRUE)
 expect_output(str(test_df), "$ responsivenessRating", fixed = TRUE)
 expect_output(str(test_df), "$ negotiationskillsRating", fixed = TRUE)
 
-
-
-
+# check when ZWSID is invalid (or if users have already reached API limit)
+expect_equal(reviews("abcd", "mwalley0"),
+             "There must be something wrong with your ZWSID, or you have reached 1000 API calls limit for today!")
