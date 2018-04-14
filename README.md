@@ -23,8 +23,13 @@ To use the Zillow API in this package, you will need to get a Zillow Web Service
 
 Once you have your ZWSID, you can set it:
 
-    library(RealEstateR)
-    set_zwsid("your-zwsid-here")
+``` r
+library(RealEstateR)
+```
+
+``` r
+set_zwsid("your-zwsid-here")
+```
 
 This allows you to make API calls within the package without having to pass in your ZWSID every time.
 
@@ -35,23 +40,63 @@ This allows you to make API calls within the package without having to pass in y
 Example
 -------
 
-To get search results response:
+To get search results response, use `get_search_results()`:
 
-    response <- get_search_results("2144 Bigelow Ave", "Seattle", "WA")
+``` r
+response <- get_search_results("2144 Bigelow Ave", "Seattle", "WA")
+```
 
-To get information about the property's `zpid`:
+Note that the address must be include a street number. Passing in `"Bigelow Ave"` without the street number will result in an error. `get_search_results()` gives you the raw Zillow API response. You can use this response in other functions to extract information from it.
 
-    response <- get_search_results("2144 Bigelow Ave", "Seattle", "WA")
-    get_zpid(response)
+For example, you can get information about the property's `zpid`:
 
-To get location data:
+``` r
+get_zpid(response)
+#> [1] "48879021"
+```
 
-    response <- get_search_results("2144 Bigelow Ave", "Seattle", "WA")
-    get_loc(response)
+You can also extract the location data (e.g., geocoordinates) from the response:
 
-To get information about similar recent sales for a specific property:
+``` r
+get_loc(response)
+#> 
+#> Status:  Request successfully processed 
+#> <Zillow: http://www.zillow.com/webservice/GetSearchResults.htm?zws-id=X1-ZWz1gc6yixcsnf_a57uf&address=2144+Bigelow+Ave&citystatezip=Seattle%2C+WA>
+#> 
+#> # A tibble: 1 x 6
+#>     zip street             city    state latitude longitude
+#>   <int> <chr>              <chr>   <chr>    <dbl>     <dbl>
+#> 1 98109 2414 Bigelow Ave N SEATTLE WA        47.6     -122.
+```
 
-    get_comp_df(zpid = "48749425", count = 5)
+To get information about similar recent sales, use `get_comp_df()`:
+
+``` r
+zpid <- get_zpid(response)
+get_comp_df(zpid = zpid, count = 5)
+#> # A tibble: 5 x 8
+#>        zpid bedrooms bathrooms  year  size lot_size    value  rent
+#>       <dbl>    <dbl>     <dbl> <dbl> <dbl>    <dbl>    <dbl> <dbl>
+#> 1 48879047.       4.        4. 1916. 2707.    3484. 1513786. 4460.
+#> 2 48690160.       4.        3. 1915. 2420.    2613. 1298157. 3950.
+#> 3 48689945.       4.        2. 1912. 2500.    2500. 1113082. 3350.
+#> 4 89138050.       3.        4. 2009. 1905.    1398. 1042789. 3850.
+#> 5 48690000.       2.        1. 1905. 1730.    3920.  895289. 2600.
+```
+
+This returns a dataframe with information about bedrooms, bathrooms, lot size of properties that are similar to your property.
+
+You can also get price estimates of other properties in the neighbourhood and plot them on a map:
+
+``` r
+neighbours <- get_neighbour_zestimates('2144 Bigelow Ave', 'Seattle', 'WA')
+plot_neighbour_zestimates(neighbours)
+#> Map from URL : http://maps.googleapis.com/maps/api/staticmap?center=47.630575,-122.349425&zoom=18&size=640x640&scale=2&maptype=roadmap&language=en-EN&sensor=false
+#> Warning: `panel.margin` is deprecated. Please use `panel.spacing` property
+#> instead
+```
+
+<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
 
 To get screenname of a real estate agent in a specific city:
 

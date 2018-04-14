@@ -50,6 +50,17 @@ test_that("get_search_results() stops if property information is invalid", {
 })
 
 
+test_that("get_search_results() stops if street number of address is not specified", {
+  set_zwsid(zwsid)
+  address <- 'Bigelow Ave'
+  city <- 'Seattle'
+  state <- 'WA'
+  expect_error(get_search_results(address,
+                                  city,
+                                  state), "Address must have a street number.")
+})
+
+
 # -----------------------------------------------------------------------------
 # get_zpid()
 # -----------------------------------------------------------------------------

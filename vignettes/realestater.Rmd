@@ -48,9 +48,6 @@ set_zwsid("your_zwsid")
 
 ```{r, include=FALSE}
 zwsid <- Sys.getenv("ZWSID")
-```
-
-```{r, include=FALSE}
 set_zwsid(zwsid)
 ```
 
@@ -61,6 +58,7 @@ response <- get_search_results('18114 Liscum Hill', 'San Antonio', 'TX')
 zpid <- get_zpid(response)
 ```
 
+Note that the address must be include a street number. Passing in `"Liscum Hill"` without the street number will result in an error. 
 
 Now that we have the `zpid` stored, we can retrieve some data and do some analysis. We can extract some individual information from the property like Zillow's price estimate:
 
@@ -80,7 +78,7 @@ Or the links to the property's Zillow link if we want to check the photos associ
 get_links(response)
 ```
 
-We can also check the price estimates of the neighbourhood of a given property. The `get_neighbour_zestimates()` function searches for zestimates of 10 street numbers greater than and less than the given property's address. If there are no neighbours on the same street, an error message will get returned. The maximum number of neighbours that could get returned is 20.
+We can also check the price estimates of other properties in the neighbourhood. The `get_neighbour_zestimates()` function searches for zestimates of 10 street numbers greater than and less than the given property's address. If there are no neighbours on the same street, an error message will get returned. The maximum number of neighbours that could get returned is 20.
 
 ```{r}
 neighbours <- get_neighbour_zestimates('18114 Liscum Hill', 'San Antonio', 'TX')
