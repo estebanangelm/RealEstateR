@@ -16,7 +16,8 @@ Suggests:
     testthat,
     covr,
     knitr,
-    rmarkdown
+    rmarkdown,
+    tidyverse
 Imports: 
     xml2,
     httr,
