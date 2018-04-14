@@ -14,7 +14,6 @@ source('R/format_params.R')
 #' @return API response
 #'
 #' @export
-
 get_search_results <- function(address, city, state) {
   zwsid <- getOption("ZWSID")
   address <- format_address(address)
@@ -31,19 +30,43 @@ get_search_results <- function(address, city, state) {
   }
 }
 
-#' Get Neighbour Information
-get_neighbours <- function(address, city, state) {
+#' Get Neighbour Zestimates
+#'
+#' @description Gets zestimates of neighbouring houses on the same street.
+#'
+#' @param address Street address of interest as a string
+#' (e.g., '2144 Bigelow Ave')
+#'
+#' @param city City of the property
+#'
+#' @param state State of the property. Can be abbreviated (e.g., 'WA' for Washington)
+#'
+#' @return Dataframe with neighbour address and corresponding zestimate
+#'
+#' @export
+get_neighbour_zestimates <- function(address, city, state) {
   street_number <- as.numeric(gsub("([0-9]+).*$", "\\1", address))
   street_name <- gsub('[0-9]+', '', address)
   neighbour_numbers <- append((street_number + c(1:10)), (street_number - c(1:10)))
-  neighbours <- paste0(neighbours, street_name)
+  neighbours <- paste0(neighbour_numbers, street_name)
   neighbour_list <- c()
+  zestimate_list <- c()
   for(n in neighbours) {
-    if(get_search_results(n, city, state)) {
+    tryCatch({
+      response <- get_search_results(n, city, state)
+      zpid <- get_zpid(response)
+      neighbour_zestimate <- get_zestimate(zpid)
+      zestimate_list <- c(zestimate_list, neighbour_zestimate)
       neighbour_list <- c(neighbour_list, n)
-    }
+    },
+    error=function(cond) {
+      return(invisible())
+    })
   }
+  neighbour_zestiamtes <- data.frame(address = neighbour_list, zestimate = zestimate_list)
+  return(neighbour_zestiamtes)
 }
+
 
 #' Get Zillow Property ID
 #'
