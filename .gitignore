@@ -3,4 +3,6 @@
 .RData
 .Ruserdata
 .Renviron
-inst/doc
+inst/doc/realestater.Rmd
+inst/doc/realestater.html
+inst/doc/realestater.R

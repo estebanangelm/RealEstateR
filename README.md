@@ -63,7 +63,7 @@ To get information of up-to 5 real estate agents based on their screennames:
 
     reviews(screennames)
 
-For a more comprehensive overview of all functions, check out the [vignette](https://s3-us-west-2.amazonaws.com/realestater/realestater.html).
+For a more comprehensive overview of all functions, check out the [vignette](inst/doc/realestater.md).
 
 Limitations
 -----------
