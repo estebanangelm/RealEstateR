@@ -6,9 +6,9 @@ context("utils.R")
 
 test_that("'check_type()' return xml document properly", {
 
-  object <- jsonlite::toJSON("just for testing")
-
-  expect_error(check_type(object))
+  uri <- paste0("http://www.zillow.com/webservice/ProReviews.htm?zws-id=", "abcd", "&screenname=", "mwalley0", "&output=json")
+  response <- httr::GET(uri)
+  expect_error(check_type(response))
 
 })
 
