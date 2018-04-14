@@ -1,5 +1,5 @@
 ---
-output: md_document
+output: github_document
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -80,6 +80,8 @@ screennames <- c("Rakesh Ram Real Estate Group", "mwalley0", "pamelarporter", "k
 
 reviews(screennames)
 ```
+
+For a more comprehensive overview of all functions, check out the [vignette](https://s3-us-west-2.amazonaws.com/realestater/realestater.html).
 
 ## Limitations
 
