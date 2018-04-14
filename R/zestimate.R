@@ -63,6 +63,9 @@ get_neighbour_zestimates <- function(address, city, state) {
       return(invisible())
     })
   }
+  if(length(neighbour_list) == 0) {
+    stop("No neighbours detected for this address")
+  }
   neighbour_zestiamtes <- data.frame(address = neighbour_list, zestimate = zestimate_list)
   return(neighbour_zestiamtes)
 }
