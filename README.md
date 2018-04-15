@@ -116,3 +116,5 @@ Contribution
 ------------
 
 Please note that this project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
+
+The house icon in the logo is free for commercial use and is taken from [Alex Timashenka](https://www.iconfinder.com/icons/384890/building_home_house_icon#size=128)
