@@ -86,6 +86,7 @@ get_neighbour_zestimates <- function(address, city, state) {
 #'
 #' @export
 plot_neighbour_zestimates <- function(df) {
+  check_df_input(df)
   base <- suppressWarnings(ggmap(get_map(location = c(lon = mean(df$longitude),
                                           lat = mean(df$latitude)), zoom=18, maptype="roadmap"), extent="device"))
   p <- base +

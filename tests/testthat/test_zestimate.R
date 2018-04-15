@@ -49,7 +49,6 @@ test_that("get_search_results() stops if property information is invalid", {
                                   state))
 })
 
-
 test_that("get_search_results() stops if street number of address is not specified", {
   set_zwsid(zwsid)
   address <- 'Bigelow Ave'
@@ -106,4 +105,10 @@ test_that("plot_neighbour_zestimates() returns a ggplot", {
   df <- get_neighbour_zestimates("2144 Bigelow Ave", "Seattle", "WA")
   output <- plot_neighbour_zestimates(df)
   expect_true(is.ggplot(output))
+})
+
+test_that("plot_neighbour_zestimates() returns an error when input is not correct format", {
+  set_zwsid(zwsid)
+  df <- data.frame()
+  expect_error(plot_neighbour_zestimates(df), "Input is in incorrect format.")
 })

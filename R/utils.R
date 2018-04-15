@@ -40,7 +40,6 @@ get_long <- function(response) {
 }
 
 
-
 #' Exception handler: response status
 #'
 #' @description Check if the API request is successful. Note that Zillow API always return `200`,
@@ -68,3 +67,17 @@ check_status <- function(response){
   }
 }
 
+#' Check dataframe input
+#'
+#' @description Checks that input is a dataframe, has at least 1 column,
+#' has column names "latitude", "longitude", "zestimate", "address"
+#'
+#' @param df Dataframe returned from get_neighbour_zestimates()
+#'
+#' @keywords internal
+check_df_input <- function(df) {
+  if(nrow(df) < 1 || !is.data.frame(df) ||
+     !c("latitude", "longitude", "zestimate", "address") %in% colnames(df)) {
+    stop("Input is in incorrect format.")
+  }
+}
