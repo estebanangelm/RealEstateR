@@ -79,11 +79,11 @@ get_comp_df(zpid = zpid, count = 5)
 #> # A tibble: 5 x 8
 #>        zpid bedrooms bathrooms  year  size lot_size    value  rent
 #>       <dbl>    <dbl>     <dbl> <dbl> <dbl>    <dbl>    <dbl> <dbl>
-#> 1 48689886.       4.      1.00 1919. 1590.    3049. 1067538. 2600.
-#> 2 48689945.       4.      2.00 1912. 2500.    2500. 1113082. 3350.
-#> 3 48690160.       4.      3.00 1915. 2420.    2613. 1298157. 3950.
-#> 4 48690000.       2.      1.00 1905. 1730.    3920.  895289. 2600.
-#> 5 48690267.       2.      1.50 1911. 1570.    3500.  953882. 3350.
+#> 1 49127356.       2.      1.10 2002. 1070.    1306.  793432. 2695.
+#> 2 48690160.       4.      3.00 1915. 2420.    2613. 1297267. 3939.
+#> 3 48689945.       4.      2.00 1912. 2500.    2500. 1111751. 3499.
+#> 4 48690000.       2.      1.00 1905. 1730.    3920.  894580. 2500.
+#> 5 48690267.       2.      1.50 1911. 1570.    3500.  952394. 3000.
 ```
 
 This returns a dataframe with information about bedrooms, bathrooms, lot size of properties that are similar to your property.
@@ -110,9 +110,11 @@ To get information of up-to 5 real estate agents based on their screennames:
 Limitations
 -----------
 
-In Zillow's Terms of Use, reverse-engineering like scrapping is not allowed. Thus, it is not possible to get screennames of all real-estate agents in a location through web scrapping method. At the same time, Zillow API allows 1000 requests per day, which also limits the number of agents' reviews information you can get. Reflecting from this limitation, our `reviews` function only allows you to search for reviews information of 5 agents at most.
+In Zillow's [Terms of Use](https://www.zillow.com/howto/api/APITerms.htm), reverse-engineering like scrapping is not allowed. Thus, it is not possible to get screennames of all real-estate agents in a location through web scrapping method. At the same time, Zillow API allows 1000 requests per day, which also limits the number of agents' reviews information you can get. Reflecting from this limitation, our `reviews` function only allows you to search for reviews information of 5 agents at most.
 
 Contribution
 ------------
 
 Please note that this project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
+
+The house icon in the logo is free for commercial use and is taken from [Alex Timashenka](https://www.iconfinder.com/icons/384890/building_home_house_icon#size=128).

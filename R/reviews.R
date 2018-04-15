@@ -64,7 +64,7 @@ reviews <- function(zwsid = NULL, screennames){
     negotiationskillsRating <- content$response$results$proInfo$negotiationskillsRating
 
 
-    df <-  tryCatch(dplyr::bind_rows(df, tibble::tibble(status, name, screenname, title,
+    tryCatch(df <- dplyr::bind_rows(df, tibble::tibble(status, name, screenname, title,
                                     businessName, businessAddress, phone,
                                     specialties, serviceArea =  list(serviceArea), recentSaleCount, reviewCount,
                                     localknowledgeRating, processexpertiseRating, responsivenessRating, negotiationskillsRating)),
