@@ -16,7 +16,7 @@ zwsid <- zwsid()
 # -----------------------------------------------------------------------------
 # test input
 # -----------------------------------------------------------------------------
-
+test_that("Expect character input for screennames", {
 # expect character input for screennames
 expect_error(reviews(zwsid, 1:5),
              "Expect screennames input to be character.")
@@ -26,10 +26,12 @@ expect_error(reviews(zwsid, c(1,2,3)),
 
 expect_error(reviews(zwsid, c("mwalley0", "pamelarporter", "klamping4", "Cincysrealtor", "Gordon", "everydoorrealestate")),
              "Expect at most 5 screennames.")
-
+})
 # -----------------------------------------------------------------------------
 # test output
 # -----------------------------------------------------------------------------
+
+test_that("Test output", {
 screennames <- c("mwalley0", "pamelarporter", "klamping4", "Cincysrealtor")
 test_df <- reviews(zwsid, screennames)
 
@@ -55,6 +57,12 @@ expect_output(str(test_df), "$ processexpertiseRating", fixed = TRUE)
 expect_output(str(test_df), "$ responsivenessRating", fixed = TRUE)
 expect_output(str(test_df), "$ negotiationskillsRating", fixed = TRUE)
 
+})
+
+test_that("Check when ZWSID is invalid", {
+
 # check when ZWSID is invalid (or if users have already reached API limit)
-expect_equal(reviews("abcd", "mwalley0"),
+expect_null(reviews("abcd", "mwalley0"),
              "Either screenname or ZWSID input is invalid, or you have reached 1000 API calls limit for today!")
+
+})
