@@ -34,22 +34,22 @@ set_zwsid(zwsid)
 screennames <- c("mwalley0", "pamelarporter", "klamping4", "Cincysrealtor")
 
 test1 <- reviews(screennames=screennames)
-# expect_type(test1, "list")
-expect_null(test1)
+expect_type(test1, "list")
+
 test_df <- reviews(zwsid, screennames)
 
 # Expect type of dataframe to be a tibble
-# expect_type(test_df, "list")
-expect_null(test_df)
-# Check output dataframe
-# expect_equal(ncol(test_df), 15)
+expect_type(test_df, "list")
 
-# cols <- c("status", "name","screenname","title","businessName",
-#           "businessAddress","phone", "specialties", "serviceArea",
-#           "recentSaleCount","reviewCount", "localknowledgeRating",
-#           "processexpertiseRating",  "responsivenessRating","negotiationskillsRating")
-#
-# expect_equal(colnames(test_df), cols)
+# Check output dataframe
+expect_equal(ncol(test_df), 15)
+
+cols <- c("status", "name","screenname","title","businessName",
+          "businessAddress","phone", "specialties", "serviceArea",
+          "recentSaleCount","reviewCount", "localknowledgeRating",
+          "processexpertiseRating",  "responsivenessRating","negotiationskillsRating")
+
+expect_equal(colnames(test_df), cols)
 
 })
 
