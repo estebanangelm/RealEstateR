@@ -8,7 +8,7 @@
 #'
 #' @param screennames Agent screenname(s) of your choice (at most 5 screennames)
 #'
-#' @param zwsid Your Zillow's API token. If you use the default, the function takes zwsid set in `set_zwsid`.
+#' @param zwsid Your Zillow's API token. If you use the default, the function takes zwsid set in `set_zwsid()`.
 #'
 #' @import rvest
 #' @import httr
