@@ -72,6 +72,7 @@ test_that("get_zpid() generates appropriate zpid", {
   response <- get_search_results(address, city, state)
   output <- get_zpid(response)
   expect_equal(output, '48879021')
+  expect_error(get_zpid(c("test")), "Input must be a response.")
 })
 
 # -----------------------------------------------------------------------------

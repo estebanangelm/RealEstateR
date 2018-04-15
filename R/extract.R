@@ -25,7 +25,7 @@
 #' }
 get_links <- function(response){
 
-  check_type(response)
+  check_response_type(response)
 
   url <- response$url
   search_xml <- xml2::read_xml(response)
@@ -80,7 +80,7 @@ get_links <- function(response){
 #' }
 get_loc <- function(response){
 
-  check_type(response)
+  check_response_type(response)
 
   url <- response$url
   search_xml <- xml2::read_xml(response)
@@ -138,7 +138,7 @@ get_loc <- function(response){
 #' }
 get_zestimate_all <- function(response){
 
-  check_type(response)
+  check_response_type(response)
 
   url <- response$url
   search_xml <- xml2::read_xml(response)
@@ -189,9 +189,7 @@ get_zestimate_all <- function(response){
 #'   get_near()
 #' }
 get_near <- function(response){
-
-  check_type(response)
-
+  check_response_type(response)
   url <- response$url
   search_xml <- xml2::read_xml(response)
 

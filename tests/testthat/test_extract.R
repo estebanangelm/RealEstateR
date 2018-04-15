@@ -47,7 +47,6 @@ test_that("'get_loc' output correct location data", {
   search_xml <- xml2::read_xml(response)
   message <- xml2::xml_text(xml2::xml_find_first(search_xml, "message/text"))
 
-
   df_check <- tibble::tribble(
     ~zip, ~street, ~city, ~state, ~latitude, ~longitude,
     98109L, "2414 Bigelow Ave N", "SEATTLE", "WA", 47.6405, -122.3481
@@ -60,7 +59,6 @@ test_that("'get_loc' output correct location data", {
   expect_equal(res$url, response$url)
   expect_equal(res$response, response)
   expect_s3_class(res, "zillow_api" )
-
 })
 
 # -----------------------------------------------------------------------------
@@ -68,15 +66,12 @@ test_that("'get_loc' output correct location data", {
 # -----------------------------------------------------------------------------
 
 test_that("'get_zestimate_all' output correct zestimate data", {
-
   zwsid <- Sys.getenv("ZWSID")
   set_zwsid(zwsid)
 
   response <- get_search_results("2144 Bigelow Ave", "Seattle", "WA")
   search_xml <- xml2::read_xml(response)
   message <- xml2::xml_text(xml2::xml_find_first(search_xml, "message/text"))
-
-
   res <- get_zestimate_all(response)
 
   expect_is(res$content, c("tbl_df", "tbl", "data.frame"))
@@ -93,27 +88,24 @@ test_that("'get_zestimate_all' output correct zestimate data", {
 # -----------------------------------------------------------------------------
 
 test_that("'get_near' output correct region data", {
-
   zwsid <- Sys.getenv("ZWSID")
   set_zwsid(zwsid)
 
   response <- get_search_results("2144 Bigelow Ave", "Seattle", "WA")
   search_xml <- xml2::read_xml(response)
   message <- xml2::xml_text(xml2::xml_find_first(search_xml, "message/text"))
-
-
   df_check <- tibble::tribble(
     ~region, ~id, ~type, ~indexvalue,
     "East Queen Anne",271856L, "neighborhood", 821600
   )
 
   res <- get_near(response)
-
   expect_equal(res$content, df_check)
   expect_equal(res$status, message)
   expect_equal(res$url, response$url)
   expect_equal(res$response, response)
   expect_s3_class(res, "zillow_api" )
+  expect_error(get_near(c(1,2,3)), "Input must be a response.")
 })
 
 # -----------------------------------------------------------------------------
@@ -121,7 +113,6 @@ test_that("'get_near' output correct region data", {
 # -----------------------------------------------------------------------------
 
 test_that("'get_near' output correct region data", {
-
   zwsid <- Sys.getenv("ZWSID")
   set_zwsid(zwsid)
 

@@ -22,7 +22,6 @@ get_search_results <- function(address, city, state) {
   base_url <- 'http://www.zillow.com/webservice/GetSearchResults.htm?'
   result <- httr::GET(url = paste0(base_url, 'zws-id=', zwsid, '&address=', address, '&citystatezip=', citystatezip))
   check_status(result)
-
   return(result)
 }
 
@@ -120,6 +119,7 @@ plot_neighbour_zestimates <- function(df) {
 #' @export
 get_zpid <- function(response) {
   zwsid <- getOption("ZWSID")
+  check_response_type(response)
   search_xml <- xml2::read_xml(httr::content(response, "text"))
   zpid <- xml2::xml_text(xml2::xml_find_all(search_xml, ".//zpid"))
   return(zpid)

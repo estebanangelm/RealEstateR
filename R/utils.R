@@ -5,7 +5,10 @@
 #' @param response API response
 #'
 #' @keywords internal
-check_type <- function(response){
+check_response_type <- function(response){
+  if (class(response) != "response") {
+    stop("Input must be a response.")
+  }
   if (httr::http_type(response) != "text/xml") {
     stop("API did not return XML", call. = FALSE)
   }
